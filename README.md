@@ -20,8 +20,8 @@
 		}
 	]
 	
-	Reads as:
+Reads as:
 	
-	Step 1, get (all) records for the tblCustomers collection and save the results to 'customerRecords' in the common state
+Step 1, get (all) records for the tblCustomers collection and save the results to 'customerRecords' in the common state
 	
-	Step 2, call res.send() with the data stored at 'customerRecords' in common state
+Step 2, call res.send() with the data stored at 'customerRecords' in common state

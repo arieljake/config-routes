@@ -23,7 +23,7 @@ module.exports = function(grunt)
 				},
 				{
 					expand: true,
-					cwd: 'example/',
+					cwd: 'example-src/',
 					src: ['**/*.js'],
 					dest: 'example-es5'
 				}]
@@ -42,7 +42,7 @@ module.exports = function(grunt)
 				},
 				{
 					expand: true,
-					cwd: 'example/',
+					cwd: 'example-src/',
 					src: ['routes/**'],
 					dest: 'example-es5/'
 				}]

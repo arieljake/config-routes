@@ -11,4 +11,4 @@ var res = {send: function(value) {
     console.dir(value);
   }};
 route(req, res);
-//# sourceURL=example/example.js
+//# sourceURL=example-src/example.js

@@ -1,23 +1,34 @@
 [
+{
+	"fn": "input/transform/string.to.array",
+	"config":
 	{
-		"fn": "input/transform/string.to.array",
 		"stringAt": "req.path",
 		"delim": ".",
-		"outputTo": "routeParts"
-	},
+		"saveTo": "routeParts"
+	}
+},
+{
+	"fn": "input/load/json",
+	"config":
 	{
-		"fn": "input/load/json",
 		"pathAt": "routeMenuPath",
-		"outputTo": "routeMenu"
-	},
+		"saveTo": "routeMenu"
+	}
+},
+{
+	"fn": "input/map/by.key",
+	"config":
 	{
-		"fn": "input/map/by.key",
 		"arrayAt": "routeParts",
 		"mapAt": "routeMenu",
-		"outputTo": "routeFunctions"
-	},
+		"saveTo": "routeFunctions"
+	}
+},
+{
+	"fn": "routing/array.of.names",
+	"config":
 	{
-		"fn": "fns/routing/array.of.names",
 		"arrayAt": "routeFunctions"
 	}
-]
+}]

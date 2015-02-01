@@ -1,16 +1,19 @@
-"use strict";
-var __moduleName = "example/example";
 'use strict';
+
 global.$traceurRuntime = require('traceur-runtime');
-var path = require("path");
-var RouteFactory = require('./objects/RouteFactory').RouteFactory;
-var FnLibrary = require('./objects/FnLibrary').FnLibrary;
-var fnLib = new FnLibrary([path.join(__dirname, "fnlib"), path.join(__dirname, "functions")]);
-var routes = new RouteFactory(path.join(__dirname, "routes"), fnLib);
-var route = routes.get("customer/GetCustomerLocations.json");
-var req = {};
-var res = {send: function(value) {
-    console.dir(value);
-  }};
+
+let path = require("path");
+let AppBase = require('./AppBase');
+
+let routes = AppBase.createRoutes(path.join(__dirname, "routes"), path.join(__dirname, "functions"));
+
+let route = routes.get("customer/GetCustomerLocations.json");
+let req = {};
+let res = {
+	send: function(value)
+	{
+		console.dir(value);
+	}
+};
+
 route(req, res);
-//# sourceURL=example.js

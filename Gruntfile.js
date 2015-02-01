@@ -10,20 +10,22 @@ module.exports = function(grunt)
 				experimental: true,
 				modules: 'commonjs',
 				blockBinding: true,
-				copyRuntime: 'dist'
+				copyRuntime: 'dist-es5'
 			},
 			all:
 			{
 				files: [
 				{
 					expand: true,
-					src: ['objects/**/*.js', 'fnLib/**/*.js'],
-					dest: 'dist'
+					cwd: 'src/',
+					src: ['**/*.js'],
+					dest: 'dist-es5'
 				},
 				{
 					expand: true,
-					src: ['example.js', 'functions/**/*.js'],
-					dest: 'example'
+					cwd: 'example/',
+					src: ['**/*.js'],
+					dest: 'example-es5'
 				}]
 			}
 		},
@@ -34,21 +36,22 @@ module.exports = function(grunt)
 				files: [
 				{
 					expand: true,
+					cwd: 'dist-es5/',
 					src: ['**'],
-					cwd: 'dist/',
-					dest: 'example/'
+					dest: 'example-es5/AppBase'
 				},
 				{
 					expand: true,
+					cwd: 'example/',
 					src: ['routes/**'],
-					dest: 'example/'
+					dest: 'example-es5/'
 				}]
 			}
 		},
 		clean:
 		{
-			dist: ['dist'],
-			example: ['example']
+			dist: ['dist-es5'],
+			example: ['example-es5']
 		},
 		mochaTest:
 		{

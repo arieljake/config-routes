@@ -1,3 +1,6 @@
-"use strict";
-var __moduleName = "example/functions/customer/GetCustomerLocations";
-//# sourceURL=functions/customer/GetCustomerLocations.js
+
+// function( permanent, temporary) -> domain/concept separation for the mind
+//function(state, config)
+//{
+//	return myPromise;
+//}

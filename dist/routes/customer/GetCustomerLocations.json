@@ -1,0 +1,15 @@
+[
+	{
+		"fn": "input/copy",
+		"valueAt": "req.params.customer_id",
+		"outputTo": "customerID"
+	},
+	{
+		"fn": "database/mongo/getRecords",
+		"outputTo": "customerLocations"
+	},
+	{
+		"fn": "output/res.send.final",
+		"valueAt": "customerLocations"
+	}
+]

@@ -11,5 +11,5 @@ function getRecords(state, config) {
 		}
 	];
 	
-	state.set(config.outputTo, value);
+	state.set(config.saveTo, value);
 };

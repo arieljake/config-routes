@@ -9,7 +9,7 @@ var __moduleName = "dist-es5/fnLib/input/transform/string.to.array";
 function stringToArray(state, config) {
   var input = state.get(config.stringAt);
   var inputParts = input.split(config.delim);
-  state.set(config.outputTo, inputParts);
+  state.set(config.saveTo, inputParts);
 }
 var $__default = stringToArray;
 ;

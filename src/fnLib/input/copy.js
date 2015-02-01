@@ -4,5 +4,5 @@ function copy(state, config) {
 
 	let value = state.get(config.valueAt);
 	
-	state.set(config.outputTo, value);
+	state.set(config.saveTo, value);
 };

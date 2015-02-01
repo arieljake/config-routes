@@ -24,7 +24,7 @@ var Route = function Route(name, definition, fnLib) {
     return this.definition.map((function(def) {
       return {
         name: def.fn,
-        config: _.omit(def, "fn"),
+        config: def.config,
         exe: $__0.fnLib.get(def.fn)
       };
     }));

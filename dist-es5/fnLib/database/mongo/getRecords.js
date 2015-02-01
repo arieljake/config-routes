@@ -8,7 +8,7 @@ Object.defineProperties(exports, {
 var __moduleName = "dist-es5/fnLib/database/mongo/getRecords";
 function getRecords(state, config) {
   var value = [{name: "ARIEL"}, {name: "JAKE"}];
-  state.set(config.outputTo, value);
+  state.set(config.saveTo, value);
 }
 var $__default = getRecords;
 ;

@@ -12,7 +12,7 @@ function loadJson(state, config) {
   var path = state.get(config.pathAt);
   var content = fs.readFileSync(path, "utf8");
   var value = JSON.parse(content);
-  state.set(config.outputTo, value);
+  state.set(config.saveTo, value);
 }
 var $__default = loadJson;
 ;

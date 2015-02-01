@@ -8,7 +8,7 @@ Object.defineProperties(exports, {
 var __moduleName = "dist-es5/fnLib/input/copy";
 function copy(state, config) {
   var value = state.get(config.valueAt);
-  state.set(config.outputTo, value);
+  state.set(config.saveTo, value);
 }
 var $__default = copy;
 ;

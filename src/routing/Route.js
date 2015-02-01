@@ -22,7 +22,7 @@ export class Route extends EventEmitter
 		{
 			return {
 				name: def.fn,
-				config: _.omit(def, "fn"),
+				config: def.config,
 				exe: this.fnLib.get(def.fn)
 			};
 		});

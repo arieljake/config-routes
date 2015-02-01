@@ -12,7 +12,7 @@ function mapByKey(state, config) {
   var result = source.map((function(key) {
     return lookup[key];
   }));
-  state.set(config.outputTo, result);
+  state.set(config.saveTo, result);
 }
 var $__default = mapByKey;
 ;

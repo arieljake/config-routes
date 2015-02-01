@@ -6,5 +6,5 @@ function mapByKey(state, config) {
 	let lookup = state.get(config.mapAt);
 	let result = source.map( (key) => lookup[key] );
 
-	state.set(config.outputTo, result);
+	state.set(config.saveTo, result);
 };

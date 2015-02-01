@@ -8,5 +8,5 @@ function loadJson(state, config) {
 	let content = fs.readFileSync(path, "utf8");
 	let value = JSON.parse(content);
 
-	state.set(config.outputTo, value);
+	state.set(config.saveTo, value);
 };

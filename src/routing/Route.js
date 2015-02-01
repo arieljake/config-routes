@@ -14,13 +14,14 @@ export class Route
 		this.fnLib = fnLib;
 	}
 
-	get fns()
+	getFns()
 	{
 		return this.definition.map((def) =>
 		{
 			return {
 				name: def.fn,
-				config: _.omit(def, "fn")
+				config: _.omit(def, "fn"),
+				exe: this.fnLib.get(def.fn)
 			};
 		});
 	}
@@ -32,11 +33,7 @@ export class Route
 			res
 		};
 		let context = new Context(model, this.fnLib);
-
-		let fns = this.fns.map((fn) => _.assign(fn,
-		{
-			exe: this.fnLib.get(fn.name)
-		}));
+		let fns = this.getFns();
 		let boundFns = fns.map((fn) => _.bind(fn.exe, null, context, fn.config));
 		let runner = new FnsRunner(boundFns);
 

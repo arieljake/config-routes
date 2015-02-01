@@ -10,11 +10,11 @@ var path = require("path");
 var _ = require("lodash");
 var RouteFactory = require('./routing/RouteFactory').RouteFactory;
 var FnLibrary = require('./routing/FnLibrary').FnLibrary;
-function createRoutes(routeLib, fnLibs) {
-  var stdFnLib = path.join(__dirname, "fnLib");
-  fnLibs = _.flatten([stdFnLib, fnLibs]);
-  var fnLib = new FnLibrary(fnLibs);
-  var routes = new RouteFactory(routeLib, fnLib);
+function createRoutes(config) {
+  var stdFnLibPath = path.join(__dirname, "fnLib");
+  var fnPaths = _.flatten([stdFnLibPath, config.fnLib]);
+  var fnLib = new FnLibrary(fnPaths);
+  var routes = new RouteFactory(config.routeLib, fnLib);
   return routes;
 }
 ;

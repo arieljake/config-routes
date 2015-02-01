@@ -18,24 +18,23 @@ var Route = function Route(name, definition, fnLib) {
   this.fnLib = fnLib;
 };
 ($traceurRuntime.createClass)(Route, {
-  get fns() {
+  getFns: function() {
+    var $__0 = this;
     return this.definition.map((function(def) {
       return {
         name: def.fn,
-        config: _.omit(def, "fn")
+        config: _.omit(def, "fn"),
+        exe: $__0.fnLib.get(def.fn)
       };
     }));
   },
   run: function(req, res) {
-    var $__0 = this;
     var model = {
       req: req,
       res: res
     };
     var context = new Context(model, this.fnLib);
-    var fns = this.fns.map((function(fn) {
-      return _.assign(fn, {exe: $__0.fnLib.get(fn.name)});
-    }));
+    var fns = this.getFns();
     var boundFns = fns.map((function(fn) {
       return _.bind(fn.exe, null, context, fn.config);
     }));

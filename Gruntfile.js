@@ -1,38 +1,61 @@
-module.exports = function (grunt) {
-	grunt.initConfig({
+module.exports = function(grunt)
+{
+	grunt.initConfig(
+	{
 		pkg: grunt.file.readJSON('package.json'),
-		traceur: {
-			options: {
+		traceur:
+		{
+			options:
+			{
 				experimental: true,
 				modules: 'commonjs',
 				blockBinding: true,
 				copyRuntime: 'dist'
 			},
-			all: {
-				files: [{
-					expand: true,
-					src: ['router.js', 'objects/**/*.js', 'fnLib/**/*.js', 'functions/**/*.js'],
-					dest: 'dist'
-      			}]
-			}
-		},
-		copy: {
-			dist: {
+			all:
+			{
 				files: [
-					{
-						expand: true,
-						src: ['routes/**'],
-						dest: 'dist/'
-					}
-				]
+				{
+					expand: true,
+					src: ['objects/**/*.js', 'fnLib/**/*.js'],
+					dest: 'dist'
+				},
+				{
+					expand: true,
+					src: ['example.js', 'functions/**/*.js'],
+					dest: 'example'
+				}]
 			}
 		},
-		clean: {
-			dist: ['dist']
+		copy:
+		{
+			example:
+			{
+				files: [
+				{
+					expand: true,
+					src: ['**'],
+					cwd: 'dist/',
+					dest: 'example/'
+				},
+				{
+					expand: true,
+					src: ['routes/**'],
+					dest: 'example/'
+				}]
+			}
 		},
-		mochaTest: {
-			objects: {
-				options: {
+		clean:
+		{
+			dist: ['dist'],
+			example: ['example']
+		},
+		mochaTest:
+		{
+			objects:
+			{
+				options:
+				{
 					reporter: 'spec',
 					captureFile: 'logs/mocha.txt',
 					quiet: false,
@@ -48,6 +71,6 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-mocha-test');
 	grunt.loadNpmTasks('grunt-traceur');
 
-	grunt.registerTask('build', ['clean:dist', 'traceur:all', 'copy:dist']);
+	grunt.registerTask('build', ['clean:dist', 'clean:example', 'traceur:all', 'copy:example']);
 	grunt.registerTask('test', ['mochaTest:objects']);
 };

@@ -1,3 +1,3 @@
 "use strict";
-var __moduleName = "dist/functions/customer/GetCustomerLocations";
+var __moduleName = "example/functions/customer/GetCustomerLocations";
 //# sourceURL=functions/customer/GetCustomerLocations.js

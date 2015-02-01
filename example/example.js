@@ -1,5 +1,5 @@
 "use strict";
-var __moduleName = "dist/router";
+var __moduleName = "example/example";
 'use strict';
 global.$traceurRuntime = require('traceur-runtime');
 var path = require("path");
@@ -13,4 +13,4 @@ var res = {send: function(value) {
     console.dir(value);
   }};
 route(req, res);
-//# sourceURL=router.js
+//# sourceURL=example.js

@@ -1,3 +1,5 @@
+global.$traceurRuntime = require('traceur-runtime');
+
 let path = require("path");
 let _ = require("lodash");
 

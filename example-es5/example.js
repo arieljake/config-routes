@@ -1,7 +1,6 @@
 "use strict";
 var __moduleName = "example-es5/example";
 'use strict';
-global.$traceurRuntime = require('traceur-runtime');
 var path = require("path");
 var AppBase = require('./AppBase');
 var routes = AppBase.createRoutes({

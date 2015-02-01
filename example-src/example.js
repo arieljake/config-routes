@@ -1,7 +1,5 @@
 'use strict';
 
-global.$traceurRuntime = require('traceur-runtime');
-
 let path = require("path");
 let AppBase = require('./AppBase');
 

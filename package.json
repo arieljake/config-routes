@@ -1,7 +1,7 @@
 {
   "name": "AppBase",
-  "version": "1.0.0",
-  "description": "- 'Functions' plural means an array of functions.",
+  "version": "0.0.1",
+  "description": "Basis for configuration based routing in express",
   "main": "index.js",
   "dependencies": {
     "lodash": "^2.4.1",

@@ -9,7 +9,7 @@ export function createRoutes(config)
 	let stdFnLibPath = path.join(__dirname, "fnLib");	
 	let fnPaths = _.flatten([stdFnLibPath,config.fnLib]);	
 	let fnLib = new FnLibrary(fnPaths);
-	let routes = new RouteFactory(config.routeLib, fnLib);
+	let routes = new RouteFactory(config.routeLib, fnLib, config.routeEvents);
 	
 	return routes;
 };

@@ -22,4 +22,8 @@ export class Context {
 	getFnByName(name) {
 		return fnLib.get(name);
 	}
+	
+	serialize() {
+		return this.model;
+	}
 };

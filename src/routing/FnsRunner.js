@@ -1,6 +1,7 @@
 let q = require('q');
+let EventEmitter = require('events').EventEmitter;
 
-export class FnsRunner
+export class FnsRunner extends EventEmitter
 {
 	constructor(fns)
 	{
@@ -11,11 +12,13 @@ export class FnsRunner
 	{
 		let fns = this.fns;
 		let fnIndex = 0;
+		let emitter = this;
 		let gen = function*()
 		{
 			while (fnIndex < fns.length)
 			{
 				yield fns[fnIndex]();
+				emitter.emit('fnComplete', fnIndex);
 				fnIndex++;
 			}
 		};

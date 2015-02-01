@@ -3,14 +3,17 @@
 let fs = require("fs");
 let path = require("path");
 let wrench = require('wrench');
+
 let Route = require('./Route').Route;
+let RouteEventHandler = require('./RouteEventHandler').RouteEventHandler;
 
 export class RouteFactory
 {
-	constructor(routeDir, fnLib)
+	constructor(routeDir, fnLib, routeEvents)
 	{
 		this.routeDir = routeDir;
 		this.fnLib = fnLib;
+		this.routeEventHandler = new RouteEventHandler(routeEvents);
 		
 		this.routes = wrench
 			.readdirSyncRecursive(routeDir)
@@ -39,6 +42,9 @@ export class RouteFactory
 			return (req, res) =>
 			{
 				var route = new Route(routeObj.name, routeObj.definition, this.fnLib);
+				
+				if (this.routeEventHandler)
+					this.routeEventHandler.handle(route);
 				
 				route.run(req, res);
 			};

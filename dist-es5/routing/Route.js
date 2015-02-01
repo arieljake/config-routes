@@ -9,6 +9,7 @@ var __moduleName = "dist-es5/routing/Route";
 var path = require("path");
 var q = require('q');
 var _ = require('lodash');
+var EventEmitter = require('events').EventEmitter;
 var FnLibrary = require('./FnLibrary').FnLibrary;
 var FnsRunner = require('./FnsRunner').FnsRunner;
 var Context = require("./Context").Context;
@@ -29,6 +30,7 @@ var Route = function Route(name, definition, fnLib) {
     }));
   },
   run: function(req, res) {
+    var $__0 = this;
     var model = {
       req: req,
       res: res
@@ -39,8 +41,19 @@ var Route = function Route(name, definition, fnLib) {
       return _.bind(fn.exe, null, context, fn.config);
     }));
     var runner = new FnsRunner(boundFns);
-    return runner.run();
+    this.attachToRunner(runner, fns);
+    this.emit('routeStarting', this.name, context.serialize());
+    runner.run().then((function() {
+      $__0.emit('routeComplete', $__0.name, context.serialize());
+    }));
+  },
+  attachToRunner: function(fnRunner, fns) {
+    var $__0 = this;
+    fnRunner.on('fnComplete', (function(fnIndex) {
+      var completedFn = fns[fnIndex];
+      $__0.emit('routeFnComplete', completedFn, $__0.name, $__0.config);
+    }));
   }
-}, {});
+}, {}, EventEmitter);
 ;
 //# sourceURL=src/routing/Route.js

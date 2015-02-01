@@ -7,12 +7,14 @@ Object.defineProperties(exports, {
 });
 var __moduleName = "dist-es5/routing/FnsRunner";
 var q = require('q');
+var EventEmitter = require('events').EventEmitter;
 var FnsRunner = function FnsRunner(fns) {
   this.fns = fns;
 };
 ($traceurRuntime.createClass)(FnsRunner, {run: function() {
     var fns = this.fns;
     var fnIndex = 0;
+    var emitter = this;
     var gen = $traceurRuntime.initGeneratorFunction(function $__1() {
       return $traceurRuntime.createGeneratorInstance(function($ctx) {
         while (true)
@@ -28,6 +30,7 @@ var FnsRunner = function FnsRunner(fns) {
               $ctx.state = 4;
               break;
             case 4:
+              emitter.emit('fnComplete', fnIndex);
               fnIndex++;
               $ctx.state = 0;
               break;
@@ -37,6 +40,6 @@ var FnsRunner = function FnsRunner(fns) {
       }, $__1, this);
     });
     return q.async(gen)();
-  }}, {});
+  }}, {}, EventEmitter);
 ;
 //# sourceURL=src/routing/FnsRunner.js

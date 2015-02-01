@@ -14,7 +14,7 @@ function createRoutes(config) {
   var stdFnLibPath = path.join(__dirname, "fnLib");
   var fnPaths = _.flatten([stdFnLibPath, config.fnLib]);
   var fnLib = new FnLibrary(fnPaths);
-  var routes = new RouteFactory(config.routeLib, fnLib);
+  var routes = new RouteFactory(config.routeLib, fnLib, config.routeEvents);
   return routes;
 }
 ;

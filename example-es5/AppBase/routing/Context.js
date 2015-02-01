@@ -22,6 +22,9 @@ var Context = function Context(model, fnLib) {
   },
   getFnByName: function(name) {
     return fnLib.get(name);
+  },
+  serialize: function() {
+    return this.model;
   }
 }, {});
 ;

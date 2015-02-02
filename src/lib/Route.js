@@ -5,7 +5,7 @@ let EventEmitter = require('events').EventEmitter;
 
 let FnLibrary = require('./FnLibrary').FnLibrary;
 let FnsRunner = require('./FnsRunner').FnsRunner;
-let Context = require("./Context").Context;
+let RouteContext = require("./RouteContext").RouteContext;
 
 export class Route extends EventEmitter
 {
@@ -30,22 +30,23 @@ export class Route extends EventEmitter
 
 	run(req, res)
 	{
-		let model = {
-			req,
-			res
-		};
-		let context = new Context(model, this.fnLib);
+		let context = new RouteContext(req, res, this.fnLib);
 		let fns = this.getFns();
 		let boundFns = fns.map((fn) => _.bind(fn.exe, null, context, fn.config));
 		let runner = new FnsRunner(boundFns);
 
 		this.attachToRunner(runner, fns);
-		this.emit('routeStarting', this.name, context.serialize());
+		this.emit('routeStarting', this.name, this.config, context.serialize());
 
 		runner.run()
 			.then(() =>
 			{
 				this.emit('routeComplete', this.name, context.serialize());
+			})
+			.catch((err) =>
+			{
+				let erroredFn = fns[err.fnIndex];
+				this.emit('routeFnError', err.error, erroredFn.name, erroredFn.config, this.name, this.config);
 			});
 	}
 
@@ -54,7 +55,7 @@ export class Route extends EventEmitter
 		fnRunner.on('fnComplete', (fnIndex) =>
 		{
 			let completedFn = fns[fnIndex];
-			this.emit('routeFnComplete', completedFn, this.name, this.config);
+			this.emit('routeFnComplete', completedFn.name, completedFn.config, this.name, this.config);
 		});
 	}
 };

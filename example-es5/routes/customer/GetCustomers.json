@@ -1,0 +1,28 @@
+[
+{
+	"fn": "input/copy",
+	"config":
+	{
+		"valueAt": "req.params.customer_id",
+		"saveTo": "customerID"
+	}
+},
+{
+	"fn": "database/mongoskin/getRecords",
+	"config":
+	{
+		"mongoVarName": "req.mongoDB",
+		"collection": "tblCustomers",
+		"queryVarName": "",
+		"optionsVarName": "",
+		"saveResultTo": "customers",
+		"saveErrorTo": "getCustomersError"
+	}
+},
+{
+	"fn": "output/res.send",
+	"config":
+	{
+		"valueAt": "customerLocations"
+	}
+}]

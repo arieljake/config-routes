@@ -2,24 +2,33 @@
 var __moduleName = "example-es5/example";
 'use strict';
 var path = require("path");
-var AppBase = require('./AppBase');
-var routes = AppBase.createRoutes({
+var Routes = require('./Routes');
+var routes = Routes.createRoutes({
   routeLib: path.join(__dirname, "routes"),
   fnLib: path.join(__dirname, "functions"),
   routeEvents: {
-    starting: function() {
-      console.dir("route starting");
+    starting: function(routeName, routeConfig) {
+      console.dir("route " + routeName + " starting");
     },
-    fnComplete: function() {
-      console.dir("route fn complete");
+    fnComplete: function(fnName, fnConfig, routeName, routeConfig) {
+      console.dir("route fn " + fnName + " complete");
     },
-    complete: function() {
-      console.dir("route complete");
+    fnError: function(err, fnName, fnConfig) {
+      console.dir("route fn error " + err + " in " + fnName);
+    },
+    complete: function(routeName) {
+      console.dir("route " + routeName + " complete");
     }
   }
 });
-var route = routes.get("customer/GetCustomerLocations.json");
-var req = {};
+var route = routes.get("customer/GetCustomers.json");
+var req = {mongoDB: {collection: function() {
+      return {find: function() {
+          return {toArray: function(cb) {
+              cb(null, [{"name": "Customer 1"}]);
+            }};
+        }};
+    }}};
 var res = {send: function(value) {
     console.dir(value);
   }};

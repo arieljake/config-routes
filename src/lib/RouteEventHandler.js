@@ -2,7 +2,7 @@ export class RouteEventHandler
 {
 	constructor(eventHandlers)
 	{
-		this.eventHandlers = eventHandlers;
+		this.eventHandlers = eventHandlers || {};
 	}
 
 	handle(route)
@@ -20,6 +20,14 @@ export class RouteEventHandler
 			if (this.eventHandlers.fnComplete)
 			{
 				this.eventHandlers.fnComplete.apply(null, args);
+			}
+		});
+
+		route.on("routeFnError", (...args) =>
+		{
+			if (this.eventHandlers.fnError)
+			{
+				this.eventHandlers.fnError.apply(null, args);
 			}
 		});
 

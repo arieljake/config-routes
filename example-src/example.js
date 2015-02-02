@@ -1,29 +1,49 @@
 'use strict';
 
 let path = require("path");
-let AppBase = require('./AppBase');
+let Routes = require('./Routes');
 
-let routes = AppBase.createRoutes({
+let routes = Routes.createRoutes({
 	routeLib: path.join(__dirname, "routes"),
 	fnLib: path.join(__dirname, "functions"),
 	routeEvents: {
-		starting: function()
+		starting: function(routeName, routeConfig)
 		{
-			console.dir("route starting");
+			console.dir("route " + routeName + " starting");
 		},
-		fnComplete: function()
+		fnComplete: function(fnName, fnConfig, routeName, routeConfig)
 		{
-			console.dir("route fn complete");
+			console.dir("route fn " + fnName  + " complete");
 		},
-		complete: function()
+		fnError: function(err, fnName, fnConfig)
 		{
-			console.dir("route complete");
+			console.dir("route fn error " + err  + " in " + fnName);	
+		},
+		complete: function(routeName)
+		{
+			console.dir("route " + routeName + " complete");
 		}
 	}
 });
 
-let route = routes.get("customer/GetCustomerLocations.json");
-let req = {};
+let route = routes.get("customer/GetCustomers.json");
+let req = {
+	mongoDB: {
+		collection: function() {
+			return {
+				find: function() {
+					return {
+						toArray: function(cb) {
+							cb(null, [{
+								"name": "Customer 1"
+							}])
+						}
+					}
+				}
+			}
+		}
+	}
+};
 let res = {
 	send: function(value)
 	{

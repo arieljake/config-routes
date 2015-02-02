@@ -1,4 +1,4 @@
-let q = require('q');
+let Q = require('q');
 let EventEmitter = require('events').EventEmitter;
 
 export class FnsRunner extends EventEmitter
@@ -15,14 +15,25 @@ export class FnsRunner extends EventEmitter
 		let emitter = this;
 		let gen = function*()
 		{
-			while (fnIndex < fns.length)
+			try
 			{
-				yield fns[fnIndex]();
-				emitter.emit('fnComplete', fnIndex);
-				fnIndex++;
+				while (fnIndex < fns.length)
+				{
+					yield fns[fnIndex]();
+
+					emitter.emit('fnComplete', fnIndex);
+					fnIndex++;
+				}
+			}
+			catch (err)
+			{
+				yield Q.reject({
+					fnIndex: fnIndex,
+					error: err
+				});
 			}
 		};
 
-		return q.async(gen)();
+		return Q.async(gen)();
 	}
 };

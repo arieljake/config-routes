@@ -38,7 +38,7 @@ module.exports = function(grunt)
 					expand: true,
 					cwd: 'dist-es5/',
 					src: ['**'],
-					dest: 'example-es5/AppBase'
+					dest: 'example-es5/Routes'
 				},
 				{
 					expand: true,

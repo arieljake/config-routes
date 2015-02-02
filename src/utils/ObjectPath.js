@@ -15,7 +15,10 @@ export class ObjectPath
 	getValueIn(obj) {
 		let {finalProperty, object} = this.descendIn(obj);
 		
-		return object[finalProperty];
+		if (!finalProperty || !object)
+			return undefined;
+		else
+			return object[finalProperty];
 	}
 	
 	setValueIn(obj, value) {
@@ -26,7 +29,10 @@ export class ObjectPath
 	
 	descendIn(obj) {
 		if (!obj || !this.path)
-			return undefined;
+			return {
+				finalProperty: undefined,
+				object: undefined
+			};
 
 		let objRef = obj;
 		let pathParts = this.path.split(".");
@@ -49,7 +55,7 @@ export class ObjectPath
 
 		return {
 			finalProperty: pathParts.shift(),
-			object: obj
+			object: objRef
 		};
 	}
 };

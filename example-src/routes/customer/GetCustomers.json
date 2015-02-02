@@ -23,6 +23,6 @@
 	"fn": "output/res.send",
 	"config":
 	{
-		"valueAt": "customerLocations"
+		"valueVarName": "customers"
 	}
 }]

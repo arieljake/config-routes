@@ -25,7 +25,7 @@ function getRecords(state, config) {
 		}
 	};
 	
-	mongoDB.collections(collection).find(query, options).toArray(resultHandler);
+	mongoDB.collection(collection).find(query, options).toArray(resultHandler);
 	
 	return deferred.promise;
 };

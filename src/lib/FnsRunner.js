@@ -15,6 +15,9 @@ export class FnsRunner extends EventEmitter
 		let emitter = this;
 		let gen = function*()
 		{
+			if (fnIndex === 0)
+				emitter.emit('runnerStarting', fnIndex);
+			
 			try
 			{
 				while (fnIndex < fns.length)
@@ -23,6 +26,9 @@ export class FnsRunner extends EventEmitter
 
 					emitter.emit('fnComplete', fnIndex);
 					fnIndex++;
+					
+					if (fnIndex >= fns.length)
+						emitter.emit('runnerComplete', fnIndex);
 				}
 			}
 			catch (err)

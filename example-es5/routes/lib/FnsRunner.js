@@ -21,6 +21,11 @@ var FnsRunner = function FnsRunner(fns) {
         while (true)
           switch ($ctx.state) {
             case 0:
+              if (fnIndex === 0)
+                emitter.emit('runnerStarting', fnIndex);
+              $ctx.state = 20;
+              break;
+            case 20:
               $ctx.pushTry(12, null);
               $ctx.state = 15;
               break;
@@ -37,6 +42,8 @@ var FnsRunner = function FnsRunner(fns) {
             case 4:
               emitter.emit('fnComplete', fnIndex);
               fnIndex++;
+              if (fnIndex >= fns.length)
+                emitter.emit('runnerComplete', fnIndex);
               $ctx.state = 15;
               break;
             case 7:

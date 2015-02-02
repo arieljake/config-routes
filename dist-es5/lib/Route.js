@@ -17,41 +17,59 @@ var Route = function Route(name, definition, fnLib) {
   this.name = name;
   this.definition = definition;
   this.fnLib = fnLib;
+  this.fns = this.getFns();
 };
 ($traceurRuntime.createClass)(Route, {
   getFns: function() {
     var $__0 = this;
-    return this.definition.map((function(def) {
+    return this.definition.map((function(def, index) {
       return {
         name: def.fn,
         config: def.config,
-        exe: $__0.fnLib.get(def.fn)
+        exe: $__0.fnLib.get(def.fn),
+        index: index
       };
     }));
   },
   run: function(req, res) {
     var $__0 = this;
-    var context = new RouteContext(req, res, this.fnLib);
-    var fns = this.getFns();
-    var boundFns = fns.map((function(fn) {
-      return _.bind(fn.exe, null, context, fn.config);
+    this.context = new RouteContext(req, res, this.fnLib);
+    var boundFns = this.fns.map((function(fn) {
+      return _.bind(fn.exe, null, $__0.context, fn.config);
     }));
     var runner = new FnsRunner(boundFns);
-    this.attachToRunner(runner, fns);
-    this.emit('routeStarting', this.name, this.config, context.serialize());
-    runner.run().then((function() {
-      $__0.emit('routeComplete', $__0.name, context.serialize());
-    })).catch((function(err) {
-      var erroredFn = fns[err.fnIndex];
-      $__0.emit('routeFnError', err.error, erroredFn.name, erroredFn.config, $__0.name, $__0.config);
+    this.attachToRunner(runner);
+    runner.run().catch((function(err) {
+      var erroredFn = $__0.fns[err.fnIndex];
+      $__0.emit('routeFnError', err.error, $__0.fnToObject(erroredFn), $__0.toObject());
     }));
   },
-  attachToRunner: function(fnRunner, fns) {
+  attachToRunner: function(fnRunner) {
     var $__0 = this;
-    fnRunner.on('fnComplete', (function(fnIndex) {
-      var completedFn = fns[fnIndex];
-      $__0.emit('routeFnComplete', completedFn.name, completedFn.config, $__0.name, $__0.config);
+    fnRunner.on('runnerStarting', (function(fnIndex) {
+      $__0.emit('routeStarting', $__0.toObject());
     }));
+    fnRunner.on('runnerComplete', (function(fnIndex) {
+      $__0.emit('routeComplete', $__0.toObject());
+    }));
+    fnRunner.on('fnComplete', (function(fnIndex) {
+      var completedFn = $__0.fns[fnIndex];
+      $__0.emit('routeFnComplete', $__0.fnToObject(completedFn), $__0.toObject());
+    }));
+  },
+  toObject: function() {
+    return {
+      name: this.name,
+      definition: this.definition,
+      state: this.context.serialize()
+    };
+  },
+  fnToObject: function(fn) {
+    return {
+      name: fn.name,
+      config: fn.config,
+      index: fn.index
+    };
   }
 }, {}, EventEmitter);
 ;

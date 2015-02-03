@@ -20,7 +20,7 @@ export class RouteFactory
 			.filter((fileName) => path.extname(fileName) == ".json")
 			.map((fileName) =>
 			{
-				let name = path.basename(fileName);
+				let name = path.basename(fileName, ".json");
 				let defPath = path.join(routeDir, fileName);
 				let definition = JSON.parse(fs.readFileSync(defPath, "utf8"));
 
@@ -35,7 +35,7 @@ export class RouteFactory
 
 	get(name)
 	{
-		var routeObj = this.routes.find((route) => route.fileName == name);
+		var routeObj = this.routes.find((route) => route.name == name);
 
 		if (routeObj)
 		{
@@ -53,7 +53,7 @@ export class RouteFactory
 		{
 			return (req, res) =>
 			{
-				res.send(404);
+				res.sendStatus(404);
 			};
 		}
 	}

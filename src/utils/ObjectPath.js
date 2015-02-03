@@ -35,7 +35,7 @@ export class ObjectPath
 			};
 
 		let objRef = obj;
-		let pathParts = this.path.split(".");
+		let pathParts = _.isArray(this.path) ? this.path : this.path.split(".");
 
 		while (pathParts.length > 1)
 		{

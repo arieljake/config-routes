@@ -39,7 +39,7 @@ var ObjectPath = function ObjectPath(path) {
         object: undefined
       };
     var objRef = obj;
-    var pathParts = this.path.split(".");
+    var pathParts = _.isArray(this.path) ? this.path : this.path.split(".");
     while (pathParts.length > 1) {
       var property = pathParts.shift();
       var childRef = objRef[property];

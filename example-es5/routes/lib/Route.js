@@ -9,11 +9,13 @@ var __moduleName = "dist-es5/lib/Route";
 var path = require("path");
 var q = require('q');
 var _ = require('lodash');
+var uuid = require('uuid');
 var EventEmitter = require('events').EventEmitter;
 var FnLibrary = require('./FnLibrary').FnLibrary;
 var FnsRunner = require('./FnsRunner').FnsRunner;
 var RouteContext = require("./RouteContext").RouteContext;
 var Route = function Route(name, definition, fnLib) {
+  this.id = uuid.v1();
   this.name = name;
   this.definition = definition;
   this.fnLib = fnLib;
@@ -59,6 +61,7 @@ var Route = function Route(name, definition, fnLib) {
   },
   toObject: function() {
     return {
+      id: this.id,
       name: this.name,
       definition: this.definition,
       state: this.context.serialize()

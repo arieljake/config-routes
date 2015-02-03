@@ -19,7 +19,7 @@ var RouteFactory = function RouteFactory(routeDir, fnLib, routeEvents) {
   this.routes = wrench.readdirSyncRecursive(routeDir).filter((function(fileName) {
     return path.extname(fileName) == ".json";
   })).map((function(fileName) {
-    var name = path.basename(fileName);
+    var name = path.basename(fileName, ".json");
     var defPath = path.join(routeDir, fileName);
     var definition = JSON.parse(fs.readFileSync(defPath, "utf8"));
     return {
@@ -33,7 +33,7 @@ var RouteFactory = function RouteFactory(routeDir, fnLib, routeEvents) {
 ($traceurRuntime.createClass)(RouteFactory, {get: function(name) {
     var $__0 = this;
     var routeObj = this.routes.find((function(route) {
-      return route.fileName == name;
+      return route.name == name;
     }));
     if (routeObj) {
       return (function(req, res) {
@@ -44,7 +44,7 @@ var RouteFactory = function RouteFactory(routeDir, fnLib, routeEvents) {
       });
     } else {
       return (function(req, res) {
-        res.send(404);
+        res.sendStatus(404);
       });
     }
   }}, {});

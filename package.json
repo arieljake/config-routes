@@ -25,10 +25,11 @@
     "wrench": "^1.5.8"
   },
   "devDependencies": {
+    "chai": "^1.10.0",
     "grunt": "^0.4.5",
     "grunt-contrib-clean": "^0.6.0",
     "grunt-contrib-copy": "^0.7.0",
-    "grunt-mocha-test": "^0.12.6",
+    "grunt-mocha-test": "^0.12.7",
     "grunt-traceur": "^0.5.1",
     "traceur": "0.0.81"
   },

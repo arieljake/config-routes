@@ -1,6 +1,7 @@
 let _ = require('lodash');
 
 let ObjectPath = require('../utils/ObjectPath').ObjectPath;
+let VariableString = require('../utils/VariableString').VariableString;
 
 export class RouteContext
 {
@@ -28,6 +29,11 @@ export class RouteContext
 		let path = new ObjectPath(name);
 
 		path.setValueIn(this.model, value);
+	}
+	
+	translate(varString)
+	{
+		return VariableString(varString, this.model);
 	}
 
 	getFnByName(name)

@@ -7,16 +7,16 @@ var routes = Routes.createRoutes({
   routeLib: path.join(__dirname, "routes"),
   fnLib: path.join(__dirname, "functions"),
   routeEvents: {
-    starting: function(routeName, routeConfig) {
+    routeStarting: function(routeName, routeConfig) {
       console.dir("route " + routeName + " starting");
     },
-    fnComplete: function(fnName, fnConfig, routeName, routeConfig) {
+    stepComplete: function(fnName, fnConfig, routeName, routeConfig) {
       console.dir("route fn " + fnName + " complete");
     },
-    fnError: function(err, fnName, fnConfig) {
+    stepError: function(err, fnName, fnConfig) {
       console.dir("route fn error " + err + " in " + fnName);
     },
-    complete: function(routeName) {
+    routeComplete: function(routeName) {
       console.dir("route " + routeName + " complete");
     }
   }

@@ -8,6 +8,7 @@ Object.defineProperties(exports, {
 var __moduleName = "dist-es5/lib/RouteContext";
 var _ = require('lodash');
 var ObjectPath = require('../utils/ObjectPath').ObjectPath;
+var VariableString = require('../utils/VariableString').VariableString;
 var RouteContext = function RouteContext(req, res, fnLib) {
   this.model = {
     req: req,
@@ -25,6 +26,9 @@ var RouteContext = function RouteContext(req, res, fnLib) {
       throw new Error("name undefined in Context.set");
     var path = new ObjectPath(name);
     path.setValueIn(this.model, value);
+  },
+  translate: function(varString) {
+    return VariableString(varString, this.model);
   },
   getFnByName: function(name) {
     return fnLib.get(name);

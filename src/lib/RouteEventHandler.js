@@ -9,33 +9,33 @@ export class RouteEventHandler
 	{
 		route.once("routeStarting", (...args) =>
 		{
-			if (this.eventHandlers.starting)
+			if (this.eventHandlers.routeStarting)
 			{
-				this.eventHandlers.starting.apply(null, args);
+				this.eventHandlers.routeStarting.apply(null, args);
 			}
 		});
 
-		route.on("routeFnComplete", (...args) =>
+		route.on("stepComplete", (...args) =>
 		{
-			if (this.eventHandlers.fnComplete)
+			if (this.eventHandlers.stepComplete)
 			{
-				this.eventHandlers.fnComplete.apply(null, args);
+				this.eventHandlers.stepComplete.apply(null, args);
 			}
 		});
 
-		route.on("routeFnError", (...args) =>
+		route.on("stepError", (...args) =>
 		{
-			if (this.eventHandlers.fnError)
+			if (this.eventHandlers.stepError)
 			{
-				this.eventHandlers.fnError.apply(null, args);
+				this.eventHandlers.stepError.apply(null, args);
 			}
 		});
 
 		route.once("routeComplete", (...args) =>
 		{
-			if (this.eventHandlers.complete)
+			if (this.eventHandlers.routeComplete)
 			{
-				this.eventHandlers.complete.apply(null, args);
+				this.eventHandlers.routeComplete.apply(null, args);
 			}
 			
 			route.removeAllListeners();

@@ -30,7 +30,14 @@ var ObjectPath = function ObjectPath(path) {
     var $__1 = this.descendIn(obj),
         finalProperty = $__1.finalProperty,
         object = $__1.object;
-    object[finalProperty] = value;
+    if (finalProperty.substr(-2) == "[]") {
+      finalProperty = finalProperty.replace("[]", "");
+      if (object.hasOwnProperty(finalProperty) === false)
+        object[finalProperty] = [];
+      object[finalProperty].push(value);
+    } else {
+      object[finalProperty] = value;
+    }
   },
   descendIn: function(obj) {
     if (!obj || !this.path)

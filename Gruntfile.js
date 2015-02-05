@@ -55,7 +55,7 @@ module.exports = function(grunt)
 		},
 		mochaTest:
 		{
-			objects:
+			dist:
 			{
 				options:
 				{
@@ -64,7 +64,7 @@ module.exports = function(grunt)
 					quiet: false,
 					clearRequireCache: false
 				},
-				src: ['objects/**/*.test.js']
+				src: ['dist-es5/**/*.test.js']
 			}
 		}
 	});
@@ -75,5 +75,5 @@ module.exports = function(grunt)
 	grunt.loadNpmTasks('grunt-traceur');
 
 	grunt.registerTask('build', ['clean:dist', 'clean:example', 'traceur:all', 'copy:example']);
-	grunt.registerTask('test', ['mochaTest:objects']);
+	grunt.registerTask('test', ['mochaTest:dist']);
 };

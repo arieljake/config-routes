@@ -24,7 +24,19 @@ export class ObjectPath
 	setValueIn(obj, value) {
 		let {finalProperty, object} = this.descendIn(obj);
 		
-		object[finalProperty] = value;
+		if (finalProperty.substr(-2) == "[]")
+		{
+			finalProperty = finalProperty.replace("[]","");
+			
+			if (object.hasOwnProperty(finalProperty) === false)
+				object[finalProperty] = [];
+			
+			object[finalProperty].push(value);
+		}
+		else
+		{
+			object[finalProperty] = value;
+		}
 	}
 	
 	descendIn(obj) {

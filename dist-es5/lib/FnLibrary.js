@@ -9,34 +9,18 @@ var __moduleName = "dist-es5/lib/FnLibrary";
 var fs = require('fs');
 var path = require('path');
 var wrench = require('wrench');
-var _ = require("lodash");
+var _ = require('lodash');
+var Library = require('./Library').Library;
 var FnLibrary = function FnLibrary(fnDirs) {
-  this.fnDirs = _.flatten([fnDirs]);
-  this.fns = _.flatten(fnDirs, this._loadFunctionsInDir);
+  this.lib = new Library(fnDirs);
 };
 ($traceurRuntime.createClass)(FnLibrary, {
-  get: function(name) {
-    var fnDef = this.fns.find((function(fn) {
-      return fn.id == name;
-    }));
-    return fnDef ? fnDef.fn : undefined;
+  get: function(id) {
+    var fnEntry = this.lib.get(id);
+    return fnEntry ? fnEntry.value.default : undefined;
   },
-  _loadFunctionsInDir: function(dir) {
-    return wrench.readdirSyncRecursive(dir).filter((function(fileName) {
-      return path.extname(fileName) == '.js';
-    })).map((function(fileName) {
-      var name = path.basename(fileName, '.js');
-      var id = path.join(path.dirname(fileName), name);
-      var fnPath = path.join(dir, fileName);
-      var fn = require(fnPath).default;
-      return {
-        fileName: fileName,
-        fnPath: fnPath,
-        name: name,
-        id: id,
-        fn: fn
-      };
-    }));
+  toObject: function() {
+    return this.lib.toObject();
   }
 }, {});
 //# sourceURL=src/lib/FnLibrary.js

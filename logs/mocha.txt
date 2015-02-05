@@ -1,0 +1,12 @@
+
+[0m[0m
+[0m  FnTranslator[0m
+[2K[0G  [32m  ✓[0m[90m when translating with a variable string [0m
+
+[0m  RouteWriter[0m
+[2K[0G  [32m  ✓[0m[90m when writing a step with a stubbed translator [0m
+[2K[0G  [32m  ✓[0m[90m when writing a route with a stubbed translator [0m
+
+
+[92m [0m[32m 3 passing[0m[90m (9ms)[0m
+

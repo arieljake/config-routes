@@ -6,7 +6,8 @@ let EventEmitter = require('events').EventEmitter;
 
 let FnLibrary = require('./FnLibrary').FnLibrary;
 let FnsRunner = require('./FnsRunner').FnsRunner;
-let RouteContext = require("./RouteContext").RouteContext;
+let RouteContext = require('./RouteContext').RouteContext;
+let Step = require('./RouteStep').RouteStep;
 
 export class Route extends EventEmitter
 {
@@ -16,26 +17,25 @@ export class Route extends EventEmitter
 		this.name = name;
 		this.definition = definition;
 		this.fnLib = fnLib;
-		this.fns = this.getFns();
+		this.steps = this.getSteps();
 	}
 
-	getFns()
+	getSteps()
 	{
-		return this.definition.map((def, index) =>
+		return this.definition.map((stepDef, index) =>
 		{
-			return {
-				name: def.fn,
-				config: def.config,
-				exe: this.fnLib.get(def.fn),
-				index: index
-			};
+			var step = new Step(stepDef, this.fnLib);
+			step.index = index;
+			
+			return step;
 		});
 	}
 
 	run(req, res)
 	{
 		this.context = new RouteContext(req, res, this.fnLib);
-		let boundFns = this.fns.map((fn) => _.bind(fn.exe, null, this.context, fn.config));
+		
+		let boundFns = this.steps.map((step) => step.getExecutable(this.context));
 		let runner = new FnsRunner(boundFns);
 
 		this.attachToRunner(runner);
@@ -43,8 +43,8 @@ export class Route extends EventEmitter
 		runner.run()
 			.catch((err) =>
 			{
-				let erroredFn = this.fns[err.fnIndex];
-				this.emit('routeFnError', err.error, this.fnToObject(erroredFn), this.toObject());
+				let erroredStep = this.steps[err.fnIndex];
+				this.emit('stepError', err.error, erroredStep.toObject(), this.toObject());
 			});
 	}
 
@@ -62,8 +62,8 @@ export class Route extends EventEmitter
 
 		fnRunner.on('fnComplete', (fnIndex) =>
 		{
-			let completedFn = this.fns[fnIndex];
-			this.emit('routeFnComplete', this.fnToObject(completedFn), this.toObject());
+			let completedStep = this.steps[fnIndex];
+			this.emit('stepComplete', completedStep.toObject(), this.toObject());
 		});
 	}
 
@@ -72,17 +72,9 @@ export class Route extends EventEmitter
 		return {
 			id: this.id,
 			name: this.name,
+			fnLib: this.fnLib.toObject(),
 			definition: this.definition,
 			state: this.context.serialize()
-		};
-	}
-
-	fnToObject(fn)
-	{
-		return {
-			name: fn.name,
-			config: fn.config,
-			index: fn.index
 		};
 	}
 };

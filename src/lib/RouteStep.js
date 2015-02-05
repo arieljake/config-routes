@@ -16,6 +16,11 @@ export class RouteStep
 	{
 		return this.definition.fn;
 	}
+
+	get desc()
+	{
+		return this.definition.desc;
+	}
 	
 	getExecutable(context)
 	{

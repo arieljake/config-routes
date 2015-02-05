@@ -16,9 +16,19 @@ var Library = function Library(dirs, fileNameRegex) {
   this.entries = _.chain(this.dirs).map(_.bind(this.loadDir, this)).flatten().value();
 };
 ($traceurRuntime.createClass)(Library, {
-  get: function(prop, value) {
+  getById: function(value) {
     return this.entries.find((function(entry) {
-      return entry[prop] == value;
+      return entry.id == value;
+    }));
+  },
+  getByName: function(value) {
+    return this.entries.find((function(entry) {
+      return entry.name == value;
+    }));
+  },
+  getByPath: function(value) {
+    return this.entries.find((function(entry) {
+      return entry.relativePath == value;
     }));
   },
   loadDir: function(dir) {

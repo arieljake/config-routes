@@ -16,24 +16,14 @@ export class RouteFactory
 	{
 		var routeDefinition = this.routeLib.get(name);
 
-		if (routeDefinition)
-		{
-			return (req, res) =>
-			{
-				var route = new Route(name, routeDefinition, this.fnLib);
-				
-				if (this.routeEventHandler)
-					this.routeEventHandler.handle(route);
-				
-				route.run(req, res);
-			};
-		}
-		else
-		{
-			return (req, res) =>
-			{
-				res.sendStatus(404);
-			};
-		}
+		if (!routeDefinition)
+			routeDefinition = this.routeLib.get("404");
+		
+		var route = new Route(name, routeDefinition, this.fnLib);
+			
+		if (this.routeEventHandler)
+			this.routeEventHandler.handle(route);
+
+		return route;
 	}
 }

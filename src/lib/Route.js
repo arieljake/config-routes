@@ -30,6 +30,13 @@ export class Route extends EventEmitter
 			return step;
 		});
 	}
+	
+	get desc()
+	{
+		return this.steps.map((step) => {
+			return step.desc;
+		}).join("<br>");
+	}
 
 	run(req, res)
 	{

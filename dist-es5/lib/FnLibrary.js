@@ -12,14 +12,14 @@ var FnLibrary = function FnLibrary(fnPaths) {
 };
 ($traceurRuntime.createClass)(FnLibrary, {
   get: function(id) {
-    var entry = this.lib.get("id", id);
+    var entry = this.lib.getById(id);
     if (!entry)
       return undefined;
     var fn = require(entry.fullPath);
     return fn.default;
   },
   getHumanizer: function(id) {
-    var entry = this.lib.get("id", id);
+    var entry = this.lib.getById(id);
     if (!entry)
       return undefined;
     var fn = require(entry.fullPath);

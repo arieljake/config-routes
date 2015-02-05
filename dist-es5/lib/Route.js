@@ -31,6 +31,11 @@ var Route = function Route(name, definition, fnLib) {
       return step;
     }));
   },
+  get desc() {
+    return this.steps.map((function(step) {
+      return step.desc;
+    })).join("<br>");
+  },
   run: function(req, res) {
     var $__0 = this;
     this.context = new RouteContext(req, res, this.fnLib);

@@ -19,6 +19,9 @@ var RouteStep = function RouteStep(definition, fnLib, index) {
   get name() {
     return this.definition.fn;
   },
+  get desc() {
+    return this.definition.desc;
+  },
   getExecutable: function(context) {
     var stepFn = this.fnLib.get(this.definition.fn);
     var executable = _.bind(stepFn, null, context, this.definition.config);

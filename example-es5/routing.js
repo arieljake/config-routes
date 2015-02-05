@@ -32,5 +32,5 @@ var req = {mongoDB: {collection: function() {
 var res = {send: function(value) {
     console.dir(value);
   }};
-route(req, res);
+route.run(req, res);
 //# sourceURL=example-src/routing.js

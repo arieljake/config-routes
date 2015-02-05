@@ -51,4 +51,4 @@ let res = {
 	}
 };
 
-route(req, res);
+route.run(req, res);

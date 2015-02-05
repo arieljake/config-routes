@@ -13,7 +13,7 @@
   "main": "dist-es5/index.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/arieljake/routes.git"
+    "url": "git://github.com/arieljake/config-routes.git"
   },
   "bugs": "https://github.com/arieljake/routes/issues",
   "homepage": "https://github.com/arieljake/routes",

@@ -10,8 +10,9 @@ var fs = require('fs');
 var path = require('path');
 var wrench = require('wrench');
 var _ = require("lodash");
-var Library = function Library(dirs) {
+var Library = function Library(dirs, fileNameRegex) {
   this.dirs = _.flatten([dirs]);
+  this.fileNameRegex = fileNameRegex || /\.js$/;
   this.entries = _.chain(this.dirs).map(this.loadDir).flatten().value();
 };
 ($traceurRuntime.createClass)(Library, {
@@ -21,10 +22,11 @@ var Library = function Library(dirs) {
     }));
   },
   loadDir: function(dir) {
+    var $__0 = this;
     if (!dir)
       return [];
     return wrench.readdirSyncRecursive(dir).filter((function(fileName) {
-      return path.extname(fileName) == '.js';
+      return $__0.fileNameRegex.test(fileName);
     })).map((function(fileName) {
       var name = path.basename(fileName, '.js');
       var id = path.join(path.dirname(fileName), name);

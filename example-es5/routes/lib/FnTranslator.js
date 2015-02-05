@@ -7,10 +7,9 @@ Object.defineProperties(exports, {
 });
 var __moduleName = "dist-es5/lib/FnTranslator";
 var _ = require("lodash");
-var Library = require("./Library").Library;
 var VariableString = require("../utils/VariableString").VariableString;
-var FnTranslator = function FnTranslator(txDirs) {
-  this.lib = new Library(txDirs);
+var FnTranslator = function FnTranslator(translationLib) {
+  this.lib = translationLib;
 };
 ($traceurRuntime.createClass)(FnTranslator, {
   translate: function(definition) {
@@ -18,8 +17,9 @@ var FnTranslator = function FnTranslator(txDirs) {
     return tx ? _translate(definition, tx) : undefined;
   },
   _translate: function(definition, translation) {
-    if (translation.varString)
+    if (translation.varString) {
       return VariableString(translation.varString, definition);
+    }
     return "step";
   }
 }, {});

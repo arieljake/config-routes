@@ -5,9 +5,10 @@ let _ = require("lodash");
 
 export class Library
 {
-	constructor(dirs)
+	constructor(dirs, fileNameRegex)
 	{
 		this.dirs = _.flatten([dirs]);
+		this.fileNameRegex = fileNameRegex || /\.js$/;
 		this.entries = _.chain(this.dirs)
 			.map(this.loadDir)
 			.flatten()
@@ -26,7 +27,7 @@ export class Library
 		
 		return wrench
 			.readdirSyncRecursive(dir)
-			.filter((fileName) => path.extname(fileName) == '.js')
+			.filter((fileName) => this.fileNameRegex.test(fileName))
 			.map((fileName) =>
 			{
 				let name = path.basename(fileName, '.js');

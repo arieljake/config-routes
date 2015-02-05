@@ -1,22 +1,17 @@
-let fs = require('fs');
-let path = require('path');
-let wrench = require('wrench');
-let _ = require('lodash');
-
 let Library = require('./Library').Library;
 
 export class FnLibrary
 {
-	constructor(fnDirs)
+	constructor(fnPaths)
 	{
-		this.lib = new Library(fnDirs);
+		this.lib = new Library(fnPaths, /\.js$/);
 	}
 
 	get(id)
 	{
-		var fnEntry = this.lib.get(id);
+		var entry = this.lib.get(id);
 
-		return fnEntry ? fnEntry.value.default : undefined;
+		return entry ? entry.value.default : undefined;
 	}
 	
 	toObject()

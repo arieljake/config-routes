@@ -1,13 +1,12 @@
 let _ = require("lodash");
 
-let Library = require("./Library").Library;
 let VariableString = require("../utils/VariableString").VariableString;
 
 export class FnTranslator
 {
-	constructor(txDirs)
+	constructor(translationLib)
 	{
-		this.lib = new Library(txDirs);
+		this.lib = translationLib;
 	}
 
 	translate(definition)
@@ -20,7 +19,9 @@ export class FnTranslator
 	_translate(definition, translation)
 	{
 		if (translation.varString)
+		{
 			return VariableString(translation.varString, definition);
+		}
 		
 		return "step";
 	}

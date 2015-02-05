@@ -6,18 +6,14 @@ Object.defineProperties(exports, {
   __esModule: {value: true}
 });
 var __moduleName = "dist-es5/lib/FnLibrary";
-var fs = require('fs');
-var path = require('path');
-var wrench = require('wrench');
-var _ = require('lodash');
 var Library = require('./Library').Library;
-var FnLibrary = function FnLibrary(fnDirs) {
-  this.lib = new Library(fnDirs);
+var FnLibrary = function FnLibrary(fnPaths) {
+  this.lib = new Library(fnPaths, /\.js$/);
 };
 ($traceurRuntime.createClass)(FnLibrary, {
   get: function(id) {
-    var fnEntry = this.lib.get(id);
-    return fnEntry ? fnEntry.value.default : undefined;
+    var entry = this.lib.get(id);
+    return entry ? entry.value.default : undefined;
   },
   toObject: function() {
     return this.lib.toObject();

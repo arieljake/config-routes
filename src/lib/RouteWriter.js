@@ -5,13 +5,15 @@ let _ = require('lodash');
 
 export class RouteWriter
 {
-	constructor(translator)
+	constructor(routeLib, stepWriter)
 	{
-		this.translator = translator;
+		this.routeLib = routeLib;
+		this.stepWriter = stepWriter;
 	}
 	
-	write(routeDefinition)
+	write(routeName)
 	{
+		let routeDefinition = this.routeLib.get(routeName);
 		let stream = new Stream.Readable();
 		let source = _.bind(this.getNext, this, routeDefinition);
 		
@@ -26,17 +28,12 @@ export class RouteWriter
 
 	getNext(routeDefinition)
 	{
-		if (routeDefinition.length === 0)
+		if (!routeDefinition || routeDefinition.length == 0)
 			return null;
 		
 		let stepDefinition = routeDefinition.shift();
-		let writtenStep = this.writeStep(stepDefinition);
+		let writtenStep = this.stepWriter.write(stepDefinition);
 		
 		return writtenStep;
-	}
-	
-	writeStep(definition)
-	{
-		return this.translator.translate(definition);
 	}
 }

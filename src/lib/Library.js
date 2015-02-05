@@ -10,14 +10,14 @@ export class Library
 		this.dirs = _.flatten([dirs]);
 		this.fileNameRegex = fileNameRegex || /\.js$/;
 		this.entries = _.chain(this.dirs)
-			.map(this.loadDir)
+			.map(_.bind(this.loadDir, this))
 			.flatten()
 			.value();
 	}
 
-	get(id)
+	get(prop, value)
 	{
-		return this.entries.find((entry) => entry.id == id);
+		return this.entries.find((entry) => entry[prop] == value);
 	}
 
 	loadDir(dir)
@@ -30,18 +30,16 @@ export class Library
 			.filter((fileName) => this.fileNameRegex.test(fileName))
 			.map((fileName) =>
 			{
-				let name = path.basename(fileName, '.js');
+				let name = path.basename(fileName, path.extname(fileName));
 				let id = path.join(path.dirname(fileName), name);
 				let relativePath = fileName;
 				let fullPath = path.join(dir, fileName);
-				let value = require(fullPath);
 
 				return {
 					id,
 					name,
 					relativePath,
-					fullPath,
-					value
+					fullPath
 				};
 			});
 	}

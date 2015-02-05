@@ -16,3 +16,19 @@ function resSend(state, config) {
 	
 	res.send(value);
 };
+
+export function humanize(utils, config) {
+	
+	var output;
+	
+	if (config.value)
+	{
+		output = utils.devariable("send #value#", config);
+	}
+	else if (config.valueVarName)
+	{
+		output = utils.devariable("send value at #valueVarName#", config);
+	}
+	
+	return output;
+};

@@ -28,7 +28,7 @@ export function VariableString(value, context, delim)
 		}
 		else
 		{
-			return new ObjectPath(path).getValueIn(context);
+			return new ObjectPath(path).getValueIn(context).toString();
 		}
 	});
 }

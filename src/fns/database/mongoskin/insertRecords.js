@@ -1,14 +1,10 @@
 let Q = require('q');
 let _ = require('lodash');
 
-export
-default
-
-function insertRecords(state, config)
+export default function insertRecords(state, config)
 {
 	try
 	{
-		console.log("1");
 		var deferred = Q.defer();
 		var mongoDB = state.get(config.mongoVarName);
 		var collection = config.collection;
@@ -42,4 +38,11 @@ function insertRecords(state, config)
 	}
 
 	return deferred.promise;
+};
+
+export function humanize(utils, config)
+{
+	var output = utils.devariable("save #recordsVarName# in the #collection# table", config);
+
+	return output;
 };

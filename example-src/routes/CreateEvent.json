@@ -1,0 +1,103 @@
+[
+	{
+		"fn": "input/set/set.var",
+		"config":
+		{
+			"valueVarName": "req.body",
+			"saveTo": "theEventData"
+		}
+	},
+	{
+		"fn": "input/set/set.vars",
+		"config":
+		{
+			"vars": [
+				{
+					"value": "Host",
+					"saveTo": "theEventData.createdBy"
+				},
+				{
+					"value": [
+					{
+						"id": 0,
+						"text": "No"
+					},
+					{
+						"id": 1,
+						"text": "Yes"
+					}],
+					"saveTo": "theEventData.options"
+				}
+			]
+		}
+	},
+	{
+		"fn": "database/mongoskin/insertRecords",
+		"config":
+		{
+			"mongoVarName": "req.mongoDB",
+			"collection": "events",
+			"recordsVarName": "theEventData",
+			"saveResultTo": "theNewEvent",
+			"saveErrorTo": "eventInsertError"
+		}
+	},
+	{
+		"fn": "input/set/set.vars",
+		"config":
+		{
+			"vars": [
+				{
+					"saveTo": "feedItem.title",
+					"valueVarName": "theNewEvent.title"
+				},
+				{
+					"saveTo": "feedItem.subTitle",
+					"valueVarName": "theNewEvent.createdBy"
+				},
+				{
+					"saveTo": "feedItem.eventId",
+					"valueVarName": "theNewEvent._id"
+				},
+				{
+					"saveTo": "feedItem.type",
+					"value": "event"
+				},
+				{
+					"saveTo": "feedItem.status",
+					"value": "Active"
+				},
+				{
+					"saveTo": "feedItem.eventRel",
+					"value": "Host"
+				}
+			]
+		}
+	},
+	{
+		"fn": "database/mongoskin/insertRecords",
+		"config":
+		{
+			"mongoVarName": "req.mongoDB",
+			"collection": "feed",
+			"recordsVarName": "feedItem",
+			"saveResultTo": "feedInsertResult",
+			"saveErrorTo": "feedInsertError"
+		}
+	},
+	{
+		"fn": "input/set/set.var",
+		"config":
+		{
+			"saveTo": "result.eventId",
+			"valueVarName": "theNewEvent._id"
+		}
+	},
+	{
+		"fn": "output/res.send",
+		"config":
+		{
+			"valueVarName": "result"
+		}
+	}
+]

@@ -9,9 +9,26 @@ export class FnLibrary
 
 	get(id)
 	{
-		var entry = this.lib.get(id);
+		var entry = this.lib.get("id", id);
 
-		return entry ? entry.value.default : undefined;
+		if (!entry)
+			return undefined;
+		
+		var fn = require(entry.fullPath);
+		
+		return fn.default;
+	}
+
+	getHumanizer(id)
+	{
+		var entry = this.lib.get("id", id);
+
+		if (!entry)
+			return undefined;
+		
+		var fn = require(entry.fullPath);
+		
+		return fn.humanize;
 	}
 	
 	toObject()

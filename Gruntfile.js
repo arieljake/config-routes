@@ -31,15 +31,6 @@ module.exports = function(grunt)
 		},
 		copy:
 		{
-			translations: {
-				files: [
-				{
-					expand: true,
-					cwd: 'src/',
-					src: ['translations/**'],
-					dest: 'dist-es5/'
-				}]
-			},
 			example:
 			{
 				files: [
@@ -47,12 +38,12 @@ module.exports = function(grunt)
 					expand: true,
 					cwd: 'dist-es5/',
 					src: ['**'],
-					dest: 'example-es5/Routes'
+					dest: 'example-es5/config-routes'
 				},
 				{
 					expand: true,
 					cwd: 'example-src/',
-					src: ['routes/**'],
+					src: ['routes/**/*.json'],
 					dest: 'example-es5/'
 				}]
 			}

@@ -1,4 +1,3 @@
-var VariableString = require("../../../utils/VariableString").VariableString;
 
 export
 default
@@ -31,4 +30,24 @@ function setVar(state, config) {
 	}
 	
     state.set(config.saveTo, value);
+};
+
+export function humanize(utils, config) {
+
+	var output;
+	
+	if (config.value)
+	{		
+		output = utils.devariable("set #saveTo# to '#value#'", config);
+	}
+    else if (config.valueVarName)
+	{
+		output = utils.devariable("copy #valueVarName# to #saveTo#", config);
+	}
+	else if (config.valueString)
+	{
+		output = utils.devariable("set #saveTo# as #valueString# from state", config);
+	}
+	
+	return output;
 };

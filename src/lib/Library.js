@@ -15,9 +15,19 @@ export class Library
 			.value();
 	}
 
-	get(prop, value)
+	getById(value)
 	{
-		return this.entries.find((entry) => entry[prop] == value);
+		return this.entries.find((entry) => entry.id == value);
+	}
+
+	getByName(value)
+	{
+		return this.entries.find((entry) => entry.name == value);
+	}
+
+	getByPath(value)
+	{
+		return this.entries.find((entry) => entry.relativePath == value);
 	}
 
 	loadDir(dir)

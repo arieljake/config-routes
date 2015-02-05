@@ -9,9 +9,9 @@ export class RouteLibrary
 		this.lib = new Library(routePaths, /\.json$/);
 	}
 
-	get(name)
+	get(id)
 	{
-		var entry = this.lib.get("name", name);
+		var entry = this.lib.getById(id);
 
 		if (!entry)
 			return undefined;

@@ -5,7 +5,7 @@ Object.defineProperties(exports, {
     }},
   __esModule: {value: true}
 });
-var __moduleName = "dist-es5/fns/input/load/json";
+var __moduleName = "dist-es5/fns/input/load.json";
 var $__fs__;
 var fs = ($__fs__ = require("fs"), $__fs__ && $__fs__.__esModule && $__fs__ || {default: $__fs__}).default;
 function loadJson(state, config) {
@@ -16,4 +16,4 @@ function loadJson(state, config) {
 }
 var $__default = loadJson;
 ;
-//# sourceURL=src/fns/input/load/json.js
+//# sourceURL=src/fns/input/load.json.js

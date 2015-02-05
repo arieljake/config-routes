@@ -31,6 +31,26 @@ export class RouteContext
 		path.setValueIn(this.model, value);
 	}
 	
+	get request()
+	{
+		var req = this.model.req;
+		
+		return {
+			toObject: function()
+			{
+				["params", "query", "body"].reduce((memo, property) => {
+					return _.assign(memo, req[property]);
+				},{});
+			},
+			get: function(name)
+			{
+				["params", "query", "body"].reduce((value, property) => {
+					return value || req[property][name];
+				});
+			}
+		};
+	}
+	
 	translate(varString)
 	{
 		return VariableString(varString, this.model);

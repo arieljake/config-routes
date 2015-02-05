@@ -5,7 +5,7 @@ Object.defineProperties(exports, {
     }},
   __esModule: {value: true}
 });
-var __moduleName = "dist-es5/fns/input/transform/string.to.array";
+var __moduleName = "dist-es5/fns/input/string.to.array";
 function stringToArray(state, config) {
   var input = state.get(config.stringAt);
   var inputParts = input.split(config.delim);
@@ -13,4 +13,4 @@ function stringToArray(state, config) {
 }
 var $__default = stringToArray;
 ;
-//# sourceURL=src/fns/input/transform/string.to.array.js
+//# sourceURL=src/fns/input/string.to.array.js

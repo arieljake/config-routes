@@ -27,6 +27,21 @@ var RouteContext = function RouteContext(req, res, fnLib) {
     var path = new ObjectPath(name);
     path.setValueIn(this.model, value);
   },
+  get request() {
+    var req = this.model.req;
+    return {
+      toObject: function() {
+        ["params", "query", "body"].reduce((function(memo, property) {
+          return _.assign(memo, req[property]);
+        }), {});
+      },
+      get: function(name) {
+        ["params", "query", "body"].reduce((function(value, property) {
+          return value || req[property][name];
+        }));
+      }
+    };
+  },
   translate: function(varString) {
     return VariableString(varString, this.model);
   },

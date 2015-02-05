@@ -12,8 +12,8 @@ var RouteLibrary = function RouteLibrary(routePaths) {
   this.lib = new Library(routePaths, /\.json$/);
 };
 ($traceurRuntime.createClass)(RouteLibrary, {
-  get: function(name) {
-    var entry = this.lib.get("name", name);
+  get: function(id) {
+    var entry = this.lib.get("id", id);
     if (!entry)
       return undefined;
     var route = JSON.parse(fs.readFileSync(entry.fullPath, "utf8"));

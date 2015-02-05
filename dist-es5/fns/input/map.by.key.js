@@ -5,7 +5,7 @@ Object.defineProperties(exports, {
     }},
   __esModule: {value: true}
 });
-var __moduleName = "dist-es5/fns/input/map/by.key";
+var __moduleName = "dist-es5/fns/input/map.by.key";
 function mapByKey(state, config) {
   var source = state.get(config.arrayAt);
   var lookup = state.get(config.mapAt);
@@ -16,4 +16,4 @@ function mapByKey(state, config) {
 }
 var $__default = mapByKey;
 ;
-//# sourceURL=src/fns/input/map/by.key.js
+//# sourceURL=src/fns/input/map.by.key.js

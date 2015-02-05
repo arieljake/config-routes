@@ -8,7 +8,7 @@ Object.defineProperties(exports, {
     }},
   __esModule: {value: true}
 });
-var __moduleName = "dist-es5/fns/input/set/set.var";
+var __moduleName = "dist-es5/fns/input/set.var";
 function setVar(state, config) {
   var value;
   if (config.value) {
@@ -42,4 +42,4 @@ function humanize(utils, config) {
   return output;
 }
 ;
-//# sourceURL=src/fns/input/set/set.var.js
+//# sourceURL=src/fns/input/set.var.js

@@ -5,7 +5,7 @@ Object.defineProperties(exports, {
     }},
   __esModule: {value: true}
 });
-var __moduleName = "dist-es5/fns/input/collection/collection.findWhere";
+var __moduleName = "dist-es5/fns/input/collection.findWhere";
 var _ = require("lodash");
 function findWhere(state, config) {
   var collection = state.get(config.collectionVarName);
@@ -15,4 +15,4 @@ function findWhere(state, config) {
 }
 var $__default = findWhere;
 ;
-//# sourceURL=src/fns/input/collection/collection.findWhere.js
+//# sourceURL=src/fns/input/collection.findWhere.js

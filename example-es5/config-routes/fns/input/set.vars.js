@@ -8,7 +8,7 @@ Object.defineProperties(exports, {
     }},
   __esModule: {value: true}
 });
-var __moduleName = "dist-es5/fns/input/set/set.vars";
+var __moduleName = "dist-es5/fns/input/set.vars";
 var SetVar = require('./set.var');
 function setVars(state, config) {
   config.vars = config.vars || [];
@@ -27,4 +27,4 @@ function humanize(utils, config) {
   });
   return output;
 }
-//# sourceURL=src/fns/input/set/set.vars.js
+//# sourceURL=src/fns/input/set.vars.js

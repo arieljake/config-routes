@@ -8,6 +8,7 @@ let FnLibrary = require('./lib/FnLibrary').FnLibrary;
 let RouteLibrary = require('./lib/RouteLibrary').RouteLibrary;
 let StepWriter = require('./lib/StepWriter').StepWriter;
 let RouteWriter = require('./lib/RouteWriter').RouteWriter;
+let Library = require('./lib/Library').Library;
 
 export function createRoutes(config)
 {
@@ -30,4 +31,11 @@ export function createRouteWriter(config)
 	let routeWriter = new RouteWriter(routeLib, stepWriter);
 	
 	return routeWriter;
+};
+
+export function createLibrary(libDirs, fileNameRegex)
+{
+	let lib = new Library(libDirs, fileNameRegex);
+	
+	return lib;
 };

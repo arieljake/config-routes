@@ -11,6 +11,7 @@ export class RouteContext
 			req: req,
 			res: res
 		};
+		this.model.req.params = this.flattenRequestParams(req);
 		this.fnLib = fnLib;
 	}
 
@@ -30,27 +31,15 @@ export class RouteContext
 
 		path.setValueIn(this.model, value);
 	}
-	
-	get request()
+
+	flattenRequestParams(req)
 	{
-		var req = this.model.req;
-		
-		return {
-			toObject: function()
-			{
-				["params", "query", "body"].reduce((memo, property) => {
-					return _.assign(memo, req[property]);
-				},{});
-			},
-			get: function(name)
-			{
-				["params", "query", "body"].reduce((value, property) => {
-					return value || req[property][name];
-				});
-			}
-		};
+		return ["params", "query", "body"].reduce((memo, property) =>
+		{
+			return _.assign(memo, req[property]);
+		},{});
 	}
-	
+
 	translate(varString)
 	{
 		return VariableString(varString, this.model);
@@ -63,14 +52,14 @@ export class RouteContext
 
 	serialize()
 	{
-		var serialized = _.omit(this.model, ['req','res']);
-		
+		var serialized = _.omit(this.model, ['req', 'res']);
+
 		serialized.req = {
 			query: this.model.req.query,
 			params: this.model.req.params,
 			body: this.model.req.body,
 		};
-		
+
 		return serialized;
 	}
 };

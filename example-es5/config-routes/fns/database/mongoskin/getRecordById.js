@@ -7,11 +7,12 @@ Object.defineProperties(exports, {
 });
 var __moduleName = "dist-es5/fns/database/mongoskin/getRecordById";
 var Q = require('q');
-function getRecords(state, config) {
+function getRecordById(state, config) {
   var deferred = Q.defer();
   var mongoDB = state.get(config.mongoVarName);
   var collection = config.collection;
   var recordId = state.get(config.recordIdVarName) || config.recordId;
+  var options = state.get(config.optionsVarName) || config.options || {};
   var resultHandler = function(err, result) {
     if (err) {
       state.set(config.saveErrorTo, err);
@@ -21,9 +22,9 @@ function getRecords(state, config) {
       deferred.resolve(result);
     }
   };
-  mongoDB.collection(collection).findById(recordId, resultHandler);
+  mongoDB.collection(collection).findById(recordId, options, resultHandler);
   return deferred.promise;
 }
-var $__default = getRecords;
+var $__default = getRecordById;
 ;
 //# sourceURL=src/fns/database/mongoskin/getRecordById.js

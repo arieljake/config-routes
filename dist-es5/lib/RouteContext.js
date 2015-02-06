@@ -14,6 +14,7 @@ var RouteContext = function RouteContext(req, res, fnLib) {
     req: req,
     res: res
   };
+  this.model.req.params = this.flattenRequestParams(req);
   this.fnLib = fnLib;
 };
 ($traceurRuntime.createClass)(RouteContext, {
@@ -27,20 +28,10 @@ var RouteContext = function RouteContext(req, res, fnLib) {
     var path = new ObjectPath(name);
     path.setValueIn(this.model, value);
   },
-  get request() {
-    var req = this.model.req;
-    return {
-      toObject: function() {
-        ["params", "query", "body"].reduce((function(memo, property) {
-          return _.assign(memo, req[property]);
-        }), {});
-      },
-      get: function(name) {
-        ["params", "query", "body"].reduce((function(value, property) {
-          return value || req[property][name];
-        }));
-      }
-    };
+  flattenRequestParams: function(req) {
+    return ["params", "query", "body"].reduce((function(memo, property) {
+      return _.assign(memo, req[property]);
+    }), {});
   },
   translate: function(varString) {
     return VariableString(varString, this.model);

@@ -24,7 +24,7 @@ export class RouteContext
 	set(name, value)
 	{
 		if (!name)
-			throw new Error("name undefined in Context.set");
+			return;
 
 		let path = new ObjectPath(name);
 

@@ -23,7 +23,7 @@ var RouteContext = function RouteContext(req, res, fnLib) {
   },
   set: function(name, value) {
     if (!name)
-      throw new Error("name undefined in Context.set");
+      return ;
     var path = new ObjectPath(name);
     path.setValueIn(this.model, value);
   },

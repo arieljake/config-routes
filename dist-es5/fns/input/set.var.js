@@ -12,6 +12,7 @@ var __moduleName = "dist-es5/fns/input/set.var";
 var MongoDbId = require('mongodb').ObjectID;
 function setVar(state, config) {
   var value;
+  var saveTo;
   if (config.value) {
     value = config.value;
   } else if (config.valueVarName) {
@@ -34,7 +35,12 @@ function setVar(state, config) {
         value = MongoDbId.createFromHexString(value);
       break;
   }
-  state.set(config.saveTo, value);
+  if (config.saveTo) {
+    saveTo = config.saveTo;
+  } else if (config.saveToString) {
+    saveTo = state.translate(config.saveToString);
+  }
+  state.set(saveTo, value);
 }
 var $__default = setVar;
 ;

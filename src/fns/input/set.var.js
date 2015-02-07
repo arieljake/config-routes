@@ -5,6 +5,7 @@ default
 function setVar(state, config) {
 
     var value;
+	var saveTo;
 
 	if (config.value)
 	{		
@@ -39,7 +40,16 @@ function setVar(state, config) {
 			break;
 	}
 	
-    state.set(config.saveTo, value);
+	if (config.saveTo)
+	{
+		saveTo = config.saveTo;
+	}
+	else if (config.saveToString)
+	{
+		saveTo = state.translate(config.saveToString);
+	}
+	
+    state.set(saveTo, value);
 };
 
 export function humanize(utils, config) {

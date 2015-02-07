@@ -27,7 +27,7 @@ export class RouteStep
 		var stepFn = this.fnLib.get(this.definition.fn);
 		
 		if (!stepFn)
-			throw new Error("function not found");
+			throw new Error("function not found: " + this.definition.fn);
 		
 		var executable = _.bind(stepFn, null, context, this.definition.config)
 		

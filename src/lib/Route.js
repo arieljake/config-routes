@@ -1,5 +1,5 @@
 let path = require("path");
-let q = require('q');
+let Q = require('q');
 let _ = require('lodash');
 var uuid = require('uuid');
 let EventEmitter = require('events').EventEmitter;
@@ -26,33 +26,44 @@ export class Route extends EventEmitter
 		{
 			var step = new Step(stepDef, this.fnLib);
 			step.index = index;
-			
+
 			return step;
 		});
 	}
-	
+
 	get desc()
 	{
-		return this.steps.map((step) => {
+		return this.steps.map((step) =>
+		{
 			return step.desc;
 		}).join("<br>");
 	}
 
 	run(req, res)
 	{
+		var deferred = Q.defer();
+
 		this.context = new RouteContext(req, res, this.fnLib);
-		
+
 		let boundFns = this.steps.map((step) => step.getExecutable(this.context));
 		let runner = new FnsRunner(boundFns);
 
 		this.attachToRunner(runner);
 
 		runner.run()
+			.then(function()
+			{
+				deferred.resolve();
+			})
 			.catch((err) =>
 			{
 				let erroredStep = this.steps[err.fnIndex];
 				this.emit('stepError', err.error, erroredStep.toObject(), this.toObject());
+			
+				deferred.reject();
 			});
+
+		return deferred.promise;
 	}
 
 	attachToRunner(fnRunner)

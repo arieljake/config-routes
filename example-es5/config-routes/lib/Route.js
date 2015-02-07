@@ -7,7 +7,7 @@ Object.defineProperties(exports, {
 });
 var __moduleName = "dist-es5/lib/Route";
 var path = require("path");
-var q = require('q');
+var Q = require('q');
 var _ = require('lodash');
 var uuid = require('uuid');
 var EventEmitter = require('events').EventEmitter;
@@ -38,16 +38,21 @@ var Route = function Route(name, definition, fnLib) {
   },
   run: function(req, res) {
     var $__0 = this;
+    var deferred = Q.defer();
     this.context = new RouteContext(req, res, this.fnLib);
     var boundFns = this.steps.map((function(step) {
       return step.getExecutable($__0.context);
     }));
     var runner = new FnsRunner(boundFns);
     this.attachToRunner(runner);
-    runner.run().catch((function(err) {
+    runner.run().then(function() {
+      deferred.resolve();
+    }).catch((function(err) {
       var erroredStep = $__0.steps[err.fnIndex];
       $__0.emit('stepError', err.error, erroredStep.toObject(), $__0.toObject());
+      deferred.reject();
     }));
+    return deferred.promise;
   },
   attachToRunner: function(fnRunner) {
     var $__0 = this;

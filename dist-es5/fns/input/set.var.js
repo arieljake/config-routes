@@ -9,6 +9,7 @@ Object.defineProperties(exports, {
   __esModule: {value: true}
 });
 var __moduleName = "dist-es5/fns/input/set.var";
+var MongoDbId = require('mongodb').ObjectID;
 function setVar(state, config) {
   var value;
   if (config.value) {
@@ -27,6 +28,10 @@ function setVar(state, config) {
       break;
     case "boolean":
       value = (value == "true");
+      break;
+    case "mongoId":
+      if (typeof value == "string")
+        value = MongoDbId.createFromHexString(value);
       break;
   }
   state.set(config.saveTo, value);

@@ -1,3 +1,4 @@
+var MongoDbId = require('mongodb').ObjectID;
 
 export
 default
@@ -30,6 +31,11 @@ function setVar(state, config) {
 			
 		case "boolean":
 			value = (value == "true");
+			break;
+			
+		case "mongoId":
+			if (typeof value == "string")
+				value = MongoDbId.createFromHexString(value);
 			break;
 	}
 	

@@ -19,6 +19,7 @@
   "homepage": "https://github.com/arieljake/routes",
   "dependencies": {
     "lodash": "^2.4.1",
+    "mongodb": "^1.4.30",
     "q": "^1.1.2",
     "traceur-runtime": "0.0.59",
     "uuid": "^2.0.1",

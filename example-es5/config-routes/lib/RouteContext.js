@@ -12,9 +12,9 @@ var VariableString = require('../utils/VariableString').VariableString;
 var RouteContext = function RouteContext(req, res, fnLib) {
   this.model = {
     req: req,
-    res: res
+    res: res,
+    reqParams: this.flattenRequestParams(req)
   };
-  this.model.req.params = this.flattenRequestParams(req);
   this.fnLib = fnLib;
 };
 ($traceurRuntime.createClass)(RouteContext, {
@@ -27,6 +27,12 @@ var RouteContext = function RouteContext(req, res, fnLib) {
       return ;
     var path = new ObjectPath(name);
     path.setValueIn(this.model, value);
+  },
+  unset: function(name, value) {
+    if (!name)
+      return ;
+    var path = new ObjectPath(name);
+    path.deleteIn(this.model);
   },
   flattenRequestParams: function(req) {
     return ["params", "query", "body"].reduce((function(memo, property) {

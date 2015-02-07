@@ -9,9 +9,9 @@ export class RouteContext
 	{
 		this.model = {
 			req: req,
-			res: res
+			res: res,
+			reqParams: this.flattenRequestParams(req)
 		};
-		this.model.req.params = this.flattenRequestParams(req);
 		this.fnLib = fnLib;
 	}
 
@@ -30,6 +30,16 @@ export class RouteContext
 		let path = new ObjectPath(name);
 
 		path.setValueIn(this.model, value);
+	}
+	
+	unset(name, value)
+	{
+		if (!name)
+			return;
+		
+		let path = new ObjectPath(name);
+		
+		path.deleteIn(this.model);
 	}
 
 	flattenRequestParams(req)

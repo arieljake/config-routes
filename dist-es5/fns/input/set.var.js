@@ -25,6 +25,9 @@ function setVar(state, config) {
     case "string":
       value = value.toString();
       break;
+    case "boolean":
+      value = (value == "true");
+      break;
   }
   state.set(config.saveTo, value);
 }

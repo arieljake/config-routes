@@ -50,6 +50,10 @@ var Route = function Route(name, definition, fnLib) {
     }).catch((function(err) {
       var erroredStep = $__0.steps[err.fnIndex];
       $__0.emit('stepError', err.error, erroredStep.toObject(), $__0.toObject());
+      if (erroredStep.hasErrorHandler) {
+        var errorHandler = erroredStep.getErrorHandler($__0.context);
+        errorHandler();
+      }
       deferred.reject();
     }));
     return deferred.promise;

@@ -22,11 +22,21 @@ var RouteStep = function RouteStep(definition, fnLib, index) {
   get desc() {
     return this.definition.desc;
   },
+  get hasErrorHandler() {
+    return this.definition.hasOwnProperty("onError");
+  },
   getExecutable: function(context) {
     var stepFn = this.fnLib.get(this.definition.fn);
     if (!stepFn)
       throw new Error("function not found: " + this.definition.fn);
     var executable = _.bind(stepFn, null, context, this.definition.config);
+    return executable;
+  },
+  getErrorHandler: function(context) {
+    var stepFn = this.fnLib.get(this.definition.onError.fn);
+    if (!stepFn)
+      throw new Error("route step has no error handler");
+    var executable = _.bind(stepFn, null, context, this.definition.onError.config);
     return executable;
   },
   toObject: function() {

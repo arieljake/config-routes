@@ -33,9 +33,24 @@ export function createRouteWriter(config)
 	return routeWriter;
 };
 
-export function createLibrary(libDirs, fileNameRegex)
+export function createLibrary(libDirs, fileNameRegex, getDecorator)
 {
 	let lib = new Library(libDirs, fileNameRegex);
+	
+	if (getDecorator)
+	{
+		lib.get = function(id)
+		{
+			var entry = lib.getById(id);
+			
+			if (!entry)
+				return undefined;
+			
+			var result = getDecorator(entry);
+			
+			return result;
+		};
+	}
 	
 	return lib;
 };

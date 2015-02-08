@@ -40,8 +40,17 @@ function createRouteWriter(config) {
   return routeWriter;
 }
 ;
-function createLibrary(libDirs, fileNameRegex) {
+function createLibrary(libDirs, fileNameRegex, getDecorator) {
   var lib = new Library(libDirs, fileNameRegex);
+  if (getDecorator) {
+    lib.get = function(id) {
+      var entry = lib.getById(id);
+      if (!entry)
+        return undefined;
+      var result = getDecorator(entry);
+      return result;
+    };
+  }
   return lib;
 }
 ;

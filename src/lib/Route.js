@@ -59,6 +59,12 @@ export class Route extends EventEmitter
 			{
 				let erroredStep = this.steps[err.fnIndex];
 				this.emit('stepError', err.error, erroredStep.toObject(), this.toObject());
+				
+				if (erroredStep.hasErrorHandler)
+				{
+					let errorHandler = erroredStep.getErrorHandler(this.context);
+					errorHandler();
+				}
 			
 				deferred.reject();
 			});

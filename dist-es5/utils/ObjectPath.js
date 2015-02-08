@@ -7,6 +7,7 @@ Object.defineProperties(exports, {
 });
 var __moduleName = "dist-es5/utils/ObjectPath";
 var _ = require("lodash");
+var ObjectPathPart = require("./ObjectPathPart").ObjectPathPart;
 var ObjectPath = function ObjectPath(path) {
   this.path = path;
 };
@@ -30,14 +31,8 @@ var ObjectPath = function ObjectPath(path) {
     var $__1 = this.descendIn(obj),
         finalProperty = $__1.finalProperty,
         object = $__1.object;
-    if (finalProperty.substr(-2) == "[]") {
-      finalProperty = finalProperty.replace("[]", "");
-      if (object.hasOwnProperty(finalProperty) === false)
-        object[finalProperty] = [];
-      object[finalProperty].push(value);
-    } else {
-      object[finalProperty] = value;
-    }
+    var finalPathPart = new ObjectPathPart(finalProperty);
+    finalPathPart.setIn(object, value);
   },
   descendIn: function(obj) {
     if (!obj || !this.path)
@@ -49,12 +44,14 @@ var ObjectPath = function ObjectPath(path) {
     var pathParts = _.isArray(this.path) ? this.path : this.path.split(".");
     while (pathParts.length > 1) {
       var property = pathParts.shift();
-      var childRef = objRef[property];
+      var pathPart = new ObjectPathPart(property);
+      var childRef = pathPart.getValueIn(objRef);
       if (childRef === undefined) {
-        if (_.isObject(objRef))
-          childRef = objRef[property] = {};
-        else
+        if (_.isObject(objRef)) {
+          childRef = pathPart.createIn(objRef);
+        } else {
           return undefined;
+        }
       }
       objRef = childRef;
     }

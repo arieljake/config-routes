@@ -1,45 +1,49 @@
 let _ = require("lodash");
+let ObjectPathPart = require("./ObjectPathPart").ObjectPathPart;
 
 export class ObjectPath
 {
-	constructor(path) {
+	constructor(path)
+	{
 		this.path = path;
 	}
-	
-	deleteIn(obj) {
-		let {finalProperty, object} = this.descendIn(obj);
-		
+
+	deleteIn(obj)
+	{
+		let
+		{
+			finalProperty, object
+		} = this.descendIn(obj);
+
 		delete object[finalProperty];
 	}
-	
-	getValueIn(obj) {
-		let {finalProperty, object} = this.descendIn(obj);
-		
+
+	getValueIn(obj)
+	{
+		let
+		{
+			finalProperty, object
+		} = this.descendIn(obj);
+
 		if (!finalProperty || !object)
 			return undefined;
 		else
 			return object[finalProperty];
 	}
-	
-	setValueIn(obj, value) {
-		let {finalProperty, object} = this.descendIn(obj);
-		
-		if (finalProperty.substr(-2) == "[]")
+
+	setValueIn(obj, value)
+	{
+		let
 		{
-			finalProperty = finalProperty.replace("[]","");
-			
-			if (object.hasOwnProperty(finalProperty) === false)
-				object[finalProperty] = [];
-			
-			object[finalProperty].push(value);
-		}
-		else
-		{
-			object[finalProperty] = value;
-		}
+			finalProperty, object
+		} = this.descendIn(obj);
+
+		var finalPathPart = new ObjectPathPart(finalProperty);
+		finalPathPart.setIn(object, value);
 	}
-	
-	descendIn(obj) {
+
+	descendIn(obj)
+	{
 		if (!obj || !this.path)
 			return {
 				finalProperty: undefined,
@@ -52,14 +56,19 @@ export class ObjectPath
 		while (pathParts.length > 1)
 		{
 			let property = pathParts.shift();
-			let childRef = objRef[property];
+			let pathPart = new ObjectPathPart(property);
+			let childRef = pathPart.getValueIn(objRef);
 
 			if (childRef === undefined)
 			{
 				if (_.isObject(objRef))
-					childRef = objRef[property] = {};
+				{
+					childRef = pathPart.createIn(objRef);
+				}
 				else
+				{
 					return undefined;
+				}
 			}
 
 			objRef = childRef;

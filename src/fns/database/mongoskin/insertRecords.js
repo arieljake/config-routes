@@ -8,7 +8,7 @@ export default function insertRecords(state, config)
 		var deferred = Q.defer();
 		var mongoDB = state.get(config.mongoVarName);
 		var collection = config.collection;
-		var records = state.get(config.recordsVarName);
+		var records = state.get(config.recordsVarName) || config.records || [];
 		var options = state.get(config.optionsVarName) || config.options ||
 		{};
 

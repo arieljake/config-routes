@@ -1,7 +1,7 @@
 let path = require("path");
 let Q = require('q');
 let _ = require('lodash');
-var uuid = require('uuid');
+let uuid = require('uuid');
 let EventEmitter = require('events').EventEmitter;
 
 let FnLibrary = require('./FnLibrary').FnLibrary;

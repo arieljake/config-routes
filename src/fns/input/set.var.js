@@ -1,11 +1,12 @@
-var MongoDbId = require('mongodb').ObjectID;
+let MongoDbId = require('mongodb').ObjectID;
+let uuid = require('uuid');
 
 export
 default
 function setVar(state, config) {
 
-    var value;
-	var saveTo;
+    let value;
+	let saveTo;
 
 	if (config.value)
 	{		
@@ -38,6 +39,10 @@ function setVar(state, config) {
 			if (typeof value == "string")
 				value = MongoDbId.createFromHexString(value);
 			break;
+			
+		case "uuid":
+			value = uuid.v1();
+			break;
 	}
 	
 	if (config.saveTo)
@@ -54,7 +59,7 @@ function setVar(state, config) {
 
 export function humanize(utils, config) {
 
-	var output;
+	let output;
 	
 	if (config.value)
 	{		

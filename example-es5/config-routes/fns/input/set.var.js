@@ -10,6 +10,7 @@ Object.defineProperties(exports, {
 });
 var __moduleName = "dist-es5/fns/input/set.var";
 var MongoDbId = require('mongodb').ObjectID;
+var uuid = require('uuid');
 function setVar(state, config) {
   var value;
   var saveTo;
@@ -33,6 +34,9 @@ function setVar(state, config) {
     case "mongoId":
       if (typeof value == "string")
         value = MongoDbId.createFromHexString(value);
+      break;
+    case "uuid":
+      value = uuid.v1();
       break;
   }
   if (config.saveTo) {

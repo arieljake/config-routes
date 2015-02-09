@@ -18,6 +18,7 @@ export class Route extends EventEmitter
 		this.definition = definition;
 		this.fnLib = fnLib;
 		this.steps = this.getSteps();
+		this.context = new RouteContext(fnLib);
 	}
 
 	getSteps()
@@ -43,7 +44,9 @@ export class Route extends EventEmitter
 	{
 		var deferred = Q.defer();
 
-		this.context = new RouteContext(req, res, this.fnLib);
+		this.context.set("req", req);
+		this.context.set("res", res);
+		this.context.set("reqParams", this.flattenRequestParams(req));
 
 		let boundFns = this.steps.map((step) => step.getExecutable(this.context));
 		let runner = new FnsRunner(boundFns);
@@ -91,6 +94,14 @@ export class Route extends EventEmitter
 		});
 	}
 
+	flattenRequestParams(req)
+	{
+		return ["params", "query", "body"].reduce((memo, property) =>
+		{
+			return _.assign(memo, req[property]);
+		},{});
+	}
+
 	toObject()
 	{
 		return {
@@ -98,7 +109,7 @@ export class Route extends EventEmitter
 			name: this.name,
 			fnLib: this.fnLib.toObject(),
 			definition: this.definition,
-			state: this.context.serialize()
+			state: _.omit(this.context.toObject(), ["req", "res"])
 		};
 	}
 };

@@ -55,7 +55,8 @@ export class ObjectPathPart
 		if (this.isArray())
 		{
 			this.createIn(obj);
-			obj[this.basename].push(value);
+			
+			obj[this.basename] = obj[this.basename].concat(value);
 		}
 		else
 		{

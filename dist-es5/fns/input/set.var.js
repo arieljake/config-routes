@@ -11,6 +11,7 @@ Object.defineProperties(exports, {
 var __moduleName = "dist-es5/fns/input/set.var";
 var MongoDbId = require('mongodb').ObjectID;
 var uuid = require('uuid');
+var _ = require('lodash');
 function setVar(state, config) {
   var value;
   var saveTo;
@@ -21,23 +22,34 @@ function setVar(state, config) {
   } else if (config.valueString) {
     value = state.translate(config.valueString);
   }
-  switch (config.format) {
-    case "integer":
-      value = parseInt(value, 10);
-      break;
-    case "string":
-      value = value.toString();
-      break;
-    case "boolean":
-      value = (value == "true");
-      break;
-    case "mongoId":
-      if (typeof value == "string")
-        value = MongoDbId.createFromHexString(value);
-      break;
-    case "uuid":
-      value = uuid.v1();
-      break;
+  if (config.format) {
+    var formatType;
+    if (_.isString(config.format))
+      formatType = config.format;
+    else
+      formatType = config.format.type;
+    switch (formatType) {
+      case "integer":
+        value = parseInt(value, 10);
+        break;
+      case "string":
+        value = value.toString();
+        break;
+      case "boolean":
+        value = (value == "true");
+        break;
+      case "mongoId":
+        if (typeof value == "string")
+          value = MongoDbId.createFromHexString(value);
+        break;
+      case "uuid":
+        value = uuid.v1();
+        break;
+      case "regexReplace":
+        var regex = new RegExp(config.format.regex, config.format.regexOptions);
+        value = value.replace(regex, config.format.replace);
+        break;
+    }
   }
   if (config.saveTo) {
     saveTo = config.saveTo;

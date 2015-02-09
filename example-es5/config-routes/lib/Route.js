@@ -21,6 +21,7 @@ var Route = function Route(name, definition, fnLib) {
   this.definition = definition;
   this.fnLib = fnLib;
   this.steps = this.getSteps();
+  this.context = new RouteContext(fnLib);
 };
 ($traceurRuntime.createClass)(Route, {
   getSteps: function() {
@@ -39,7 +40,9 @@ var Route = function Route(name, definition, fnLib) {
   run: function(req, res) {
     var $__0 = this;
     var deferred = Q.defer();
-    this.context = new RouteContext(req, res, this.fnLib);
+    this.context.set("req", req);
+    this.context.set("res", res);
+    this.context.set("reqParams", this.flattenRequestParams(req));
     var boundFns = this.steps.map((function(step) {
       return step.getExecutable($__0.context);
     }));
@@ -71,13 +74,18 @@ var Route = function Route(name, definition, fnLib) {
       $__0.emit('stepComplete', completedStep.toObject(), $__0.toObject());
     }));
   },
+  flattenRequestParams: function(req) {
+    return ["params", "query", "body"].reduce((function(memo, property) {
+      return _.assign(memo, req[property]);
+    }), {});
+  },
   toObject: function() {
     return {
       id: this.id,
       name: this.name,
       fnLib: this.fnLib.toObject(),
       definition: this.definition,
-      state: this.context.serialize()
+      state: _.omit(this.context.toObject(), ["req", "res"])
     };
   }
 }, {}, EventEmitter);

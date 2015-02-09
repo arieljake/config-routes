@@ -1,18 +1,12 @@
-let _ = require('lodash');
-
 let ObjectPath = require('../utils/ObjectPath').ObjectPath;
 let VariableString = require('../utils/VariableString').VariableString;
 
 export class RouteContext
 {
-	constructor(req, res, fnLib)
+	constructor(fnLib, state)
 	{
-		this.model = {
-			req: req,
-			res: res,
-			reqParams: this.flattenRequestParams(req)
-		};
 		this.fnLib = fnLib;
+		this.model = state || {};
 	}
 
 	get(name)
@@ -41,15 +35,7 @@ export class RouteContext
 		
 		path.deleteIn(this.model);
 	}
-
-	flattenRequestParams(req)
-	{
-		return ["params", "query", "body"].reduce((memo, property) =>
-		{
-			return _.assign(memo, req[property]);
-		},{});
-	}
-
+	
 	translate(varString)
 	{
 		return VariableString(varString, this.model);
@@ -60,16 +46,8 @@ export class RouteContext
 		return fnLib.get(name);
 	}
 
-	serialize()
+	toObject()
 	{
-		var serialized = _.omit(this.model, ['req', 'res']);
-
-		serialized.req = {
-			query: this.model.req.query,
-			params: this.model.req.params,
-			body: this.model.req.body,
-		};
-
-		return serialized;
+		return this.model;
 	}
 };

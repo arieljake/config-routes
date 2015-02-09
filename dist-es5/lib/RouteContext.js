@@ -6,16 +6,11 @@ Object.defineProperties(exports, {
   __esModule: {value: true}
 });
 var __moduleName = "dist-es5/lib/RouteContext";
-var _ = require('lodash');
 var ObjectPath = require('../utils/ObjectPath').ObjectPath;
 var VariableString = require('../utils/VariableString').VariableString;
-var RouteContext = function RouteContext(req, res, fnLib) {
-  this.model = {
-    req: req,
-    res: res,
-    reqParams: this.flattenRequestParams(req)
-  };
+var RouteContext = function RouteContext(fnLib, state) {
   this.fnLib = fnLib;
+  this.model = state || {};
 };
 ($traceurRuntime.createClass)(RouteContext, {
   get: function(name) {
@@ -34,25 +29,14 @@ var RouteContext = function RouteContext(req, res, fnLib) {
     var path = new ObjectPath(name);
     path.deleteIn(this.model);
   },
-  flattenRequestParams: function(req) {
-    return ["params", "query", "body"].reduce((function(memo, property) {
-      return _.assign(memo, req[property]);
-    }), {});
-  },
   translate: function(varString) {
     return VariableString(varString, this.model);
   },
   getFnByName: function(name) {
     return fnLib.get(name);
   },
-  serialize: function() {
-    var serialized = _.omit(this.model, ['req', 'res']);
-    serialized.req = {
-      query: this.model.req.query,
-      params: this.model.req.params,
-      body: this.model.req.body
-    };
-    return serialized;
+  toObject: function() {
+    return this.model;
   }
 }, {});
 ;

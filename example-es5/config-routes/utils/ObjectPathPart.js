@@ -40,7 +40,7 @@ var ObjectPathPart = function ObjectPathPart(part) {
   setIn: function(obj, value) {
     if (this.isArray()) {
       this.createIn(obj);
-      obj[this.basename].push(value);
+      obj[this.basename] = obj[this.basename].concat(value);
     } else {
       obj[this.basename] = value;
     }

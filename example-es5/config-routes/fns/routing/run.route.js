@@ -15,7 +15,19 @@ function setVar(state, config) {
   var route = routeLib.get(routeName);
   var req = state.get("req");
   var res = state.get("res");
-  return route.run(req, res);
+  if (config.input) {
+    Object.keys(config.input).map(function(inputKey) {
+      var fullKey = "input." + inputKey;
+      var valueVarName = config.input[inputKey];
+      var value = state.get(valueVarName);
+      route.context.set(fullKey, value);
+    });
+  }
+  var routePromise = route.run(req, res);
+  if (config.fork === true)
+    return undefined;
+  else
+    return routePromise;
 }
 var $__default = setVar;
 ;

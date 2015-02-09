@@ -15,6 +15,11 @@ function consoleDir(state, config) {
   } else if (config.valueString) {
     value = state.tranlsate(config.valueString);
   }
+  switch (config.format) {
+    case "jsonString":
+      value = JSON.stringify(value);
+      break;
+  }
   console.dir(value);
 }
 var $__default = consoleDir;

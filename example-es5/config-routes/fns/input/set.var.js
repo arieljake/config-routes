@@ -44,6 +44,9 @@ function setVar(state, config) {
   } else if (config.saveToString) {
     saveTo = state.translate(config.saveToString);
   }
+  if (config.valueVarName && config.deleteOriginal === true) {
+    state.unset(config.valueVarName);
+  }
   state.set(saveTo, value);
 }
 var $__default = setVar;

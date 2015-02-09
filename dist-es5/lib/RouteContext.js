@@ -28,7 +28,7 @@ var RouteContext = function RouteContext(req, res, fnLib) {
     var path = new ObjectPath(name);
     path.setValueIn(this.model, value);
   },
-  unset: function(name, value) {
+  unset: function(name) {
     if (!name)
       return ;
     var path = new ObjectPath(name);

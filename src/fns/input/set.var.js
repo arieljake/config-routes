@@ -54,7 +54,12 @@ function setVar(state, config) {
 		saveTo = state.translate(config.saveToString);
 	}
 	
-    state.set(saveTo, value);
+	if (config.valueVarName && config.deleteOriginal === true)
+	{
+		state.unset(config.valueVarName);
+	}
+
+	state.set(saveTo, value);	
 };
 
 export function humanize(utils, config) {

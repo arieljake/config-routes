@@ -17,5 +17,12 @@ function consoleDir(state, config) {
 		value = state.tranlsate(config.valueString);
 	}
 	
+	switch (config.format)
+	{
+		case "jsonString":
+			value = JSON.stringify(value);
+			break;
+	}
+	
 	console.dir(value);
 };

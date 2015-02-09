@@ -32,7 +32,7 @@ export class RouteContext
 		path.setValueIn(this.model, value);
 	}
 	
-	unset(name, value)
+	unset(name)
 	{
 		if (!name)
 			return;

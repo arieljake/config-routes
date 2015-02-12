@@ -21,4 +21,9 @@ function map(state, config) {
 	});
 	
     state.set(config.saveTo, value);
+	
+	if (config.deleteOriginal === true)
+	{
+		state.unset(config.collectionVarName);
+	}
 };

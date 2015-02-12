@@ -11,7 +11,7 @@ function deleteRecords(state, config) {
   var deferred = Q.defer();
   var mongoDB = state.get(config.mongoVarName);
   var collection = config.collection;
-  var query = state.get(config.queryVarName) || config.query || {};
+  var query = config.query || state.get(config.queryVarName) || {};
   var resultHandler = function(err, result) {
     if (err) {
       state.set(config.saveErrorTo, err);

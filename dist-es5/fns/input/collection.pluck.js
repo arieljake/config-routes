@@ -5,24 +5,18 @@ Object.defineProperties(exports, {
     }},
   __esModule: {value: true}
 });
-var __moduleName = "dist-es5/fns/input/collection.map";
+var __moduleName = "dist-es5/fns/input/collection.pluck";
 var _ = require("lodash");
-var SetVars = require('./set.vars');
-function map(state, config) {
+function pluck(state, config) {
   var collection = state.get(config.collectionVarName);
   var value = _.map(collection, function(item) {
-    state.set(config.sourceKey, item);
-    SetVars.default(state, config.map);
-    var result = state.get(config.destKey);
-    state.unset(config.sourceKey);
-    state.unset(config.destKey);
-    return result;
+    return item[config.propertyName];
   });
   state.set(config.saveTo, value);
   if (config.deleteOriginal === true) {
     state.unset(config.collectionVarName);
   }
 }
-var $__default = map;
+var $__default = pluck;
 ;
-//# sourceURL=src/fns/input/collection.map.js
+//# sourceURL=src/fns/input/collection.pluck.js

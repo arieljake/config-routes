@@ -19,6 +19,9 @@ function map(state, config) {
     return result;
   });
   state.set(config.saveTo, value);
+  if (config.deleteOriginal === true) {
+    state.unset(config.collectionVarName);
+  }
 }
 var $__default = map;
 ;

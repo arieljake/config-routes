@@ -24,6 +24,16 @@ function setVar(state, config) {
     });
   }
   var routePromise = route.run(req, res);
+  if (config.output) {
+    routePromise = routePromise.then(function() {
+      Object.keys(config.output).map(function(outputKey) {
+        var fullKey = "output." + outputKey;
+        var saveTo = config.output[outputKey];
+        var value = route.context.get(fullKey);
+        state.set(saveTo, value);
+      });
+    });
+  }
   if (config.fork === true)
     return undefined;
   else

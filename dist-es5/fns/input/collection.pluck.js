@@ -7,10 +7,12 @@ Object.defineProperties(exports, {
 });
 var __moduleName = "dist-es5/fns/input/collection.pluck";
 var _ = require("lodash");
+var ObjectPath = require("../../utils/ObjectPath").ObjectPath;
 function pluck(state, config) {
   var collection = state.get(config.collectionVarName);
+  var path = new ObjectPath(config.propertyName);
   var value = _.map(collection, function(item) {
-    return item[config.propertyName];
+    return path.getValueIn(item);
   });
   state.set(config.saveTo, value);
   if (config.deleteOriginal === true) {

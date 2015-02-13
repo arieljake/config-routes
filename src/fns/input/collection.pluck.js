@@ -1,13 +1,15 @@
 let _ = require("lodash");
+let ObjectPath = require("../../utils/ObjectPath").ObjectPath;
 
 export
 default
 function pluck(state, config)
 {
-	var collection = state.get(config.collectionVarName);
-	var value = _.map(collection, function(item)
+	let collection = state.get(config.collectionVarName);
+	let path = new ObjectPath(config.propertyName);		
+	let value = _.map(collection, function(item)
 	{
-		return item[config.propertyName];
+		return path.getValueIn(item);
 	});
 
 	state.set(config.saveTo, value);

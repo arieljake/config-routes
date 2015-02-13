@@ -13,10 +13,10 @@ function setVarSwitchfunction(state, config) {
   var values;
   var lookup;
   var value;
-  if (config.valueVarName) {
-    lookup = state.get(config.valueVarName);
-  } else if (config.valueString) {
-    lookup = state.translate(config.valueString);
+  if (config.lookupVarName) {
+    lookup = state.get(config.lookupVarName);
+  } else if (config.lookupString) {
+    lookup = state.translate(config.lookupString);
   }
   if (config.values) {
     values = config.values;

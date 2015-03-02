@@ -57,7 +57,8 @@ export class Library
 	toObject()
 	{
 		return {
-			dirs: this.dirs
+			dirs: this.dirs,
+			entries: this.entries
 		};
 	}
 }

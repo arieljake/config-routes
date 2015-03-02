@@ -16,7 +16,10 @@ export class FnLibrary
 		
 		var fn = require(entry.fullPath);
 		
-		return fn.default;
+		if (fn.default)
+			return fn.default;
+		else
+			return fn;
 	}
 
 	getHumanizer(id)

@@ -29,7 +29,10 @@ function insertRecords(state, config) {
         deferred.resolve(result);
       }
     };
-    mongoDB.collection(collection).insert(records, options, resultHandler);
+    if (records === undefined || (_.isArray(records) && records.length === 0))
+      deferred.resolve([]);
+    else
+      mongoDB.collection(collection).insert(records, options, resultHandler);
   } catch (err) {
     deferred.reject(err);
   }

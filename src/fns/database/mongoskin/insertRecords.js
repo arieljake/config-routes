@@ -30,7 +30,10 @@ export default function insertRecords(state, config)
 		};
 
 
-		mongoDB.collection(collection).insert(records, options, resultHandler);
+		if (records === undefined || (_.isArray(records) && records.length === 0))
+			deferred.resolve([]);
+		else
+			mongoDB.collection(collection).insert(records, options, resultHandler);
 	}
 	catch (err)
 	{

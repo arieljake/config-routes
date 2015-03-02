@@ -16,7 +16,10 @@ var FnLibrary = function FnLibrary(fnPaths) {
     if (!entry)
       return undefined;
     var fn = require(entry.fullPath);
-    return fn.default;
+    if (fn.default)
+      return fn.default;
+    else
+      return fn;
   },
   getHumanizer: function(id) {
     var entry = this.lib.getById(id);

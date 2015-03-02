@@ -51,7 +51,10 @@ var Library = function Library(dirs, fileNameRegex) {
     }));
   },
   toObject: function() {
-    return {dirs: this.dirs};
+    return {
+      dirs: this.dirs,
+      entries: this.entries
+    };
   }
 }, {});
 //# sourceURL=src/lib/Library.js

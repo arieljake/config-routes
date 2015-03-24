@@ -15,7 +15,7 @@ var _ = require('lodash');
 function setVar(state, config) {
   var value;
   var saveTo;
-  if (config.value) {
+  if (config.value !== undefined) {
     value = config.value;
   } else if (config.valueVarName) {
     value = state.get(config.valueVarName);
@@ -44,6 +44,9 @@ function setVar(state, config) {
         break;
       case "uuid":
         value = uuid.v1();
+        break;
+      case "timestamp":
+        value = Date.now();
         break;
       case "regexReplace":
         var regex = new RegExp(config.format.regex, config.format.regexOptions);

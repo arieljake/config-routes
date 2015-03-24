@@ -10,6 +10,12 @@ export class RouteFactory
 		this.routeLib = routeLib;
 		this.fnLib = fnLib;
 		this.routeEventHandler = new RouteEventHandler(routeEvents);
+		this.routeInputs = {};
+	}
+	
+	addRouteInput(name, value)
+	{
+		this.routeInputs[name] = value;
 	}
 
 	get(name)
@@ -20,10 +26,22 @@ export class RouteFactory
 			routeDefinition = this.routeLib.get("404");
 		
 		var route = new Route(name, routeDefinition, this.fnLib);
-			
+
+		this.addInputsToRoute(route);
+		
 		if (this.routeEventHandler)
 			this.routeEventHandler.handle(route);
 
 		return route;
+	}
+	
+	addInputsToRoute(route)
+	{
+		Object.keys(this.routeInputs).map((inputKey) => 
+		{
+			var value = this.routeInputs[inputKey];
+
+			route.context.set(inputKey, value);
+		});
 	}
 }

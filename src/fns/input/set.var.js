@@ -11,7 +11,7 @@ function setVar(state, config)
 	let value;
 	let saveTo;
 
-	if (config.value)
+	if (config.value !== undefined)
 	{
 		value = config.value;
 	}
@@ -54,6 +54,10 @@ function setVar(state, config)
 
 			case "uuid":
 				value = uuid.v1();
+				break;
+
+			case "timestamp":
+				value = Date.now();
 				break;
 				
 			case "regexReplace":

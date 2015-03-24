@@ -1,7 +1,7 @@
 export
 default
 
-function validateInput(state, config)
+function inputExists(state, config)
 {
 	var missingInputs = [];
 

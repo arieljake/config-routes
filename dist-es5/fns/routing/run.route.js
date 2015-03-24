@@ -9,7 +9,7 @@ Object.defineProperties(exports, {
   __esModule: {value: true}
 });
 var __moduleName = "dist-es5/fns/routing/run.route";
-function setVar(state, config) {
+function runRoute(state, config) {
   var routeLib = state.get(config.routeLibVarName);
   var routeName = state.translate(config.routeNameString);
   var route = routeLib.get(routeName);
@@ -19,7 +19,12 @@ function setVar(state, config) {
     Object.keys(config.input).map(function(inputKey) {
       var fullKey = "input." + inputKey;
       var valueVarName = config.input[inputKey];
-      var value = state.get(valueVarName);
+      var value;
+      if (valueVarName.length >= 2 && valueVarName.substr(0, 1) == "'" && valueVarName.substr(-1) == "'") {
+        value = valueVarName.substr(1, valueVarName.length - 2);
+      } else {
+        value = state.get(valueVarName);
+      }
       route.context.set(fullKey, value);
     });
   }
@@ -39,7 +44,7 @@ function setVar(state, config) {
   else
     return routePromise;
 }
-var $__default = setVar;
+var $__default = runRoute;
 ;
 function humanize(utils, config) {
   var output = utils.devariable("run route #routeName#", config);

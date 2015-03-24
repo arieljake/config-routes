@@ -9,7 +9,7 @@ Object.defineProperties(exports, {
   __esModule: {value: true}
 });
 var __moduleName = "dist-es5/fns/routing/input.exists";
-function validateInput(state, config) {
+function inputExists(state, config) {
   var missingInputs = [];
   if (config.vars) {
     config.vars.forEach(function(varName) {
@@ -23,7 +23,7 @@ function validateInput(state, config) {
     return Q.reject({missingInputs: missingInputs});
   }
 }
-var $__default = validateInput;
+var $__default = inputExists;
 ;
 function humanize(utils, config) {
   var output = utils.devariable("validate input", config);

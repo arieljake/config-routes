@@ -1,8 +1,7 @@
 export
 default
-function setVar(state, config)
+function runRoute(state, config)
 {
-
 	var routeLib = state.get(config.routeLibVarName);
 	var routeName = state.translate(config.routeNameString);
 	var route = routeLib.get(routeName);
@@ -15,7 +14,16 @@ function setVar(state, config)
 		{
 			var fullKey = "input." + inputKey;
 			var valueVarName = config.input[inputKey];
-			var value = state.get(valueVarName);
+			var value;
+			
+			if (valueVarName.length >= 2 && valueVarName.substr(0,1) == "'" && valueVarName.substr(-1) == "'")
+			{
+				value = valueVarName.substr(1,valueVarName.length-2);
+			}
+			else
+			{
+				value = state.get(valueVarName);
+			}
 
 			route.context.set(fullKey, value);
 		});

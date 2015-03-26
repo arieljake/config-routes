@@ -49,7 +49,7 @@ var Route = function Route(name, definition, fnLib) {
     var runner = new FnsRunner(boundFns);
     this.attachToRunner(runner);
     runner.run().then(function() {
-      deferred.resolve(this);
+      deferred.resolve();
     }).catch((function(err) {
       var erroredStep = $__0.steps[err.fnIndex];
       $__0.emit('stepError', err.error, erroredStep.toObject(), $__0.toObject());
@@ -57,7 +57,7 @@ var Route = function Route(name, definition, fnLib) {
         var errorHandler = erroredStep.getErrorHandler($__0.context);
         errorHandler();
       }
-      deferred.reject($__0, erroredStep);
+      deferred.reject(err);
     }));
     return deferred.promise;
   },

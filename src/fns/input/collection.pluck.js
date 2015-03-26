@@ -1,15 +1,22 @@
 let _ = require("lodash");
 let ObjectPath = require("../../utils/ObjectPath").ObjectPath;
+let Formatter = require("../../lib/Formatter").Formatter;
 
 export
 default
 function pluck(state, config)
 {
 	let collection = state.get(config.collectionVarName);
-	let path = new ObjectPath(config.propertyName);		
+	let path = new ObjectPath(config.propertyName);
+	let format = config.format;
+	
 	let value = _.map(collection, function(item)
 	{
-		return path.getValueIn(item);
+		var itemValue = path.getValueIn(item);
+		
+		itemValue = Formatter.format(itemValue, format);
+		
+		return itemValue;
 	});
 
 	state.set(config.saveTo, value);

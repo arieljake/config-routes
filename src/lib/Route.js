@@ -69,7 +69,7 @@ export class Route extends EventEmitter
 					errorHandler();
 				}
 			
-				deferred.reject();
+				deferred.reject(err);
 			});
 
 		return deferred.promise;

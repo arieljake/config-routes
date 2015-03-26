@@ -8,11 +8,15 @@ Object.defineProperties(exports, {
 var __moduleName = "dist-es5/fns/input/collection.pluck";
 var _ = require("lodash");
 var ObjectPath = require("../../utils/ObjectPath").ObjectPath;
+var Formatter = require("../../lib/Formatter").Formatter;
 function pluck(state, config) {
   var collection = state.get(config.collectionVarName);
   var path = new ObjectPath(config.propertyName);
+  var format = config.format;
   var value = _.map(collection, function(item) {
-    return path.getValueIn(item);
+    var itemValue = path.getValueIn(item);
+    itemValue = Formatter.format(itemValue, format);
+    return itemValue;
   });
   state.set(config.saveTo, value);
   if (config.deleteOriginal === true) {

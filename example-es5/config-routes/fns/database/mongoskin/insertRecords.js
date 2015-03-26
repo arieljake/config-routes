@@ -30,7 +30,7 @@ function insertRecords(state, config) {
       }
     };
     if (records === undefined || (_.isArray(records) && records.length === 0))
-      deferred.resolve([]);
+      resultHandler(null, []);
     else
       mongoDB.collection(collection).insert(records, options, resultHandler);
   } catch (err) {

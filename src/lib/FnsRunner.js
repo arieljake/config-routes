@@ -1,3 +1,5 @@
+'use strict';
+
 let Q = require('q');
 let EventEmitter = require('events').EventEmitter;
 

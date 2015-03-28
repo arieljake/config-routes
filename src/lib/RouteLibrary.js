@@ -1,5 +1,6 @@
-let fs = require("fs");
+'use strict';
 
+let fs = require("fs");
 let Library = require('./Library').Library;
 
 export class RouteLibrary

@@ -6,6 +6,7 @@ Object.defineProperties(exports, {
   __esModule: {value: true}
 });
 var __moduleName = "dist-es5/lib/Formatter";
+'use strict';
 var MongoDbId = require('mongodb').ObjectID;
 var uuid = require('uuid');
 var _ = require('lodash');

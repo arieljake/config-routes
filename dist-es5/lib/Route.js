@@ -6,22 +6,20 @@ Object.defineProperties(exports, {
   __esModule: {value: true}
 });
 var __moduleName = "dist-es5/lib/Route";
-var path = require("path");
+'use strict';
 var Q = require('q');
 var _ = require('lodash');
 var uuid = require('uuid');
 var EventEmitter = require('events').EventEmitter;
-var FnLibrary = require('./FnLibrary').FnLibrary;
 var FnsRunner = require('./FnsRunner').FnsRunner;
-var RouteContext = require('./RouteContext').RouteContext;
 var Step = require('./RouteStep').RouteStep;
-var Route = function Route(name, definition, fnLib) {
+var Route = function Route(name, definition, fnLib, context) {
   this.id = uuid.v1();
   this.name = name;
   this.definition = definition;
   this.fnLib = fnLib;
+  this.context = context;
   this.steps = this.getSteps();
-  this.context = new RouteContext(fnLib);
 };
 ($traceurRuntime.createClass)(Route, {
   getSteps: function() {
@@ -37,12 +35,9 @@ var Route = function Route(name, definition, fnLib) {
       return step.desc;
     })).join("<br>");
   },
-  run: function(req, res) {
+  run: function() {
     var $__0 = this;
     var deferred = Q.defer();
-    this.context.set("req", req);
-    this.context.set("res", res);
-    this.context.set("reqParams", this.flattenRequestParams(req));
     var boundFns = this.steps.map((function(step) {
       return step.getExecutable($__0.context);
     }));
@@ -74,18 +69,16 @@ var Route = function Route(name, definition, fnLib) {
       $__0.emit('stepComplete', completedStep.toObject(), $__0.toObject());
     }));
   },
-  flattenRequestParams: function(req) {
-    return ["params", "query", "body"].reduce((function(memo, property) {
-      return _.assign(memo, req[property]);
-    }), {});
-  },
   toObject: function() {
+    var hiddenContextKeys = _.filter(Object.keys(this.context), function(key) {
+      return key.indexOf("_") === 0;
+    });
     return {
       id: this.id,
       name: this.name,
       fnLib: this.fnLib.toObject(),
       definition: this.definition,
-      state: _.omit(this.context.toObject(), ["req", "res"])
+      state: _.omit(this.context.toObject(), hiddenContextKeys)
     };
   }
 }, {}, EventEmitter);

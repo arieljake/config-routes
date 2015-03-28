@@ -5,7 +5,6 @@ let Formatter = require("../../lib/Formatter").Formatter;
 
 export
 default
-
 function setVar(state, config)
 {
 

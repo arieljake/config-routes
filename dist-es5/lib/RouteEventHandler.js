@@ -6,6 +6,7 @@ Object.defineProperties(exports, {
   __esModule: {value: true}
 });
 var __moduleName = "dist-es5/lib/RouteEventHandler";
+'use strict';
 var RouteEventHandler = function RouteEventHandler(eventHandlers) {
   this.eventHandlers = eventHandlers || {};
 };

@@ -1,3 +1,5 @@
+'use strict';
+
 let MongoDbId = require('mongodb').ObjectID;
 let uuid = require('uuid');
 let _ = require('lodash');

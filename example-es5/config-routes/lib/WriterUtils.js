@@ -6,6 +6,7 @@ Object.defineProperties(exports, {
   __esModule: {value: true}
 });
 var __moduleName = "dist-es5/lib/WriterUtils";
+'use strict';
 var VariableString = require("../utils/VariableString").VariableString;
 var WriterUtils = {devariable: function(varString, context) {
     return VariableString(varString, context);

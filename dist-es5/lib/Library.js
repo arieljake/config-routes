@@ -6,6 +6,7 @@ Object.defineProperties(exports, {
   __esModule: {value: true}
 });
 var __moduleName = "dist-es5/lib/Library";
+'use strict';
 var fs = require('fs');
 var path = require('path');
 var wrench = require('wrench');

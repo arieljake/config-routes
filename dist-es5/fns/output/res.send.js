@@ -10,7 +10,7 @@ Object.defineProperties(exports, {
 });
 var __moduleName = "dist-es5/fns/output/res.send";
 function resSend(state, config) {
-  var res = state.get("res");
+  var res = state.get(config.responseVarName);
   var value;
   if (config.value) {
     value = config.value;

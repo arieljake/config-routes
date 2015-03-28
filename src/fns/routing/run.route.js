@@ -3,11 +3,20 @@ default
 function runRoute(state, config)
 {
 	var routeLib = state.get(config.routeLibVarName);
-	var routeName = state.translate(config.routeNameString);
-	var route = routeLib.get(routeName);
-	var req = state.get("req");
-	var res = state.get("res");
-
+	var routeContext = state.child();
+	var route;
+	
+	if (config.routeNameString)
+	{
+		var routeName = state.translate(config.routeNameString);
+		
+		route = routeLib.get(routeName, routeContext);
+	}
+	else if (config.route)
+	{
+		route = routeLib.create(config.desc, config.route, routeContext);
+	}
+	
 	if (config.input)
 	{
 		Object.keys(config.input).map(function(inputKey)
@@ -28,8 +37,8 @@ function runRoute(state, config)
 			route.context.set(fullKey, value);
 		});
 	}
-
-	var routePromise = route.run(req, res);
+	
+	var routePromise = route.run();
 
 	if (config.output)
 	{
@@ -55,7 +64,6 @@ function runRoute(state, config)
 
 export function humanize(utils, config)
 {
-
 	var output = utils.devariable("run route #routeName#", config);
 
 	return output;

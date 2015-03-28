@@ -6,6 +6,7 @@ Object.defineProperties(exports, {
   __esModule: {value: true}
 });
 var __moduleName = "dist-es5/lib/FnLibrary";
+'use strict';
 var Library = require('./Library').Library;
 var FnLibrary = function FnLibrary(fnPaths) {
   this.lib = new Library(fnPaths, /\.js$/);

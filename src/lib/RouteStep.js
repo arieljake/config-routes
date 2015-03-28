@@ -1,6 +1,8 @@
+'use strict';
+
 let q = require('q');
 let _ = require('lodash');
-var uuid = require('uuid');
+let uuid = require('uuid');
 
 export class RouteStep
 {

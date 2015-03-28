@@ -1,12 +1,14 @@
+'use strict';
+
 let ObjectPath = require('../utils/ObjectPath').ObjectPath;
 let VariableString = require('../utils/VariableString').VariableString;
 
 export class RouteContext
 {
-	constructor(fnLib, state)
+	constructor(state)
 	{
-		this.fnLib = fnLib;
 		this.model = state || {};
+		this.inheritedProps = [];
 	}
 
 	get(name)
@@ -16,7 +18,7 @@ export class RouteContext
 		return path.getValueIn(this.model);
 	}
 
-	set(name, value)
+	set(name, value, inherited)
 	{
 		if (!name)
 			return;
@@ -24,6 +26,11 @@ export class RouteContext
 		let path = new ObjectPath(name);
 
 		path.setValueIn(this.model, value);
+		
+		if (inherited === true)
+		{
+			this.inheritedProps.push(name);
+		}
 	}
 	
 	unset(name)
@@ -40,10 +47,18 @@ export class RouteContext
 	{
 		return VariableString(varString, this.model);
 	}
-
-	getFnByName(name)
+	
+	child()
 	{
-		return fnLib.get(name);
+		let child = new RouteContext();
+		
+		this.inheritedProps.forEach((prop) => {
+			let value = this.get(prop);
+			
+			child.set(prop, value, true);
+		});
+		
+		return child;
 	}
 
 	toObject()

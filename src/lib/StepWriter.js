@@ -1,5 +1,6 @@
-let _ = require("lodash");
+'use strict';
 
+let _ = require("lodash");
 let WriterUtils = require("./WriterUtils").WriterUtils;
 
 export class StepWriter

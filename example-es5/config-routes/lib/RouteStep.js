@@ -6,6 +6,7 @@ Object.defineProperties(exports, {
   __esModule: {value: true}
 });
 var __moduleName = "dist-es5/lib/RouteStep";
+'use strict';
 var q = require('q');
 var _ = require('lodash');
 var uuid = require('uuid');

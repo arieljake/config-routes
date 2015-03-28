@@ -6,6 +6,7 @@ Object.defineProperties(exports, {
   __esModule: {value: true}
 });
 var __moduleName = "dist-es5/lib/FnsRunner";
+'use strict';
 var Q = require('q');
 var EventEmitter = require('events').EventEmitter;
 var FnsRunner = function FnsRunner(fns) {

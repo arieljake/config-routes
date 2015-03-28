@@ -2,7 +2,7 @@ export
 default
 function resSendStatus(state, config) {
 
-	let res = state.get("res");
+	let res = state.get(config.responseVarName);
 	
 	res.sendStatus(config.status);
 };

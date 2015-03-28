@@ -6,6 +6,7 @@ Object.defineProperties(exports, {
   __esModule: {value: true}
 });
 var __moduleName = "dist-es5/lib/StepWriter";
+'use strict';
 var _ = require("lodash");
 var WriterUtils = require("./WriterUtils").WriterUtils;
 var StepWriter = function StepWriter(fnLib) {

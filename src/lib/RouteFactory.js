@@ -2,6 +2,7 @@
 
 let Route = require('./Route').Route;
 let RouteEventHandler = require('./RouteEventHandler').RouteEventHandler;
+let RouteContext = require('./RouteContext').RouteContext;
 
 export class RouteFactory
 {
@@ -18,14 +19,24 @@ export class RouteFactory
 		this.routeInputs[name] = value;
 	}
 
-	get(name)
+	get(name, context)
 	{
 		var routeDefinition = this.routeLib.get(name);
 
 		if (!routeDefinition)
-			routeDefinition = this.routeLib.get("404");
-		
-		var route = new Route(name, routeDefinition, this.fnLib);
+			return undefined;
+
+		return this.create(name, routeDefinition, context);
+	}
+
+	create(name, routeDefinition, context)
+	{
+		if (!context)
+		{
+			context = new RouteContext();
+		}
+
+		var route = new Route(name, routeDefinition, this.fnLib, context);
 
 		this.addInputsToRoute(route);
 		

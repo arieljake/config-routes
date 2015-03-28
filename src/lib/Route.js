@@ -1,24 +1,22 @@
-let path = require("path");
+'use strict';
+
 let Q = require('q');
 let _ = require('lodash');
 let uuid = require('uuid');
 let EventEmitter = require('events').EventEmitter;
-
-let FnLibrary = require('./FnLibrary').FnLibrary;
 let FnsRunner = require('./FnsRunner').FnsRunner;
-let RouteContext = require('./RouteContext').RouteContext;
 let Step = require('./RouteStep').RouteStep;
 
 export class Route extends EventEmitter
 {
-	constructor(name, definition, fnLib)
+	constructor(name, definition, fnLib, context)
 	{
 		this.id = uuid.v1();
 		this.name = name;
 		this.definition = definition;
 		this.fnLib = fnLib;
+		this.context = context;
 		this.steps = this.getSteps();
-		this.context = new RouteContext(fnLib);
 	}
 
 	getSteps()
@@ -40,13 +38,9 @@ export class Route extends EventEmitter
 		}).join("<br>");
 	}
 
-	run(req, res)
+	run()
 	{
 		var deferred = Q.defer();
-
-		this.context.set("req", req);
-		this.context.set("res", res);
-		this.context.set("reqParams", this.flattenRequestParams(req));
 
 		let boundFns = this.steps.map((step) => step.getExecutable(this.context));
 		let runner = new FnsRunner(boundFns);
@@ -94,22 +88,18 @@ export class Route extends EventEmitter
 		});
 	}
 
-	flattenRequestParams(req)
-	{
-		return ["params", "query", "body"].reduce((memo, property) =>
-		{
-			return _.assign(memo, req[property]);
-		},{});
-	}
-
 	toObject()
 	{
+		var hiddenContextKeys = _.filter(Object.keys(this.context), function(key) {
+			return key.indexOf("_") === 0;
+		})
+		
 		return {
 			id: this.id,
 			name: this.name,
 			fnLib: this.fnLib.toObject(),
 			definition: this.definition,
-			state: _.omit(this.context.toObject(), ["req", "res"])
+			state: _.omit(this.context.toObject(), hiddenContextKeys)
 		};
 	}
 };

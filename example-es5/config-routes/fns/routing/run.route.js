@@ -11,10 +11,14 @@ Object.defineProperties(exports, {
 var __moduleName = "dist-es5/fns/routing/run.route";
 function runRoute(state, config) {
   var routeLib = state.get(config.routeLibVarName);
-  var routeName = state.translate(config.routeNameString);
-  var route = routeLib.get(routeName);
-  var req = state.get("req");
-  var res = state.get("res");
+  var routeContext = state.child();
+  var route;
+  if (config.routeNameString) {
+    var routeName = state.translate(config.routeNameString);
+    route = routeLib.get(routeName, routeContext);
+  } else if (config.route) {
+    route = routeLib.create(config.desc, config.route, routeContext);
+  }
   if (config.input) {
     Object.keys(config.input).map(function(inputKey) {
       var fullKey = "input." + inputKey;
@@ -28,7 +32,7 @@ function runRoute(state, config) {
       route.context.set(fullKey, value);
     });
   }
-  var routePromise = route.run(req, res);
+  var routePromise = route.run();
   if (config.output) {
     routePromise = routePromise.then(function() {
       Object.keys(config.output).map(function(outputKey) {

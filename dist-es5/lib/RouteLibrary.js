@@ -6,6 +6,7 @@ Object.defineProperties(exports, {
   __esModule: {value: true}
 });
 var __moduleName = "dist-es5/lib/RouteLibrary";
+'use strict';
 var fs = require("fs");
 var Library = require('./Library').Library;
 var RouteLibrary = function RouteLibrary(routePaths) {

@@ -1,5 +1,6 @@
-var VariableString = require("../utils/VariableString").VariableString;
+'use strict';
 
+let VariableString = require("../utils/VariableString").VariableString;
 
 export var WriterUtils = {
 

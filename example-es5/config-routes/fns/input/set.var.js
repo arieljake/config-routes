@@ -23,6 +23,9 @@ function setVar(state, config) {
   } else if (config.valueString) {
     value = state.translate(config.valueString);
   }
+  if (value === undefined && config.hasOwnProperty("defaultValue")) {
+    value = config.defaultValue;
+  }
   value = Formatter.format(value, config.format);
   if (config.saveTo) {
     saveTo = config.saveTo;

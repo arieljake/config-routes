@@ -13,7 +13,6 @@ var _ = require('lodash');
 var runRoute = require("./run.route").default;
 function branchRoute(state, config) {
   var value = state.get(config.valueVarName);
-  var format = config.format;
   var cases = config.cases;
   var defaultCase = config.defaultCase;
   var targetCase = _.find(cases, function(curCase) {

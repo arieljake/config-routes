@@ -10,6 +10,11 @@ var __moduleName = "dist-es5/lib/Formatter";
 var MongoDbId = require('mongodb').ObjectID;
 var uuid = require('uuid');
 var _ = require('lodash');
+var formatTypeEqualsTest = function(type) {
+  return function(formatType) {
+    return formatType == type;
+  };
+};
 var Formatter = {
   format: function(value, config) {
     if (!config)
@@ -28,17 +33,17 @@ var Formatter = {
     return value;
   },
   formatters: [{
-    test: Formatter.formatTypeEqualsTest("integer"),
+    test: formatTypeEqualsTest("integer"),
     format: function(value, config) {
       return parseInt(value, 10);
     }
   }, {
-    test: Formatter.formatTypeEqualsTest("string"),
+    test: formatTypeEqualsTest("string"),
     format: function(value, config) {
       return value.toString();
     }
   }, {
-    test: Formatter.formatTypeEqualsTest("mongoId"),
+    test: formatTypeEqualsTest("mongoId"),
     format: function(value, config) {
       if (typeof value == "string")
         return MongoDbId.createFromHexString(value);
@@ -46,17 +51,17 @@ var Formatter = {
         return value;
     }
   }, {
-    test: Formatter.formatTypeEqualsTest("uuid"),
+    test: formatTypeEqualsTest("uuid"),
     format: function(value, config) {
       return uuid.v1();
     }
   }, {
-    test: Formatter.formatTypeEqualsTest("timestamp"),
+    test: formatTypeEqualsTest("timestamp"),
     format: function(value, config) {
       return Date.now();
     }
   }, {
-    test: Formatter.formatTypeEqualsTest("regexReplace"),
+    test: formatTypeEqualsTest("regexReplace"),
     format: function(value, config) {
       var regex = new RegExp(config.regex, config.regexOptions);
       return value.replace(regex, config.replace);
@@ -71,11 +76,6 @@ var Formatter = {
       var numDigits = parseInt(numDigitsStr, 10);
       return ("" + Math.random()).substring(2, 2 + numDigits);
     }
-  }],
-  formatTypeEqualsTest: function(type) {
-    return function(formatType) {
-      return formatType == type;
-    };
-  }
+  }]
 };
 //# sourceURL=src/lib/Formatter.js

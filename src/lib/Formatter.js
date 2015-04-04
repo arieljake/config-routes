@@ -4,6 +4,14 @@ let MongoDbId = require('mongodb').ObjectID;
 let uuid = require('uuid');
 let _ = require('lodash');
 
+let formatTypeEqualsTest = function(type)
+{
+	return function(formatType)
+	{
+		return formatType == type;
+	};
+};
+
 export var Formatter = {
 
 	format: function(value, config)
@@ -18,10 +26,11 @@ export var Formatter = {
 		else
 			formatType = config.type;
 
-		var formatter = _.find(Formatter.formatters, function(formatter) {
+		var formatter = _.find(Formatter.formatters, function(formatter)
+		{
 			return formatter.test(formatType) === true;
 		});
-		
+
 		if (formatter)
 		{
 			value = formatter.format(value, config, formatType);
@@ -32,20 +41,23 @@ export var Formatter = {
 
 	formatters: [
 		{
-			test: Formatter.formatTypeEqualsTest("integer"),
-			format: function(value, config) {
+			test: formatTypeEqualsTest("integer"),
+			format: function(value, config)
+			{
 				return parseInt(value, 10);
 			}
 		},
 		{
-			test: Formatter.formatTypeEqualsTest("string"),
-			format: function(value, config) {
+			test: formatTypeEqualsTest("string"),
+			format: function(value, config)
+			{
 				return value.toString();
 			}
 		},
 		{
-			test: Formatter.formatTypeEqualsTest("mongoId"),
-			format: function(value, config) {
+			test: formatTypeEqualsTest("mongoId"),
+			format: function(value, config)
+			{
 				if (typeof value == "string")
 					return MongoDbId.createFromHexString(value);
 				else
@@ -53,42 +65,39 @@ export var Formatter = {
 			}
 		},
 		{
-			test: Formatter.formatTypeEqualsTest("uuid"),
-			format: function(value, config) {
+			test: formatTypeEqualsTest("uuid"),
+			format: function(value, config)
+			{
 				return uuid.v1();
 			}
 		},
 		{
-			test: Formatter.formatTypeEqualsTest("timestamp"),
-			format: function(value, config) {
+			test: formatTypeEqualsTest("timestamp"),
+			format: function(value, config)
+			{
 				return Date.now();
 			}
 		},
 		{
-			test: Formatter.formatTypeEqualsTest("regexReplace"),
-			format: function(value, config) {
+			test: formatTypeEqualsTest("regexReplace"),
+			format: function(value, config)
+			{
 				var regex = new RegExp(config.regex, config.regexOptions);
 				return value.replace(regex, config.replace);
 			}
 		},
 		{
 			regex: /^(\d+)digit#$/,
-			test: function(formatType) {
+			test: function(formatType)
+			{
 				return this.regex.test(formatType);
 			},
-			format: function(value, config, formatType) {
+			format: function(value, config, formatType)
+			{
 				var numDigitsStr = this.regex.exec(formatType)[1];
-				var numDigits = parseInt(numDigitsStr,10);
-				return ("" + Math.random()).substring(2,2+numDigits);
+				var numDigits = parseInt(numDigitsStr, 10);
+				return ("" + Math.random()).substring(2, 2 + numDigits);
 			}
 		}
-	],
-
-	formatTypeEqualsTest: function(type)
-	{
-		return function(formatType)
-		{
-			return formatType == type;
-		};
-	}
+	]
 };

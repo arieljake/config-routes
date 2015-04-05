@@ -31,10 +31,6 @@ function branchRoute(state, config)
 		
 		return runRoute(state, routeConfig);
 	}
-	else
-	{
-		throw new Error("no valid switch");
-	}
 };
 
 export function humanize(utils, config)

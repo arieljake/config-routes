@@ -29,8 +29,6 @@ function branchRoute(state, config) {
       input: _.defaults({}, targetCase.input, config.input)
     };
     return runRoute(state, routeConfig);
-  } else {
-    throw new Error("no valid switch");
   }
 }
 var $__default = branchRoute;

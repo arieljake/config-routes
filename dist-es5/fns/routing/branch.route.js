@@ -26,7 +26,8 @@ function branchRoute(state, config) {
       routeLibVarName: config.routeLibVarName,
       route: targetCase.route,
       desc: targetCase.desc,
-      input: _.defaults({}, targetCase.input, config.input)
+      input: _.defaults({}, targetCase.input, config.input),
+      output: _.defaults({}, targetCase.output, config.output)
     };
     return runRoute(state, routeConfig);
   }

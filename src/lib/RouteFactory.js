@@ -14,12 +14,17 @@ export class RouteFactory
 		this.routeLib = routeLib;
 		this.fnLib = fnLib;
 		this.routeEventHandler = new RouteEventHandler(routeEvents);
-		this.routeInputs = {};
+		this.routeInputs = [];
 	}
 	
-	addRouteInput(name, value)
+	addRouteInput(name, value, isInherited, isIgnoredOnDump)
 	{
-		this.routeInputs[name] = value;
+		this.routeInputs.push({
+			name: name,
+			value: value,
+			inherited: isInherited,
+			ignored: isIgnoredOnDump
+		});
 	}
 
 	get(name, context)
@@ -70,11 +75,8 @@ export class RouteFactory
 	
 	addInputsToContext(context)
 	{
-		Object.keys(this.routeInputs).map((inputKey) => 
-		{
-			var value = this.routeInputs[inputKey];
-
-			context.set(inputKey, value);
+		this.routeInputs.forEach(function(input) {
+			context.set(input.name, input.value, input.inherited, input.ignored);
 		});
 	}
 }

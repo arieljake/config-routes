@@ -32,9 +32,16 @@ export class Route extends EventEmitter
 			.catch((err) =>
 			{
 				let erroredStep = this.steps[err.fnIndex];
-				this.emit('stepError', err.error, erroredStep.toObject(), this.toObject());
+				let stepObj = erroredStep.toObject();
+				let routeObj = this.toObject();
 			
-				deferred.reject(err);
+				this.emit('stepError', err.error, stepObj, routeObj);
+			
+				deferred.reject({
+					step: stepObj,
+					error: err.error,
+					route: routeObj
+				});
 			});
 
 		return deferred.promise;

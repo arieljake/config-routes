@@ -30,8 +30,14 @@ var Route = function Route(id, name, steps, context) {
       deferred.resolve();
     }).catch((function(err) {
       var erroredStep = $__0.steps[err.fnIndex];
-      $__0.emit('stepError', err.error, erroredStep.toObject(), $__0.toObject());
-      deferred.reject(err);
+      var stepObj = erroredStep.toObject();
+      var routeObj = $__0.toObject();
+      $__0.emit('stepError', err.error, stepObj, routeObj);
+      deferred.reject({
+        step: stepObj,
+        error: err.error,
+        route: routeObj
+      });
     }));
     return deferred.promise;
   },

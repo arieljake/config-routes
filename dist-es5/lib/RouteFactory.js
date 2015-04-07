@@ -16,11 +16,16 @@ var RouteFactory = function RouteFactory(routeLib, fnLib, routeEvents) {
   this.routeLib = routeLib;
   this.fnLib = fnLib;
   this.routeEventHandler = new RouteEventHandler(routeEvents);
-  this.routeInputs = {};
+  this.routeInputs = [];
 };
 ($traceurRuntime.createClass)(RouteFactory, {
-  addRouteInput: function(name, value) {
-    this.routeInputs[name] = value;
+  addRouteInput: function(name, value, isInherited, isIgnoredOnDump) {
+    this.routeInputs.push({
+      name: name,
+      value: value,
+      inherited: isInherited,
+      ignored: isIgnoredOnDump
+    });
   },
   get: function(name, context) {
     var routeDefinition = this.routeLib.get(name);
@@ -54,11 +59,9 @@ var RouteFactory = function RouteFactory(routeLib, fnLib, routeEvents) {
     }));
   },
   addInputsToContext: function(context) {
-    var $__0 = this;
-    Object.keys(this.routeInputs).map((function(inputKey) {
-      var value = $__0.routeInputs[inputKey];
-      context.set(inputKey, value);
-    }));
+    this.routeInputs.forEach(function(input) {
+      context.set(input.name, input.value, input.inherited, input.ignored);
+    });
   }
 }, {});
 //# sourceURL=src/lib/RouteFactory.js

@@ -1,5 +1,6 @@
 'use strict';
 
+let _ = require('lodash');
 let ObjectPath = require('../utils/ObjectPath').ObjectPath;
 let VariableString = require('../utils/VariableString').VariableString;
 
@@ -9,6 +10,7 @@ export class RouteContext
 	{
 		this.model = state || {};
 		this.inheritedProps = [];
+		this.excludedOnDumpProps = [];
 	}
 
 	get(name)
@@ -18,7 +20,7 @@ export class RouteContext
 		return path.getValueIn(this.model);
 	}
 
-	set(name, value, inherited)
+	set(name, value, inherited, excludedOnDump)
 	{
 		if (!name)
 			return;
@@ -30,6 +32,11 @@ export class RouteContext
 		if (inherited === true)
 		{
 			this.inheritedProps.push(name);
+		}
+		
+		if (excludedOnDump === true)
+		{
+			this.excludedOnDumpProps.push(name);
 		}
 	}
 	
@@ -63,6 +70,6 @@ export class RouteContext
 
 	toObject()
 	{
-		return this.model;
+		return _.omit(this.model, this.excludedOnDumpProps);
 	}
 };

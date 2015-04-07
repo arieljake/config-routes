@@ -7,11 +7,13 @@ Object.defineProperties(exports, {
 });
 var __moduleName = "dist-es5/lib/RouteContext";
 'use strict';
+var _ = require('lodash');
 var ObjectPath = require('../utils/ObjectPath').ObjectPath;
 var VariableString = require('../utils/VariableString').VariableString;
 var RouteContext = function RouteContext(state) {
   this.model = state || {};
   this.inheritedProps = [];
+  this.excludedOnDumpProps = [];
 };
 var $RouteContext = RouteContext;
 ($traceurRuntime.createClass)(RouteContext, {
@@ -19,13 +21,16 @@ var $RouteContext = RouteContext;
     var path = new ObjectPath(name);
     return path.getValueIn(this.model);
   },
-  set: function(name, value, inherited) {
+  set: function(name, value, inherited, excludedOnDump) {
     if (!name)
       return ;
     var path = new ObjectPath(name);
     path.setValueIn(this.model, value);
     if (inherited === true) {
       this.inheritedProps.push(name);
+    }
+    if (excludedOnDump === true) {
+      this.excludedOnDumpProps.push(name);
     }
   },
   unset: function(name) {
@@ -47,7 +52,7 @@ var $RouteContext = RouteContext;
     return child;
   },
   toObject: function() {
-    return this.model;
+    return _.omit(this.model, this.excludedOnDumpProps);
   }
 }, {});
 ;

@@ -216,8 +216,9 @@ describe("Route", function()
 			{
 				try
 				{
-					assert.equal(err.fnIndex, 0, "expected step errored");
+					assert(err.step, "step returned");
 					assert(err.error, "error returned");
+					assert(err.route, "route returned");
 					assert.equal(err.error.message, "step error", "error matches");
 					
 					done();

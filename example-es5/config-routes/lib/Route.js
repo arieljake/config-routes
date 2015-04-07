@@ -34,8 +34,8 @@ var Route = function Route(id, name, steps, context) {
       var routeObj = $__0.toObject();
       $__0.emit('stepError', err.error, stepObj, routeObj);
       deferred.reject({
+        error: err,
         step: stepObj,
-        error: err.error,
         route: routeObj
       });
     }));

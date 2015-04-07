@@ -38,8 +38,8 @@ export class Route extends EventEmitter
 				this.emit('stepError', err.error, stepObj, routeObj);
 			
 				deferred.reject({
+					error: err,
 					step: stepObj,
-					error: err.error,
 					route: routeObj
 				});
 			});

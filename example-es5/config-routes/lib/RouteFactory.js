@@ -36,8 +36,8 @@ var RouteFactory = function RouteFactory(routeLib, fnLib, routeEvents) {
   create: function(name, routeDefinition, context) {
     if (!context) {
       context = new RouteContext();
+      this.addInputsToContext(context);
     }
-    this.addInputsToContext(context);
     var routeId = uuid.v1();
     var steps = this.createStepsForRoute(routeId, routeDefinition);
     var route = new Route(routeId, name, steps, context);

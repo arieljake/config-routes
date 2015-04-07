@@ -61,8 +61,9 @@ export class RouteContext
 		
 		this.inheritedProps.forEach((prop) => {
 			let value = this.get(prop);
+			let isExcludedOnDump = this.excludedOnDumpProps.indexOf(prop) >= 0;
 			
-			child.set(prop, value, true);
+			child.set(prop, value, true, isExcludedOnDump);
 		});
 		
 		return child;

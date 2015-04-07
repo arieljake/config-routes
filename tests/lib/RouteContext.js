@@ -117,4 +117,24 @@ describe("Route", function()
 		assert.equal(Object.keys(childContext.model).length, 1, "empty state");
 		assert.equal(childContext.model.foo, 1, "value matches");
 	});
+	
+	it("child context excludes same props on dump", function()
+	{
+		var routeContext = new RouteContext();
+
+		routeContext.set("foo", 1, true, false);
+		routeContext.set("bar", 2, true, true);
+		
+		var childContext = routeContext.child();
+		
+		assert.equal(childContext.model.foo, 1, "value 1 inherited");
+		assert.equal(childContext.model.bar, 2, "value 2 inherited");
+		
+		var childObj = childContext.toObject();
+		
+		assert.equal(childObj.foo, 1, "value 1 dumped");
+		assert.isUndefined(childObj.bar, "value 2 excluded");
+		
+		assert.deepEqual(childObj, routeContext.toObject(), "dumps match");
+	});
 });

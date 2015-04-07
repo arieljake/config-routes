@@ -65,7 +65,7 @@ var FnsRunner = function FnsRunner(fns) {
               $ctx.state = 13;
               return Q.reject({
                 fnIndex: fnIndex,
-                error: err
+                error: err.message || err
               });
             case 13:
               $ctx.maybeThrow();

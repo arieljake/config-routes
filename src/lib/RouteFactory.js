@@ -42,9 +42,8 @@ export class RouteFactory
 		if (!context)
 		{
 			context = new RouteContext();
+			this.addInputsToContext(context);
 		}
-		
-		this.addInputsToContext(context);
 		
 		var routeId = uuid.v1();
 		var steps = this.createStepsForRoute(routeId, routeDefinition);		

@@ -126,7 +126,7 @@ describe("Route", function()
 			try
 			{
 				assert.equal(value, 1, "step ran");
-				assert.equal(error.message, "step error", "error matches");
+				assert.equal(error, "step error", "error matches");
 				assert.deepEqual(stepObj, step1.toObject(), "step obj matches");
 				assert.deepEqual(routeObj, route.toObject(), "route obj matches");
 				
@@ -219,7 +219,7 @@ describe("Route", function()
 					assert(err.step, "step returned");
 					assert(err.error, "error returned");
 					assert(err.route, "route returned");
-					assert.equal(err.error.message, "step error", "error matches");
+					assert.equal(err.error.error, "step error", "error matches");
 					
 					done();
 				}

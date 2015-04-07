@@ -37,7 +37,7 @@ export class FnsRunner extends EventEmitter
 				
 				yield Q.reject({
 					fnIndex: fnIndex,
-					error: err
+					error: err.message || err
 				});
 			}
 		};

@@ -6,16 +6,16 @@
 [0m  FnsRunner[0m
 [2K[0G  [32m  ✓[0m[90m promise completes with no fns [0m
 [2K[0G  [32m  ✓[0m[90m promise completes after fns return [0m
-[2K[0G  [32m  ✓[0m[90m promise completes after fns promise compeletes [0m[31m(103ms)[0m
+[2K[0G  [32m  ✓[0m[90m promise completes after fns promise compeletes [0m[31m(102ms)[0m
 [2K[0G  [32m  ✓[0m[90m promise catches after fns throw error [0m
-[2K[0G  [32m  ✓[0m[90m promise catches after fns reject promise [0m[31m(102ms)[0m
+[2K[0G  [32m  ✓[0m[90m promise catches after fns reject promise [0m[31m(103ms)[0m
 [2K[0G  [32m  ✓[0m[90m promise catches after 2nd fn throws error [0m
 [2K[0G  [32m  ✓[0m[90m runnerStarting event fires [0m
 [2K[0G  [32m  ✓[0m[90m runnerComplete event fires [0m
 [2K[0G  [32m  ✓[0m[90m runnerStarting event fires once [0m
 [2K[0G  [32m  ✓[0m[90m fnComplete fires once for each fn [0m
 [2K[0G  [32m  ✓[0m[90m fnError fires if fn throws error [0m
-[2K[0G  [32m  ✓[0m[90m fn error trigger promise catch [0m
+[2K[0G  [32m  ✓[0m[90m fn error trigger promise rejection with error message [0m
 [2K[0G  [32m  ✓[0m[90m fn error stops sequence [0m[31m(102ms)[0m
 
 [0m  Route[0m
@@ -37,11 +37,12 @@
 [2K[0G  [32m  ✓[0m[90m toObject omits excluded props [0m
 [2K[0G  [32m  ✓[0m[90m child context has empty state with no inherited props [0m
 [2K[0G  [32m  ✓[0m[90m child context has inherited props [0m
+[2K[0G  [32m  ✓[0m[90m child context excludes same props on dump [0m
 
 [0m  RouteStep[0m
 [2K[0G  [32m  ✓[0m[90m getExecutable binds context and config [0m
 [2K[0G  [32m  ✓[0m[90m toObject returns id, name and desc [0m
 
 
-[92m [0m[32m 32 passing[0m[90m (448ms)[0m
+[92m [0m[32m 33 passing[0m[90m (452ms)[0m
 

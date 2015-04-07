@@ -47,7 +47,8 @@ var $RouteContext = RouteContext;
     var child = new $RouteContext();
     this.inheritedProps.forEach((function(prop) {
       var value = $__0.get(prop);
-      child.set(prop, value, true);
+      var isExcludedOnDump = $__0.excludedOnDumpProps.indexOf(prop) >= 0;
+      child.set(prop, value, true, isExcludedOnDump);
     }));
     return child;
   },

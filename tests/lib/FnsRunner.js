@@ -302,7 +302,7 @@ describe("FnsRunner", function()
 		runner.run();
 	});
 
-	it("fn error trigger promise catch", function(done)
+	it("fn error trigger promise rejection with error message", function(done)
 	{
 		var fn1 = function()
 		{
@@ -318,7 +318,7 @@ describe("FnsRunner", function()
 				{
 					assert.equal(err.fnIndex, 0, "err contains index of fn that err'd");
 					assert(err.error, "err contains thrown error");
-					assert.equal(err.error.message, "test error", "error matches");
+					assert.equal(err.error, "test error", "error matches");
 
 					done();
 				}

@@ -1,12 +1,19 @@
 
 [0m[0m
-[0m  FnTranslator[0m
-[2K[0G  [32m  ✓[0m[90m when translating with a variable string [0m
+[0m  FnLibrary[0m
+[2K[0G  [32m  ✓[0m[90m returns fn by id [0m[31m(116ms)[0m
 
-[0m  RouteWriter[0m
-[2K[0G  [32m  ✓[0m[90m when writing a step with a stubbed translator [0m
-[2K[0G  [32m  ✓[0m[90m when writing a route with a stubbed translator [0m
+[0m  FnsRunner[0m
+[2K[0G  [32m  ✓[0m[90m promise completes after fns return [0m
+[2K[0G  [32m  ✓[0m[90m promise completes after fns promise compeletes [0m[31m(102ms)[0m
+[2K[0G  [32m  ✓[0m[90m promise catches after fns throw error [0m
+[2K[0G  [32m  ✓[0m[90m promise catches after fns reject promise [0m[31m(102ms)[0m
+[2K[0G  [32m  ✓[0m[90m promise catches after 2nd fn throws error [0m
+
+[0m  RouteStep[0m
+[2K[0G  [32m  ✓[0m[90m getExecutable binds context and config [0m
+[2K[0G  [32m  ✓[0m[90m toObject returns id, name and desc [0m
 
 
-[92m [0m[32m 3 passing[0m[90m (7ms)[0m
+[92m [0m[32m 8 passing[0m[90m (335ms)[0m
 

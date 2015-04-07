@@ -7,45 +7,23 @@ Object.defineProperties(exports, {
 });
 var __moduleName = "dist-es5/lib/RouteStep";
 'use strict';
-var q = require('q');
 var _ = require('lodash');
-var uuid = require('uuid');
-var RouteStep = function RouteStep(definition, fnLib, index) {
-  this.id = uuid.v1();
-  this.definition = definition;
-  this.fnLib = fnLib;
-  this.index = index;
+var RouteStep = function RouteStep(id, name, desc, stepFn, stepConfig) {
+  this.id = id;
+  this.name = name;
+  this.desc = desc;
+  this.stepFn = stepFn;
+  this.stepConfig = stepConfig;
 };
 ($traceurRuntime.createClass)(RouteStep, {
-  get name() {
-    return this.definition.fn;
-  },
-  get desc() {
-    return this.definition.desc;
-  },
-  get hasErrorHandler() {
-    return this.definition.hasOwnProperty("onError");
-  },
   getExecutable: function(context) {
-    var stepFn = this.fnLib.get(this.definition.fn);
-    if (!stepFn)
-      throw new Error("function not found: " + this.definition.fn);
-    var executable = _.bind(stepFn, null, context, this.definition.config);
-    return executable;
-  },
-  getErrorHandler: function(context) {
-    var stepFn = this.fnLib.get(this.definition.onError.fn);
-    if (!stepFn)
-      throw new Error("route step has no error handler");
-    var executable = _.bind(stepFn, null, context, this.definition.onError.config);
-    return executable;
+    return _.bind(this.stepFn, null, context, this.stepConfig);
   },
   toObject: function() {
     return {
       id: this.id,
       name: this.name,
-      config: this.definition,
-      index: this.index
+      desc: this.desc
     };
   }
 }, {});

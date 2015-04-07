@@ -1,8 +1,11 @@
 'use strict';
 
+let uuid = require('uuid');
+
 let Route = require('./Route').Route;
 let RouteEventHandler = require('./RouteEventHandler').RouteEventHandler;
 let RouteContext = require('./RouteContext').RouteContext;
+let RouteStep = require('./RouteStep').RouteStep;
 
 export class RouteFactory
 {
@@ -35,10 +38,12 @@ export class RouteFactory
 		{
 			context = new RouteContext();
 		}
-
-		var route = new Route(name, routeDefinition, this.fnLib, context);
-
-		this.addInputsToRoute(route);
+		
+		this.addInputsToContext(context);
+		
+		var routeId = uuid.v1();
+		var steps = this.createStepsForRoute(routeId, routeDefinition);		
+		var route = new Route(routeId, name, steps, context);
 		
 		if (this.routeEventHandler)
 			this.routeEventHandler.handle(route);
@@ -46,13 +51,30 @@ export class RouteFactory
 		return route;
 	}
 	
-	addInputsToRoute(route)
+	createStepsForRoute(routeId, definition)
+	{
+		return definition.map((stepDef, index) =>
+		{
+			var stepId = routeId + "." + index;
+			var fnId = stepDef.fn;
+			var desc = stepDef.desc;
+			var stepConfig = stepDef.config;
+			var stepFn = this.fnLib.get(fnId);
+			
+			if (!stepFn)
+				throw new Error("function not found: " + fnId);
+			
+			return new RouteStep(stepId, fnId, desc, stepFn, stepConfig);
+		});
+	}
+	
+	addInputsToContext(context)
 	{
 		Object.keys(this.routeInputs).map((inputKey) => 
 		{
 			var value = this.routeInputs[inputKey];
 
-			route.context.set(inputKey, value);
+			context.set(inputKey, value);
 		});
 	}
 }

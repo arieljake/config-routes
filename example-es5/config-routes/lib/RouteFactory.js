@@ -7,9 +7,11 @@ Object.defineProperties(exports, {
 });
 var __moduleName = "dist-es5/lib/RouteFactory";
 'use strict';
+var uuid = require('uuid');
 var Route = require('./Route').Route;
 var RouteEventHandler = require('./RouteEventHandler').RouteEventHandler;
 var RouteContext = require('./RouteContext').RouteContext;
+var RouteStep = require('./RouteStep').RouteStep;
 var RouteFactory = function RouteFactory(routeLib, fnLib, routeEvents) {
   this.routeLib = routeLib;
   this.fnLib = fnLib;
@@ -30,17 +32,32 @@ var RouteFactory = function RouteFactory(routeLib, fnLib, routeEvents) {
     if (!context) {
       context = new RouteContext();
     }
-    var route = new Route(name, routeDefinition, this.fnLib, context);
-    this.addInputsToRoute(route);
+    this.addInputsToContext(context);
+    var routeId = uuid.v1();
+    var steps = this.createStepsForRoute(routeId, routeDefinition);
+    var route = new Route(routeId, name, steps, context);
     if (this.routeEventHandler)
       this.routeEventHandler.handle(route);
     return route;
   },
-  addInputsToRoute: function(route) {
+  createStepsForRoute: function(routeId, definition) {
+    var $__0 = this;
+    return definition.map((function(stepDef, index) {
+      var stepId = routeId + "." + index;
+      var fnId = stepDef.fn;
+      var desc = stepDef.desc;
+      var stepConfig = stepDef.config;
+      var stepFn = $__0.fnLib.get(fnId);
+      if (!stepFn)
+        throw new Error("function not found: " + fnId);
+      return new RouteStep(stepId, fnId, desc, stepFn, stepConfig);
+    }));
+  },
+  addInputsToContext: function(context) {
     var $__0 = this;
     Object.keys(this.routeInputs).map((function(inputKey) {
       var value = $__0.routeInputs[inputKey];
-      route.context.set(inputKey, value);
+      context.set(inputKey, value);
     }));
   }
 }, {});

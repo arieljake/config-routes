@@ -22,15 +22,14 @@ var FnsRunner = function FnsRunner(fns) {
         while (true)
           switch ($ctx.state) {
             case 0:
-              if (fnIndex === 0)
-                emitter.emit('runnerStarting', fnIndex);
-              $ctx.state = 20;
+              $ctx.pushTry(18, null);
+              $ctx.state = 21;
               break;
-            case 20:
-              $ctx.pushTry(12, null);
-              $ctx.state = 15;
+            case 21:
+              emitter.emit('runnerStarting');
+              $ctx.state = 9;
               break;
-            case 15:
+            case 9:
               $ctx.state = (fnIndex < fns.length) ? 1 : 7;
               break;
             case 1:
@@ -43,26 +42,32 @@ var FnsRunner = function FnsRunner(fns) {
             case 4:
               emitter.emit('fnComplete', fnIndex);
               fnIndex++;
-              if (fnIndex >= fns.length)
-                emitter.emit('runnerComplete', fnIndex);
-              $ctx.state = 15;
+              $ctx.state = 9;
               break;
             case 7:
+              emitter.emit('runnerComplete');
+              $ctx.state = 11;
+              break;
+            case 11:
               $ctx.popTry();
               $ctx.state = -2;
               break;
-            case 12:
+            case 18:
               $ctx.popTry();
               err = $ctx.storedException;
-              $ctx.state = 8;
+              $ctx.state = 16;
               break;
-            case 8:
-              $ctx.state = 9;
+            case 16:
+              emitter.emit('fnError', fnIndex, err);
+              $ctx.state = 17;
+              break;
+            case 17:
+              $ctx.state = 13;
               return Q.reject({
                 fnIndex: fnIndex,
                 error: err
               });
-            case 9:
+            case 13:
               $ctx.maybeThrow();
               $ctx.state = -2;
               break;

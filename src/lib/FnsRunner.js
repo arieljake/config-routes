@@ -17,24 +17,24 @@ export class FnsRunner extends EventEmitter
 		let emitter = this;
 		let gen = function*()
 		{
-			if (fnIndex === 0)
-				emitter.emit('runnerStarting', fnIndex);
-			
 			try
 			{
+				emitter.emit('runnerStarting');
+			
 				while (fnIndex < fns.length)
 				{
 					yield fns[fnIndex]();
 
 					emitter.emit('fnComplete', fnIndex);
-					fnIndex++;
-					
-					if (fnIndex >= fns.length)
-						emitter.emit('runnerComplete', fnIndex);
+					fnIndex++;	
 				}
+
+				emitter.emit('runnerComplete');
 			}
 			catch (err)
 			{
+				emitter.emit('fnError', fnIndex, err);
+				
 				yield Q.reject({
 					fnIndex: fnIndex,
 					error: err

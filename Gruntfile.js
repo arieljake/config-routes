@@ -64,7 +64,7 @@ module.exports = function(grunt)
 					quiet: false,
 					clearRequireCache: false
 				},
-				src: ['dist-es5/**/*.test.js']
+				src: ['tests/**/*.js']
 			}
 		}
 	});

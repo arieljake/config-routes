@@ -2,40 +2,17 @@
 
 let Q = require('q');
 let _ = require('lodash');
-let uuid = require('uuid');
 let EventEmitter = require('events').EventEmitter;
 let FnsRunner = require('./FnsRunner').FnsRunner;
-let Step = require('./RouteStep').RouteStep;
 
 export class Route extends EventEmitter
 {
-	constructor(name, definition, fnLib, context)
+	constructor(id, name, steps, context)
 	{
-		this.id = uuid.v1();
+		this.id = id;
 		this.name = name;
-		this.definition = definition;
-		this.fnLib = fnLib;
+		this.steps = steps;
 		this.context = context;
-		this.steps = this.getSteps();
-	}
-
-	getSteps()
-	{
-		return this.definition.map((stepDef, index) =>
-		{
-			var step = new Step(stepDef, this.fnLib);
-			step.index = index;
-
-			return step;
-		});
-	}
-
-	get desc()
-	{
-		return this.steps.map((step) =>
-		{
-			return step.desc;
-		}).join("<br>");
 	}
 
 	run()
@@ -56,12 +33,6 @@ export class Route extends EventEmitter
 			{
 				let erroredStep = this.steps[err.fnIndex];
 				this.emit('stepError', err.error, erroredStep.toObject(), this.toObject());
-				
-				if (erroredStep.hasErrorHandler)
-				{
-					let errorHandler = erroredStep.getErrorHandler(this.context);
-					errorHandler();
-				}
 			
 				deferred.reject(err);
 			});
@@ -90,16 +61,10 @@ export class Route extends EventEmitter
 
 	toObject()
 	{
-		var hiddenContextKeys = _.filter(Object.keys(this.context), function(key) {
-			return key.indexOf("_") === 0;
-		})
-		
 		return {
 			id: this.id,
 			name: this.name,
-			fnLib: this.fnLib.toObject(),
-			definition: this.definition,
-			state: _.omit(this.context.toObject(), hiddenContextKeys)
+			state: this.context.toObject()
 		};
 	}
 };

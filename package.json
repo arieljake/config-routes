@@ -18,6 +18,7 @@
   "bugs": "https://github.com/arieljake/config-routes/issues",
   "homepage": "https://github.com/arieljake/config-routes",
   "dependencies": {
+    "eventemitter3": "^0.1.6",
     "lodash": "^2.4.1",
     "mongodb": "^1.4.30",
     "q": "^1.1.2",

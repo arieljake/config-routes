@@ -6,18 +6,21 @@ Object.defineProperties(exports, {
   __esModule: {value: true}
 });
 var __moduleName = "dist-es5/lib/FnsRunner";
-var $__q__;
+var $__q__,
+    $__eventemitter3__;
 'use strict';
 var Q = ($__q__ = require("q"), $__q__ && $__q__.__esModule && $__q__ || {default: $__q__}).default;
-var EventEmitter = require('events').EventEmitter;
+var EventEmitter = ($__eventemitter3__ = require("eventemitter3"), $__eventemitter3__ && $__eventemitter3__.__esModule && $__eventemitter3__ || {default: $__eventemitter3__}).default;
 var FnsRunner = function FnsRunner(fns) {
+  $traceurRuntime.superConstructor($FnsRunner).call(this);
   this.fns = fns;
 };
+var $FnsRunner = FnsRunner;
 ($traceurRuntime.createClass)(FnsRunner, {run: function() {
     var fns = this.fns;
     var fnIndex = 0;
     var emitter = this;
-    var gen = $traceurRuntime.initGeneratorFunction(function $__2() {
+    var gen = $traceurRuntime.initGeneratorFunction(function $__3() {
       var err;
       return $traceurRuntime.createGeneratorInstance(function($ctx) {
         while (true)
@@ -75,7 +78,7 @@ var FnsRunner = function FnsRunner(fns) {
             default:
               return $ctx.end();
           }
-      }, $__2, this);
+      }, $__3, this);
     });
     return Q.async(gen)();
   }}, {}, EventEmitter);

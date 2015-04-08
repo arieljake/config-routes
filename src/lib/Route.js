@@ -1,7 +1,6 @@
 'use strict';
 
-let EventEmitter = require('events').EventEmitter;
-
+import {default as EventEmitter} from "eventemitter3";
 import {default as Q} from 'q';
 import {default as _} from 'lodash';
 import {FnsRunner} from './FnsRunner';

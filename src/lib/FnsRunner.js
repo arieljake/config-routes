@@ -1,12 +1,14 @@
 'use strict';
 
 import {default as Q} from "q";
-let EventEmitter = require('events').EventEmitter;
+import {default as EventEmitter} from "eventemitter3";
 
 export class FnsRunner extends EventEmitter
 {
 	constructor(fns)
 	{
+		super();
+		
 		this.fns = fns;
 	}
 

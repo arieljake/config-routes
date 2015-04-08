@@ -1,6 +1,6 @@
 {
 	"name": "ConfigRoutes",
-	"version": "0.0.2",
+	"version": "0.0.1",
 	"homepage": "https://www.npmjs.com/package/config-routes",
 	"description": "Configuration based routing",
 	"main": "dist-es5/index.js",

@@ -6,31 +6,33 @@ Object.defineProperties(exports, {
   __esModule: {value: true}
 });
 var __moduleName = "dist-es5/utils/ObjectPath";
-var _ = require("lodash");
-var ObjectPathPart = require("./ObjectPathPart").ObjectPathPart;
+var $__lodash__,
+    $__dist_45_es5_47_utils_47_ObjectPathPart__;
+var _ = ($__lodash__ = require("lodash"), $__lodash__ && $__lodash__.__esModule && $__lodash__ || {default: $__lodash__}).default;
+var ObjectPathPart = ($__dist_45_es5_47_utils_47_ObjectPathPart__ = require("./ObjectPathPart"), $__dist_45_es5_47_utils_47_ObjectPathPart__ && $__dist_45_es5_47_utils_47_ObjectPathPart__.__esModule && $__dist_45_es5_47_utils_47_ObjectPathPart__ || {default: $__dist_45_es5_47_utils_47_ObjectPathPart__}).ObjectPathPart;
 var ObjectPath = function ObjectPath(path) {
   this.path = path;
 };
 ($traceurRuntime.createClass)(ObjectPath, {
   deleteIn: function(obj) {
-    var $__1 = this.descendIn(obj),
-        finalProperty = $__1.finalProperty,
-        object = $__1.object;
+    var $__3 = this.descendIn(obj),
+        finalProperty = $__3.finalProperty,
+        object = $__3.object;
     delete object[finalProperty];
   },
   getValueIn: function(obj) {
-    var $__1 = this.descendIn(obj),
-        finalProperty = $__1.finalProperty,
-        object = $__1.object;
+    var $__3 = this.descendIn(obj),
+        finalProperty = $__3.finalProperty,
+        object = $__3.object;
     if (!finalProperty || !object)
       return undefined;
     else
       return object[finalProperty];
   },
   setValueIn: function(obj, value) {
-    var $__1 = this.descendIn(obj),
-        finalProperty = $__1.finalProperty,
-        object = $__1.object;
+    var $__3 = this.descendIn(obj),
+        finalProperty = $__3.finalProperty,
+        object = $__3.object;
     var finalPathPart = new ObjectPathPart(finalProperty);
     finalPathPart.setIn(object, value);
   },

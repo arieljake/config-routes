@@ -3,7 +3,8 @@
 let fs = require('fs');
 let path = require('path');
 let wrench = require('wrench');
-let _ = require("lodash");
+
+import {default as _} from 'lodash';
 
 export class Library
 {

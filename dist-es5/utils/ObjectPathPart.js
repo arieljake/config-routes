@@ -6,7 +6,8 @@ Object.defineProperties(exports, {
   __esModule: {value: true}
 });
 var __moduleName = "dist-es5/utils/ObjectPathPart";
-var _ = require("lodash");
+var $__lodash__;
+var _ = ($__lodash__ = require("lodash"), $__lodash__ && $__lodash__.__esModule && $__lodash__ || {default: $__lodash__}).default;
 var ObjectPathPart = function ObjectPathPart(part) {
   this.part = part;
 };

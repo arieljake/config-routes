@@ -1,8 +1,9 @@
 'use strict';
 
-let _ = require('lodash');
-let ObjectPath = require('../utils/ObjectPath').ObjectPath;
-let VariableString = require('../utils/VariableString').VariableString;
+
+import {default as _} from 'lodash';
+import {ObjectPath} from '../utils/ObjectPath';
+import {VariableString} from '../utils/VariableString';
 
 export class RouteContext
 {

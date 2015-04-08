@@ -1,9 +1,10 @@
 'use strict';
 
-let Q = require('q');
-let _ = require('lodash');
 let EventEmitter = require('events').EventEmitter;
-let FnsRunner = require('./FnsRunner').FnsRunner;
+
+import {default as Q} from 'q';
+import {default as _} from 'lodash';
+import {FnsRunner} from './FnsRunner';
 
 export class Route extends EventEmitter
 {

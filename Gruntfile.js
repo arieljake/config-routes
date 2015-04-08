@@ -3,6 +3,12 @@ module.exports = function(grunt)
 	grunt.initConfig(
 	{
 		pkg: grunt.file.readJSON('package.json'),
+		
+		clean:
+		{
+			dist: ['dist-es5']
+		},
+		
 		traceur:
 		{
 			options:
@@ -20,39 +26,10 @@ module.exports = function(grunt)
 					cwd: 'src/',
 					src: ['**/*.js'],
 					dest: 'dist-es5'
-				},
-				{
-					expand: true,
-					cwd: 'example-src/',
-					src: ['**/*.js'],
-					dest: 'example-es5'
 				}]
 			}
 		},
-		copy:
-		{
-			example:
-			{
-				files: [
-				{
-					expand: true,
-					cwd: 'dist-es5/',
-					src: ['**'],
-					dest: 'example-es5/config-routes'
-				},
-				{
-					expand: true,
-					cwd: 'example-src/',
-					src: ['routes/**/*.json'],
-					dest: 'example-es5/'
-				}]
-			}
-		},
-		clean:
-		{
-			dist: ['dist-es5'],
-			example: ['example-es5']
-		},
+		
 		mochaTest:
 		{
 			dist:
@@ -74,6 +51,6 @@ module.exports = function(grunt)
 	grunt.loadNpmTasks('grunt-mocha-test');
 	grunt.loadNpmTasks('grunt-traceur');
 
-	grunt.registerTask('build', ['clean:dist', 'clean:example', 'traceur:all', 'copy:example']);
+	grunt.registerTask('build', ['clean:dist', 'traceur:all']);
 	grunt.registerTask('test', ['mochaTest:dist']);
 };

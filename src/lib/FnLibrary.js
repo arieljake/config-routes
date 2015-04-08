@@ -1,6 +1,6 @@
 'use strict';
 
-let Library = require('./Library').Library;
+import {Library} from "./Library";
 
 export class FnLibrary
 {

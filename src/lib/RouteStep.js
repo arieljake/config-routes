@@ -1,6 +1,6 @@
 'use strict';
 
-let _ = require('lodash');
+import {default as _} from 'lodash';
 
 export class RouteStep
 {

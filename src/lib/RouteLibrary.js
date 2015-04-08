@@ -1,7 +1,8 @@
 'use strict';
 
 let fs = require("fs");
-let Library = require('./Library').Library;
+
+import {Library} from './Library';
 
 export class RouteLibrary
 {

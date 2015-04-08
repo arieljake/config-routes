@@ -6,10 +6,13 @@ Object.defineProperties(exports, {
   __esModule: {value: true}
 });
 var __moduleName = "dist-es5/lib/RouteContext";
+var $__lodash__,
+    $__dist_45_es5_47_utils_47_ObjectPath__,
+    $__dist_45_es5_47_utils_47_VariableString__;
 'use strict';
-var _ = require('lodash');
-var ObjectPath = require('../utils/ObjectPath').ObjectPath;
-var VariableString = require('../utils/VariableString').VariableString;
+var _ = ($__lodash__ = require("lodash"), $__lodash__ && $__lodash__.__esModule && $__lodash__ || {default: $__lodash__}).default;
+var ObjectPath = ($__dist_45_es5_47_utils_47_ObjectPath__ = require("../utils/ObjectPath"), $__dist_45_es5_47_utils_47_ObjectPath__ && $__dist_45_es5_47_utils_47_ObjectPath__.__esModule && $__dist_45_es5_47_utils_47_ObjectPath__ || {default: $__dist_45_es5_47_utils_47_ObjectPath__}).ObjectPath;
+var VariableString = ($__dist_45_es5_47_utils_47_VariableString__ = require("../utils/VariableString"), $__dist_45_es5_47_utils_47_VariableString__ && $__dist_45_es5_47_utils_47_VariableString__.__esModule && $__dist_45_es5_47_utils_47_VariableString__ || {default: $__dist_45_es5_47_utils_47_VariableString__}).VariableString;
 var RouteContext = function RouteContext(state) {
   this.model = state || {};
   this.inheritedProps = [];
@@ -43,11 +46,11 @@ var $RouteContext = RouteContext;
     return VariableString(varString, this.model);
   },
   child: function() {
-    var $__0 = this;
+    var $__3 = this;
     var child = new $RouteContext();
     this.inheritedProps.forEach((function(prop) {
-      var value = $__0.get(prop);
-      var isExcludedOnDump = $__0.excludedOnDumpProps.indexOf(prop) >= 0;
+      var value = $__3.get(prop);
+      var isExcludedOnDump = $__3.excludedOnDumpProps.indexOf(prop) >= 0;
       child.set(prop, value, true, isExcludedOnDump);
     }));
     return child;

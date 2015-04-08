@@ -6,8 +6,9 @@ Object.defineProperties(exports, {
   __esModule: {value: true}
 });
 var __moduleName = "dist-es5/lib/FnLibrary";
+var $__dist_45_es5_47_lib_47_Library__;
 'use strict';
-var Library = require('./Library').Library;
+var Library = ($__dist_45_es5_47_lib_47_Library__ = require("./Library"), $__dist_45_es5_47_lib_47_Library__ && $__dist_45_es5_47_lib_47_Library__.__esModule && $__dist_45_es5_47_lib_47_Library__ || {default: $__dist_45_es5_47_lib_47_Library__}).Library;
 var FnLibrary = function FnLibrary(fnPaths) {
   this.lib = new Library(fnPaths, /\.js$/);
 };

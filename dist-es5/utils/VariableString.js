@@ -6,8 +6,10 @@ Object.defineProperties(exports, {
   __esModule: {value: true}
 });
 var __moduleName = "dist-es5/utils/VariableString";
-var _ = require("lodash");
-var ObjectPath = require("./ObjectPath").ObjectPath;
+var $__lodash__,
+    $__dist_45_es5_47_utils_47_ObjectPath__;
+var _ = ($__lodash__ = require("lodash"), $__lodash__ && $__lodash__.__esModule && $__lodash__ || {default: $__lodash__}).default;
+var ObjectPath = ($__dist_45_es5_47_utils_47_ObjectPath__ = require("./ObjectPath"), $__dist_45_es5_47_utils_47_ObjectPath__ && $__dist_45_es5_47_utils_47_ObjectPath__.__esModule && $__dist_45_es5_47_utils_47_ObjectPath__ || {default: $__dist_45_es5_47_utils_47_ObjectPath__}).ObjectPath;
 function VariableString(value, context, delim) {
   if (_.isString(value) === false)
     return value;

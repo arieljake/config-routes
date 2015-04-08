@@ -1,11 +1,10 @@
 'use strict';
 
-let uuid = require('uuid');
-
-let Route = require('./Route').Route;
-let RouteEventHandler = require('./RouteEventHandler').RouteEventHandler;
-let RouteContext = require('./RouteContext').RouteContext;
-let RouteStep = require('./RouteStep').RouteStep;
+import {default as uuid} from 'uuid';
+import {Route} from './Route';
+import {RouteEventHandler} from './RouteEventHandler';
+import {RouteContext} from './RouteContext';
+import {RouteStep} from './RouteStep';
 
 export class RouteFactory
 {

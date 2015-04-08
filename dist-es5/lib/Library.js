@@ -6,11 +6,12 @@ Object.defineProperties(exports, {
   __esModule: {value: true}
 });
 var __moduleName = "dist-es5/lib/Library";
+var $__lodash__;
 'use strict';
 var fs = require('fs');
 var path = require('path');
 var wrench = require('wrench');
-var _ = require("lodash");
+var _ = ($__lodash__ = require("lodash"), $__lodash__ && $__lodash__.__esModule && $__lodash__ || {default: $__lodash__}).default;
 var Library = function Library(dirs, fileNameRegex) {
   this.dirs = _.flatten([dirs]);
   this.fileNameRegex = fileNameRegex || /\.js$/;
@@ -33,11 +34,11 @@ var Library = function Library(dirs, fileNameRegex) {
     }));
   },
   loadDir: function(dir) {
-    var $__0 = this;
+    var $__1 = this;
     if (!dir)
       return [];
     return wrench.readdirSyncRecursive(dir).filter((function(fileName) {
-      return $__0.fileNameRegex.test(fileName);
+      return $__1.fileNameRegex.test(fileName);
     })).map((function(fileName) {
       var name = path.basename(fileName, path.extname(fileName));
       var id = path.join(path.dirname(fileName), name);

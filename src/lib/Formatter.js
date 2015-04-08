@@ -1,8 +1,9 @@
 'use strict';
 
 let MongoDbId = require('mongodb').ObjectID;
-let uuid = require('uuid');
-let _ = require('lodash');
+
+import {default as uuid} from 'uuid';
+import {default as _} from 'lodash';
 
 let formatTypeEqualsTest = function(type)
 {

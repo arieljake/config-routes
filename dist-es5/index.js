@@ -3,24 +3,24 @@ Object.defineProperties(exports, {
   createRoutes: {get: function() {
       return createRoutes;
     }},
-  createRouteWriter: {get: function() {
-      return createRouteWriter;
-    }},
   createLibrary: {get: function() {
       return createLibrary;
     }},
   __esModule: {value: true}
 });
 var __moduleName = "dist-es5/index";
+var $__lodash__,
+    $__dist_45_es5_47_lib_47_RouteFactory__,
+    $__dist_45_es5_47_lib_47_FnLibrary__,
+    $__dist_45_es5_47_lib_47_RouteLibrary__,
+    $__dist_45_es5_47_lib_47_Library__;
 global.$traceurRuntime = require('traceur-runtime');
 var path = require("path");
-var _ = require("lodash");
-var RouteFactory = require('./lib/RouteFactory').RouteFactory;
-var FnLibrary = require('./lib/FnLibrary').FnLibrary;
-var RouteLibrary = require('./lib/RouteLibrary').RouteLibrary;
-var StepWriter = require('./lib/StepWriter').StepWriter;
-var RouteWriter = require('./lib/RouteWriter').RouteWriter;
-var Library = require('./lib/Library').Library;
+var _ = ($__lodash__ = require("lodash"), $__lodash__ && $__lodash__.__esModule && $__lodash__ || {default: $__lodash__}).default;
+var RouteFactory = ($__dist_45_es5_47_lib_47_RouteFactory__ = require("./lib/RouteFactory"), $__dist_45_es5_47_lib_47_RouteFactory__ && $__dist_45_es5_47_lib_47_RouteFactory__.__esModule && $__dist_45_es5_47_lib_47_RouteFactory__ || {default: $__dist_45_es5_47_lib_47_RouteFactory__}).RouteFactory;
+var FnLibrary = ($__dist_45_es5_47_lib_47_FnLibrary__ = require("./lib/FnLibrary"), $__dist_45_es5_47_lib_47_FnLibrary__ && $__dist_45_es5_47_lib_47_FnLibrary__.__esModule && $__dist_45_es5_47_lib_47_FnLibrary__ || {default: $__dist_45_es5_47_lib_47_FnLibrary__}).FnLibrary;
+var RouteLibrary = ($__dist_45_es5_47_lib_47_RouteLibrary__ = require("./lib/RouteLibrary"), $__dist_45_es5_47_lib_47_RouteLibrary__ && $__dist_45_es5_47_lib_47_RouteLibrary__.__esModule && $__dist_45_es5_47_lib_47_RouteLibrary__ || {default: $__dist_45_es5_47_lib_47_RouteLibrary__}).RouteLibrary;
+var Library = ($__dist_45_es5_47_lib_47_Library__ = require("./lib/Library"), $__dist_45_es5_47_lib_47_Library__ && $__dist_45_es5_47_lib_47_Library__.__esModule && $__dist_45_es5_47_lib_47_Library__ || {default: $__dist_45_es5_47_lib_47_Library__}).Library;
 function createRoutes(config) {
   var stdFnLibPath = path.join(__dirname, "fns");
   var fnPaths = _.flatten([stdFnLibPath, config.fnLib]);
@@ -28,16 +28,6 @@ function createRoutes(config) {
   var routeLib = new RouteLibrary(config.routeLib);
   var routes = new RouteFactory(routeLib, fnLib, config.routeEvents);
   return routes;
-}
-;
-function createRouteWriter(config) {
-  var stdFnLibPath = path.join(__dirname, "fns");
-  var fnPaths = _.flatten([stdFnLibPath, config.fnLib]);
-  var fnLib = new FnLibrary(fnPaths);
-  var routeLib = new RouteLibrary(config.routeLib);
-  var stepWriter = new StepWriter(fnLib);
-  var routeWriter = new RouteWriter(routeLib, stepWriter);
-  return routeWriter;
 }
 ;
 function createLibrary(libDirs, fileNameRegex, getDecorator) {

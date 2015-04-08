@@ -1,5 +1,6 @@
-let _ = require("lodash");
-let ObjectPathPart = require("./ObjectPathPart").ObjectPathPart;
+
+import {default as _} from "lodash";
+import {ObjectPathPart} from "./ObjectPathPart";
 
 export class ObjectPath
 {

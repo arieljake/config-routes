@@ -6,12 +6,17 @@ Object.defineProperties(exports, {
   __esModule: {value: true}
 });
 var __moduleName = "dist-es5/lib/RouteFactory";
+var $__uuid__,
+    $__dist_45_es5_47_lib_47_Route__,
+    $__dist_45_es5_47_lib_47_RouteEventHandler__,
+    $__dist_45_es5_47_lib_47_RouteContext__,
+    $__dist_45_es5_47_lib_47_RouteStep__;
 'use strict';
-var uuid = require('uuid');
-var Route = require('./Route').Route;
-var RouteEventHandler = require('./RouteEventHandler').RouteEventHandler;
-var RouteContext = require('./RouteContext').RouteContext;
-var RouteStep = require('./RouteStep').RouteStep;
+var uuid = ($__uuid__ = require("uuid"), $__uuid__ && $__uuid__.__esModule && $__uuid__ || {default: $__uuid__}).default;
+var Route = ($__dist_45_es5_47_lib_47_Route__ = require("./Route"), $__dist_45_es5_47_lib_47_Route__ && $__dist_45_es5_47_lib_47_Route__.__esModule && $__dist_45_es5_47_lib_47_Route__ || {default: $__dist_45_es5_47_lib_47_Route__}).Route;
+var RouteEventHandler = ($__dist_45_es5_47_lib_47_RouteEventHandler__ = require("./RouteEventHandler"), $__dist_45_es5_47_lib_47_RouteEventHandler__ && $__dist_45_es5_47_lib_47_RouteEventHandler__.__esModule && $__dist_45_es5_47_lib_47_RouteEventHandler__ || {default: $__dist_45_es5_47_lib_47_RouteEventHandler__}).RouteEventHandler;
+var RouteContext = ($__dist_45_es5_47_lib_47_RouteContext__ = require("./RouteContext"), $__dist_45_es5_47_lib_47_RouteContext__ && $__dist_45_es5_47_lib_47_RouteContext__.__esModule && $__dist_45_es5_47_lib_47_RouteContext__ || {default: $__dist_45_es5_47_lib_47_RouteContext__}).RouteContext;
+var RouteStep = ($__dist_45_es5_47_lib_47_RouteStep__ = require("./RouteStep"), $__dist_45_es5_47_lib_47_RouteStep__ && $__dist_45_es5_47_lib_47_RouteStep__.__esModule && $__dist_45_es5_47_lib_47_RouteStep__ || {default: $__dist_45_es5_47_lib_47_RouteStep__}).RouteStep;
 var RouteFactory = function RouteFactory(routeLib, fnLib, routeEvents) {
   this.routeLib = routeLib;
   this.fnLib = fnLib;
@@ -46,13 +51,13 @@ var RouteFactory = function RouteFactory(routeLib, fnLib, routeEvents) {
     return route;
   },
   createStepsForRoute: function(routeId, definition) {
-    var $__0 = this;
+    var $__5 = this;
     return definition.map((function(stepDef, index) {
       var stepId = routeId + "." + index;
       var fnId = stepDef.fn;
       var desc = stepDef.desc;
       var stepConfig = stepDef.config;
-      var stepFn = $__0.fnLib.get(fnId);
+      var stepFn = $__5.fnLib.get(fnId);
       if (!stepFn)
         throw new Error("function not found: " + fnId);
       return new RouteStep(stepId, fnId, desc, stepFn, stepConfig);

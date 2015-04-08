@@ -6,10 +6,12 @@ Object.defineProperties(exports, {
   __esModule: {value: true}
 });
 var __moduleName = "dist-es5/lib/Formatter";
+var $__uuid__,
+    $__lodash__;
 'use strict';
 var MongoDbId = require('mongodb').ObjectID;
-var uuid = require('uuid');
-var _ = require('lodash');
+var uuid = ($__uuid__ = require("uuid"), $__uuid__ && $__uuid__.__esModule && $__uuid__ || {default: $__uuid__}).default;
+var _ = ($__lodash__ = require("lodash"), $__lodash__ && $__lodash__.__esModule && $__lodash__ || {default: $__lodash__}).default;
 var formatTypeEqualsTest = function(type) {
   return function(formatType) {
     return formatType == type;

@@ -1,6 +1,6 @@
 'use strict';
 
-let Q = require('q');
+import {default as Q} from "q";
 let EventEmitter = require('events').EventEmitter;
 
 export class FnsRunner extends EventEmitter

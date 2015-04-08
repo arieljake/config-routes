@@ -1,6 +1,5 @@
-var _ = require("lodash");
-
-var ObjectPath = require("./ObjectPath").ObjectPath;
+import {default as _} from "lodash";
+import {ObjectPath} from "./ObjectPath";
 
 export function VariableString(value, context, delim)
 {

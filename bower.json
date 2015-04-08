@@ -1,46 +1,42 @@
 {
-	"name": "ConfigRoutes",
-	"version": "0.0.1",
-	"homepage": "https://www.npmjs.com/package/config-routes",
-	"description": "Configuration based routing",
-	"main": "dist-es5/index.js",
-	"ignore": [
-		"**/.*",
-		"Gruntfile.js",
-		"package.json",
-		"tests",
-		"src",
-		"logs",
-		"grunt",
-		"example-*"
- 	],
-	"repository":
-	{
-		"type": "git",
-		"url": "git://github.com/arieljake/config-routes.git"
-	},
-	"bugs": "https://github.com/arieljake/config-routes/issues",
-	"homepage": "https://github.com/arieljake/config-routes",
-	"dependencies":
-	{
-		"lodash": "^2.4.1",
-		"mongodb": "^1.4.30",
-		"q": "^1.1.2",
-		"traceur-runtime": "0.0.59",
-		"uuid": "^2.0.1",
-		"wrench": "^1.5.8"
-	},
-	"devDependencies":
-	{
-		"chai": "^1.10.0",
-		"grunt": "^0.4.5",
-		"grunt-contrib-clean": "^0.6.0",
-		"grunt-contrib-copy": "^0.7.0",
-		"grunt-mocha-test": "^0.12.7",
-		"grunt-traceur": "^0.5.1",
-		"traceur": "0.0.81"
-	},
-	"keywords": [
+  "name": "ConfigRoutes",
+  "version": "0.0.2",
+  "homepage": "https://github.com/arieljake/config-routes",
+  "description": "Configuration based routing",
+  "main": "dist-es5/index.js",
+  "ignore": [
+    "**/.*",
+    "Gruntfile.js",
+    "package.json",
+    "tests",
+    "src",
+    "logs",
+    "grunt",
+    "example-*"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/arieljake/config-routes.git"
+  },
+  "bugs": "https://github.com/arieljake/config-routes/issues",
+  "dependencies": {
+    "lodash": "^2.4.1",
+    "mongodb": "^1.4.30",
+    "q": "^1.1.2",
+    "traceur-runtime": "0.0.59",
+    "uuid": "^2.0.1",
+    "wrench": "^1.5.8"
+  },
+  "devDependencies": {
+    "chai": "^1.10.0",
+    "grunt": "^0.4.5",
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-copy": "^0.7.0",
+    "grunt-mocha-test": "^0.12.7",
+    "grunt-traceur": "^0.5.1",
+    "traceur": "0.0.81"
+  },
+  "keywords": [
     "expressjs",
     "route",
     "routing",
@@ -48,5 +44,5 @@
     "json",
     "functional"
   ],
-	"private": false
+  "private": false
 }

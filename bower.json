@@ -1,6 +1,6 @@
 {
   "name": "ConfigRoutes",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "homepage": "https://github.com/arieljake/config-routes",
   "description": "Configuration based routing",
   "main": "dist-es5/index.js",
@@ -21,11 +21,9 @@
   "bugs": "https://github.com/arieljake/config-routes/issues",
   "dependencies": {
     "lodash": "^2.4.1",
-    "mongodb": "^1.4.30",
     "q": "^1.1.2",
     "traceur-runtime": "0.0.59",
-    "uuid": "^2.0.1",
-    "wrench": "^1.5.8"
+    "uuid": "^2.0.1"
   },
   "devDependencies": {
     "chai": "^1.10.0",

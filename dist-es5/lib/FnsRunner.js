@@ -12,10 +12,8 @@ var $__q__,
 var Q = ($__q__ = require("q"), $__q__ && $__q__.__esModule && $__q__ || {default: $__q__}).default;
 var EventEmitter = ($__eventemitter3__ = require("eventemitter3"), $__eventemitter3__ && $__eventemitter3__.__esModule && $__eventemitter3__ || {default: $__eventemitter3__}).default;
 var FnsRunner = function FnsRunner(fns) {
-  $traceurRuntime.superConstructor($FnsRunner).call(this);
   this.fns = fns;
 };
-var $FnsRunner = FnsRunner;
 ($traceurRuntime.createClass)(FnsRunner, {run: function() {
     var fns = this.fns;
     var fnIndex = 0;

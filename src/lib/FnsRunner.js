@@ -7,8 +7,6 @@ export class FnsRunner extends EventEmitter
 {
 	constructor(fns)
 	{
-		super();
-		
 		this.fns = fns;
 	}
 

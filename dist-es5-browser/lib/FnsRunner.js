@@ -9,10 +9,8 @@ define("config-routes/lib/FnsRunner", ["q", "eventemitter3"], function($__0,$__2
   var Q = $__0.default;
   var EventEmitter = $__2.default;
   var FnsRunner = function FnsRunner(fns) {
-    $traceurRuntime.superConstructor($FnsRunner).call(this);
     this.fns = fns;
   };
-  var $FnsRunner = FnsRunner;
   ($traceurRuntime.createClass)(FnsRunner, {run: function() {
       var fns = this.fns;
       var fnIndex = 0;

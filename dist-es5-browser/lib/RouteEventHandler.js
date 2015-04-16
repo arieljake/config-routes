@@ -30,6 +30,7 @@ define("config-routes/lib/RouteEventHandler", [], function() {
         if ($__0.eventHandlers.stepError) {
           $__0.eventHandlers.stepError.apply(null, args);
         }
+        route.removeAllListeners();
       }));
       route.once("routeComplete", (function() {
         for (var args = [],

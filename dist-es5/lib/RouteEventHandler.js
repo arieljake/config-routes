@@ -35,6 +35,7 @@ var RouteEventHandler = function RouteEventHandler(eventHandlers) {
       if ($__0.eventHandlers.stepError) {
         $__0.eventHandlers.stepError.apply(null, args);
       }
+      route.removeAllListeners();
     }));
     route.once("routeComplete", (function() {
       for (var args = [],

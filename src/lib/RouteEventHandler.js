@@ -31,6 +31,8 @@ export class RouteEventHandler
 			{
 				this.eventHandlers.stepError.apply(null, args);
 			}
+			
+			route.removeAllListeners();
 		});
 
 		route.once("routeComplete", (...args) =>

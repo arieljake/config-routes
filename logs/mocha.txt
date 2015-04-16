@@ -1,7 +1,7 @@
 
 [0m[0m
 [0m  FnLibrary[0m
-[2K[0G  [32m  ✓[0m[90m returns fn by id [0m[31m(123ms)[0m
+[2K[0G  [32m  ✓[0m[90m returns fn by id [0m[31m(163ms)[0m
 
 [0m  FnsRunner[0m
 [2K[0G  [32m  ✓[0m[90m promise completes with no fns [0m
@@ -16,7 +16,7 @@
 [2K[0G  [32m  ✓[0m[90m fnComplete fires once for each fn [0m
 [2K[0G  [32m  ✓[0m[90m fnError fires if fn throws error [0m
 [2K[0G  [32m  ✓[0m[90m fn error trigger promise rejection with error message [0m
-[2K[0G  [32m  ✓[0m[90m fn error stops sequence [0m[31m(102ms)[0m
+[2K[0G  [32m  ✓[0m[90m fn error stops sequence [0m[31m(101ms)[0m
 
 [0m  Route[0m
 [2K[0G  [32m  ✓[0m[90m toObject returns id, name, and state [0m
@@ -44,5 +44,5 @@
 [2K[0G  [32m  ✓[0m[90m toObject returns id, name and desc [0m
 
 
-[92m [0m[32m 33 passing[0m[90m (465ms)[0m
+[92m [0m[32m 33 passing[0m[90m (501ms)[0m
 

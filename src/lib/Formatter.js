@@ -69,7 +69,15 @@ export var Formatter = {
 			test: formatTypeEqualsTest("uuid"),
 			format: function(value, config)
 			{
-				return uuid.v1();
+				value = uuid.v1();
+
+				if (config.endsWith)
+				{
+					var len = config.endsWith.length;
+					value = value.substr(0,value.length-len) + config.endsWith;
+				}
+				
+				return value;
 			}
 		},
 		{

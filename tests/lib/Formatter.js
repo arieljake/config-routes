@@ -38,4 +38,28 @@ describe("Formatter", function()
 		
 		assert.strictEqual(newValue, value, "format matches");
 	});
+	
+	it("returns uuid v1 by default", function()
+	{
+		var value = "10";
+		var newValue = Formatter.format(value, [{type: "uuid"}]);
+		
+		assert.match(newValue, /[0-9a-f]{8}-[0-9a-f]{4}-1[0-9a-f]{3}-[0-9a-f]{4}-[0-9a-f]{12}/, "value id is uuid.v1");
+	});
+	
+	it("returns uuid v1 if requested", function()
+	{
+		var value = "10";
+		var newValue = Formatter.format(value, [{type: "uuid.v1"}]);
+		
+		assert.match(newValue, /[0-9a-f]{8}-[0-9a-f]{4}-1[0-9a-f]{3}-[0-9a-f]{4}-[0-9a-f]{12}/, "value id is uuid.v1");
+	});
+	
+	it("returns uuid v4 if requested", function()
+	{
+		var value = "10";
+		var newValue = Formatter.format(value, [{type: "uuid.v4"}]);
+		
+		assert.match(newValue, /[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[0-9a-f]{4}-[0-9a-f]{12}/, "value id is uuid.v4");
+	});
 });

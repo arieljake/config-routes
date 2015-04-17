@@ -94,10 +94,21 @@ export var Formatter = {
 			}
 		},
 		{
-			test: formatTypeEqualsTest("uuid"),
-			format: function(value, config)
+			regex: /^uuid/,
+			test: function(formatType)
 			{
-				value = uuid.v1();
+				return this.regex.test(formatType);
+			},
+			format: function(value, config, formatType)
+			{
+				if (formatType.indexOf(".v4") > 0)
+				{
+					value = uuid.v4();
+				}
+				else
+				{
+					value = uuid.v1();
+				}				
 
 				if (config.endsWith)
 				{

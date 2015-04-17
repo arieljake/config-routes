@@ -63,9 +63,16 @@ define("config-routes/lib/Formatter", ["uuid", "lodash"], function($__0,$__2) {
           return value;
       }
     }, {
-      test: formatTypeEqualsTest("uuid"),
-      format: function(value, config) {
-        value = uuid.v1();
+      regex: /^uuid/,
+      test: function(formatType) {
+        return this.regex.test(formatType);
+      },
+      format: function(value, config, formatType) {
+        if (formatType.indexOf(".v4") > 0) {
+          value = uuid.v4();
+        } else {
+          value = uuid.v1();
+        }
         if (config.endsWith) {
           var len = config.endsWith.length;
           value = value.substr(0, value.length - len) + config.endsWith;

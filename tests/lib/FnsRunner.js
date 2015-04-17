@@ -318,7 +318,7 @@ describe("FnsRunner", function()
 				{
 					assert.equal(err.fnIndex, 0, "err contains index of fn that err'd");
 					assert(err.error, "err contains thrown error");
-					assert.equal(err.error, "test error", "error matches");
+					assert.match(err.error, /test error/, "error matches");
 
 					done();
 				}

@@ -41,8 +41,9 @@ define("config-routes/utils/ObjectPath", ["lodash", "./ObjectPathPart"], functio
         };
       var objRef = obj;
       var pathParts = _.isArray(this.path) ? this.path : this.path.split(".");
-      while (pathParts.length > 1) {
-        var property = pathParts.shift();
+      var partIndex = 0;
+      while (partIndex < pathParts.length - 1) {
+        var property = pathParts[partIndex++];
         var pathPart = new ObjectPathPart(property);
         var childRef = pathPart.getValueIn(objRef);
         if (childRef === undefined) {
@@ -55,7 +56,7 @@ define("config-routes/utils/ObjectPath", ["lodash", "./ObjectPathPart"], functio
         objRef = childRef;
       }
       return {
-        finalProperty: pathParts.shift(),
+        finalProperty: pathParts[partIndex],
         object: objRef
       };
     }

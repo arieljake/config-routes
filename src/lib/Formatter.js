@@ -2,8 +2,16 @@
 
 let MongoDbId = require('mongodb').ObjectID;
 
-import {default as uuid} from 'uuid';
-import {default as _} from 'lodash';
+import
+{
+	default as uuid
+}
+from 'uuid';
+import
+{
+	default as _
+}
+from 'lodash';
 
 let formatTypeEqualsTest = function(type)
 {
@@ -20,24 +28,35 @@ export var Formatter = {
 		if (!config)
 			return value;
 
-		var formatType;
-
-		if (_.isString(config))
-			formatType = config.toString();
-		else
-			formatType = config.type;
-
-		var formatter = _.find(Formatter.formatters, function(formatter)
+		if (Array.isArray(config))
 		{
-			return formatter.test(formatType) === true;
-		});
-
-		if (formatter)
-		{
-			value = formatter.format(value, config, formatType);
+			config.forEach(function(formatStep) {
+				value = Formatter.format(value, formatStep);
+			});
+			
+			return value;
 		}
+		else
+		{
+			var formatType;
 
-		return value;
+			if (_.isString(config))
+				formatType = config.toString();
+			else
+				formatType = config.type;
+
+			var formatter = _.find(Formatter.formatters, function(formatter)
+			{
+				return formatter.test(formatType) === true;
+			});
+
+			if (formatter)
+			{
+				value = formatter.format(value, config, formatType);
+			}
+
+			return value;
+		}
 	},
 
 	formatters: [
@@ -53,6 +72,15 @@ export var Formatter = {
 			format: function(value, config)
 			{
 				return value.toString();
+			}
+		},
+		{
+			test: formatTypeEqualsTest("multiply"),
+			format: function(value, config)
+			{
+				var factor = config.factor;
+				
+				return value * factor;
 			}
 		},
 		{
@@ -74,9 +102,9 @@ export var Formatter = {
 				if (config.endsWith)
 				{
 					var len = config.endsWith.length;
-					value = value.substr(0,value.length-len) + config.endsWith;
+					value = value.substr(0, value.length - len) + config.endsWith;
 				}
-				
+
 				return value;
 			}
 		},

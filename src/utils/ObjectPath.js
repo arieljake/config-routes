@@ -53,10 +53,11 @@ export class ObjectPath
 
 		let objRef = obj;
 		let pathParts = _.isArray(this.path) ? this.path : this.path.split(".");
+		let partIndex = 0
 
-		while (pathParts.length > 1)
+		while (partIndex < pathParts.length - 1)
 		{
-			let property = pathParts.shift();
+			let property = pathParts[partIndex++];
 			let pathPart = new ObjectPathPart(property);
 			let childRef = pathPart.getValueIn(objRef);
 
@@ -76,7 +77,7 @@ export class ObjectPath
 		}
 
 		return {
-			finalProperty: pathParts.shift(),
+			finalProperty: pathParts[partIndex],
 			object: objRef
 		};
 	}

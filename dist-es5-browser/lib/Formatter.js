@@ -18,18 +18,25 @@ define("config-routes/lib/Formatter", ["uuid", "lodash"], function($__0,$__2) {
     format: function(value, config) {
       if (!config)
         return value;
-      var formatType;
-      if (_.isString(config))
-        formatType = config.toString();
-      else
-        formatType = config.type;
-      var formatter = _.find(Formatter.formatters, function(formatter) {
-        return formatter.test(formatType) === true;
-      });
-      if (formatter) {
-        value = formatter.format(value, config, formatType);
+      if (Array.isArray(config)) {
+        config.forEach(function(formatStep) {
+          value = Formatter.format(value, formatStep);
+        });
+        return value;
+      } else {
+        var formatType;
+        if (_.isString(config))
+          formatType = config.toString();
+        else
+          formatType = config.type;
+        var formatter = _.find(Formatter.formatters, function(formatter) {
+          return formatter.test(formatType) === true;
+        });
+        if (formatter) {
+          value = formatter.format(value, config, formatType);
+        }
+        return value;
       }
-      return value;
     },
     formatters: [{
       test: formatTypeEqualsTest("integer"),
@@ -40,6 +47,12 @@ define("config-routes/lib/Formatter", ["uuid", "lodash"], function($__0,$__2) {
       test: formatTypeEqualsTest("string"),
       format: function(value, config) {
         return value.toString();
+      }
+    }, {
+      test: formatTypeEqualsTest("multiply"),
+      format: function(value, config) {
+        var factor = config.factor;
+        return value * factor;
       }
     }, {
       test: formatTypeEqualsTest("mongoId"),

@@ -64,7 +64,7 @@ define("config-routes/lib/FnsRunner", ["q", "eventemitter3"], function($__0,$__2
                 $ctx.state = 13;
                 return Q.reject({
                   fnIndex: fnIndex,
-                  error: err.message || err
+                  error: err.stack || err.message || err
                 });
               case 13:
                 $ctx.maybeThrow();

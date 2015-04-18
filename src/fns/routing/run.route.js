@@ -6,6 +6,9 @@ function runRoute(state, config)
 	var routeContext = state.child();
 	var route;
 	
+	if (!routeLib)
+		throw new Error("routeLib is undefined");
+	
 	if (config.routeNameString)
 	{
 		var routeName = state.translate(config.routeNameString);

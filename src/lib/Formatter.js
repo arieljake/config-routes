@@ -110,7 +110,7 @@ export var Formatter = {
 					value = uuid.v1();
 				}				
 
-				if (config.endsWith)
+				if (_.isObject(config) && config.endsWith)
 				{
 					var len = config.endsWith.length;
 					value = value.substr(0, value.length - len) + config.endsWith;

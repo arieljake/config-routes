@@ -13,6 +13,8 @@ function runRoute(state, config) {
   var routeLib = state.get(config.routeLibVarName);
   var routeContext = state.child();
   var route;
+  if (!routeLib)
+    throw new Error("routeLib is undefined");
   if (config.routeNameString) {
     var routeName = state.translate(config.routeNameString);
     route = routeLib.get(routeName, routeContext);

@@ -14,7 +14,7 @@ define("config-routes/fns/database/mongoskin/getRecord", [], function() {
         deferred.reject(err);
       } else if (items.length > 1) {
         state.set(config.saveErrorTo, items.length + " items returned");
-        deferred.reject(err);
+        deferred.reject(items.length + " items returned");
       } else if (items.length === 0) {
         state.set(config.saveResultTo, null);
         deferred.resolve(null);

@@ -13,8 +13,8 @@ var Q = require("q");
 var runRoute = require("./run.route").default;
 function runRouteOnEach(state, config) {
   var collection = state.get(config.collectionVarName);
-  var routeConfig = config.routeConfig;
   var inputVarName = config.inputVarName;
+  var routeConfig = config.routeConfig;
   var itemKey = "__item_" + Math.random().toString().substr(2);
   if (routeConfig.input === undefined) {
     routeConfig.input = {};

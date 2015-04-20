@@ -57,6 +57,8 @@ define("config-routes/lib/FnsRunner", ["q", "eventemitter3"], function($__0,$__2
                 $ctx.state = 16;
                 break;
               case 16:
+                if (!err)
+                  err = "unknown error";
                 emitter.emit('fnError', fnIndex, err);
                 $ctx.state = 17;
                 break;

@@ -33,6 +33,9 @@ export class FnsRunner extends EventEmitter
 			}
 			catch (err)
 			{
+				if (!err)
+					err = "unknown error";
+				
 				emitter.emit('fnError', fnIndex, err);
 				
 				yield Q.reject({

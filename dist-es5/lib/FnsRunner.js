@@ -60,6 +60,8 @@ var FnsRunner = function FnsRunner(fns) {
               $ctx.state = 16;
               break;
             case 16:
+              if (!err)
+                err = "unknown error";
               emitter.emit('fnError', fnIndex, err);
               $ctx.state = 17;
               break;

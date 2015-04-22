@@ -14,12 +14,22 @@ define("config-routes/fns/routing/branch.route", [], function() {
       targetCase = defaultCase;
     }
     if (targetCase) {
+      var buildOutput = function(branchOutput, caseOutput) {
+        if (typeof branchOutput === "string" || typeof caseOutput === "string") {
+          if (caseOutput)
+            return caseOutput;
+          else
+            return branchOutput;
+        } else {
+          return _.defaults({}, caseOutput, branchOutput);
+        }
+      };
       var routeConfig = {
         routeLibVarName: config.routeLibVarName,
         route: targetCase.route,
         desc: targetCase.desc,
         input: _.defaults({}, targetCase.input, config.input),
-        output: _.defaults({}, targetCase.output, config.output)
+        output: buildOutput(config.output, targetCase.output)
       };
       return runRoute(state, routeConfig);
     }

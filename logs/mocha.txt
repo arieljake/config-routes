@@ -1,14 +1,21 @@
 
 [0m[0m
+[0m  Filter[0m
+[2K[0G  [32m  ✓[0m[90m undefined config returns true [0m
+[2K[0G  [32m  ✓[0m[90m unrecognized config responds true [0m
+[2K[0G  [32m  ✓[0m[90m matches regex responds true [0m
+[2K[0G  [32m  ✓[0m[90m matches regex responds false [0m
+[2K[0G  [32m  ✓[0m[90m valueVarName honored [0m
+
 [0m  FnLibrary[0m
 [2K[0G  [32m  ✓[0m[90m returns fn by id [0m
 
 [0m  FnsRunner[0m
 [2K[0G  [32m  ✓[0m[90m promise completes with no fns [0m
 [2K[0G  [32m  ✓[0m[90m promise completes after fns return [0m
-[2K[0G  [32m  ✓[0m[90m promise completes after fns promise compeletes [0m[31m(101ms)[0m
+[2K[0G  [32m  ✓[0m[90m promise completes after fns promise compeletes [0m[31m(103ms)[0m
 [2K[0G  [32m  ✓[0m[90m promise catches after fns throw error [0m
-[2K[0G  [32m  ✓[0m[90m promise catches after fns reject promise [0m[31m(103ms)[0m
+[2K[0G  [32m  ✓[0m[90m promise catches after fns reject promise [0m[31m(102ms)[0m
 [2K[0G  [32m  ✓[0m[90m promise catches after 2nd fn throws error [0m
 [2K[0G  [32m  ✓[0m[90m runnerStarting event fires [0m
 [2K[0G  [32m  ✓[0m[90m runnerComplete event fires [0m
@@ -27,7 +34,7 @@
 [2K[0G  [32m  ✓[0m[90m returns uuid v1 by default with object [0m
 [2K[0G  [32m  ✓[0m[90m returns uuid v1 by default with array format [0m
 [2K[0G  [32m  ✓[0m[90m returns uuid v1 if requested with string format [0m
-[2K[0G  [32m  ✓[0m[90m returns uuid v1 if requested with object [0m
+[2K[0G  [32m  ✓[0m[90m returns uuid v1 if requested with object format [0m
 [2K[0G  [32m  ✓[0m[90m returns uuid v1 if requested with array format [0m
 [2K[0G  [32m  ✓[0m[90m returns uuid v4 if requested with string format [0m
 [2K[0G  [32m  ✓[0m[90m returns uuid v4 if requested with object format [0m
@@ -59,5 +66,5 @@
 [2K[0G  [32m  ✓[0m[90m toObject returns id, name and desc [0m
 
 
-[92m [0m[32m 46 passing[0m[90m (357ms)[0m
+[92m [0m[32m 51 passing[0m[90m (361ms)[0m
 

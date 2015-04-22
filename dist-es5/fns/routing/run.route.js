@@ -37,12 +37,17 @@ function runRoute(state, config) {
   var routePromise = route.run();
   if (config.output) {
     routePromise = routePromise.then(function() {
-      Object.keys(config.output).map(function(outputKey) {
-        var fullKey = "output." + outputKey;
-        var saveTo = config.output[outputKey];
-        var value = route.context.get(fullKey);
-        state.set(saveTo, value);
-      });
+      if (typeof config.output === "string") {
+        var value = route.context.get("output");
+        state.set(config.output, value);
+      } else {
+        Object.keys(config.output).map(function(outputKey) {
+          var fullKey = "output." + outputKey;
+          var saveTo = config.output[outputKey];
+          var value = route.context.get(fullKey);
+          state.set(saveTo, value);
+        });
+      }
     });
   }
   if (config.fork === true)

@@ -7,6 +7,8 @@ import {RouteFactory} from './lib/RouteFactory';
 import {FnLibrary} from './lib/FnLibrary';
 import {RouteLibrary} from './lib/RouteLibrary';
 import {Library} from './lib/Library';
+import {ObjectPath} from "./utils/ObjectPath";
+import {VariableString} from './utils/VariableString';
 
 export function createRoutes(config)
 {
@@ -39,4 +41,9 @@ export function createLibrary(libDirs, fileNameRegex, getDecorator)
 	}
 	
 	return lib;
+};
+
+export var utils = {
+	ObjectPath,
+	VariableString
 };

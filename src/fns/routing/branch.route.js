@@ -3,13 +3,11 @@ let runRoute = require("./run.route").default;
 
 export
 default
-
 function branchRoute(state, config)
 {
 	var value = state.get(config.valueVarName);
 	var cases = config.cases;
 	var defaultCase = config.defaultCase;
-
 	var targetCase = _.find(cases, function(curCase)
 	{
 		return curCase.value == value;
@@ -22,12 +20,27 @@ function branchRoute(state, config)
 
 	if (targetCase)
 	{
+		var buildOutput = function(branchOutput, caseOutput)
+		{
+			if (typeof branchOutput === "string" || typeof caseOutput === "string")
+			{
+				if (caseOutput)
+					return caseOutput;
+				else
+					return branchOutput;
+			}
+			else
+			{
+				return _.defaults({}, caseOutput, branchOutput)
+			}
+		}
+		
 		var routeConfig = {
 			routeLibVarName: config.routeLibVarName,
 			route: targetCase.route,
 			desc: targetCase.desc,
 			input: _.defaults({}, targetCase.input, config.input),
-			output: _.defaults({}, targetCase.output, config.output),
+			output: buildOutput(config.output, targetCase.output)
 		};
 		
 		return runRoute(state, routeConfig);

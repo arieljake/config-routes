@@ -9,12 +9,13 @@ Object.defineProperties(exports, {
   __esModule: {value: true}
 });
 var __moduleName = "dist-es5/fns/routing/run.route";
+var Q = require("q");
 function runRoute(state, config) {
   var routeLib = state.get(config.routeLibVarName);
   var routeContext = state.child();
   var route;
   if (!routeLib)
-    throw new Error("routeLib is undefined");
+    return Q.reject("routeLib is undefined");
   if (config.routeNameString) {
     var routeName = state.translate(config.routeNameString);
     route = routeLib.get(routeName, routeContext);

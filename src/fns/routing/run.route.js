@@ -1,6 +1,7 @@
+let Q = require("q");
+
 export
 default
-
 function runRoute(state, config)
 {
 	var routeLib = state.get(config.routeLibVarName);
@@ -8,7 +9,7 @@ function runRoute(state, config)
 	var route;
 
 	if (!routeLib)
-		throw new Error("routeLib is undefined");
+		return Q.reject("routeLib is undefined");
 
 	if (config.routeNameString)
 	{

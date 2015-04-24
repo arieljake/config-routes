@@ -13,7 +13,7 @@ let filterTypeEqualsTest = function(type)
 
 export var Filter = {
 
-	filter: function(value, config)
+	filter: function(value, config, state)
 	{
 		if (!config)
 			return true;
@@ -24,7 +24,7 @@ export var Filter = {
 		
 			for (var i = 0; i < config.length && passes === true; i++)
 			{
-				passes = Filter.filter(value, config[i]);
+				passes = Filter.filter(value, config[i], state);
 			}
 
 			return passes;
@@ -40,7 +40,7 @@ export var Filter = {
 
 			var filter = _.find(Filter.filters, function(filter)
 			{
-				return filter.test(filterType) === true;
+				return filter.filterApplies(filterType) === true;
 			});
 
 			if (filter)
@@ -51,7 +51,7 @@ export var Filter = {
 					value = path.getValueIn(value);
 				}
 				
-				return filter.filter(value, config, filterType);
+				return filter.passes(value, config, state, filterType);
 			}
 			else
 			{
@@ -62,11 +62,19 @@ export var Filter = {
 
 	filters: [
 		{
-			test: filterTypeEqualsTest("matches"),
-			filter: function(value, config)
+			filterApplies: filterTypeEqualsTest("matches"),
+			passes: function(value, config)
 			{
 				var regex = new RegExp(config.regex);
 				return regex.test(value);
+			}
+		},
+		{
+			filterApplies: filterTypeEqualsTest("notIn"),
+			passes: function(value, config, state, filterType)
+			{
+				var values = state.get(config.collectionVarName);
+				return values.indexOf(value) < 0;
 			}
 		}
 	]

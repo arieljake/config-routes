@@ -46,4 +46,24 @@ describe("Filter", function()
 		
 		assert.strictEqual(result, true, "result true");
 	});
+	
+	it("notIn valid without match", function()
+	{
+		var value = 1;
+		var result = Filter.filter(value, {type: "notIn", collectionVarName: "badValues"}, { get: function() {
+			return [2];
+		}});
+		
+		assert.strictEqual(result, true, "result true");
+	});
+	
+	it("notIn valid with match", function()
+	{
+		var value = 1;
+		var result = Filter.filter(value, {type: "notIn", collectionVarName: "badValues"}, { get: function() {
+			return [1];
+		}});
+		
+		assert.strictEqual(result, false, "result false");
+	});
 });

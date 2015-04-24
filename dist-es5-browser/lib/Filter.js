@@ -14,13 +14,13 @@ define("config-routes/lib/Filter", ["lodash", "../utils/ObjectPath"], function($
     };
   };
   var Filter = {
-    filter: function(value, config) {
+    filter: function(value, config, state) {
       if (!config)
         return true;
       if (Array.isArray(config)) {
         var passes = true;
         for (var i = 0; i < config.length && passes === true; i++) {
-          passes = Filter.filter(value, config[i]);
+          passes = Filter.filter(value, config[i], state);
         }
         return passes;
       } else {
@@ -30,24 +30,30 @@ define("config-routes/lib/Filter", ["lodash", "../utils/ObjectPath"], function($
         else
           filterType = config.type;
         var filter = _.find(Filter.filters, function(filter) {
-          return filter.test(filterType) === true;
+          return filter.filterApplies(filterType) === true;
         });
         if (filter) {
           if (config.valueVarName) {
             var path = new ObjectPath(config.valueVarName);
             value = path.getValueIn(value);
           }
-          return filter.filter(value, config, filterType);
+          return filter.passes(value, config, state, filterType);
         } else {
           return true;
         }
       }
     },
     filters: [{
-      test: filterTypeEqualsTest("matches"),
-      filter: function(value, config) {
+      filterApplies: filterTypeEqualsTest("matches"),
+      passes: function(value, config) {
         var regex = new RegExp(config.regex);
         return regex.test(value);
+      }
+    }, {
+      filterApplies: filterTypeEqualsTest("notIn"),
+      passes: function(value, config, state, filterType) {
+        var values = state.get(config.collectionVarName);
+        return values.indexOf(value) < 0;
       }
     }]
   };

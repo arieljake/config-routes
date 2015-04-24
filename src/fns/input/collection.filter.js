@@ -8,7 +8,7 @@ function collectionFilter(state, config)
 	let collection = state.get(config.collectionVarName);
 	let result = _.filter(collection, function(item)
 	{
-		return Filter.test(item, config.filter);
+		return Filter.filter(item, config.filter, state);
 	});
 
 	state.set(config.saveTo, result);

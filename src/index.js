@@ -3,10 +3,11 @@ global.$traceurRuntime = require('traceur-runtime');
 let path = require("path");
 
 import {default as _} from "lodash";
-import {RouteFactory} from './lib/RouteFactory';
-import {FnLibrary} from './lib/FnLibrary';
-import {RouteLibrary} from './lib/RouteLibrary';
 import {Library} from './lib/Library';
+import {RouteFactory} from './lib/RouteFactory';
+import {RouteLibrary} from './lib/RouteLibrary';
+import {RouteContext} from './lib/RouteContext';
+import {FnLibrary} from './lib/FnLibrary';
 import {ObjectPath} from "./utils/ObjectPath";
 import {VariableString} from './utils/VariableString';
 
@@ -41,6 +42,11 @@ export function createLibrary(libDirs, fileNameRegex, getDecorator)
 	}
 	
 	return lib;
+};
+
+export function createContext(state)
+{
+	return new RouteContext(state);
 };
 
 export var utils = {

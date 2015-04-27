@@ -1,4 +1,4 @@
-define("config-routes/index", ["lodash", "./lib/RouteFactory", "./lib/FnLibrary", "./lib/RouteLibrary", "./lib/Library", "./utils/ObjectPath", "./utils/VariableString"], function($__0,$__2,$__4,$__6,$__8,$__10,$__12) {
+define("config-routes/index", ["lodash", "./lib/Library", "./lib/RouteFactory", "./lib/RouteLibrary", "./lib/RouteContext", "./lib/FnLibrary", "./utils/ObjectPath", "./utils/VariableString"], function($__0,$__2,$__4,$__6,$__8,$__10,$__12,$__14) {
   "use strict";
   var __moduleName = "config-routes/index";
   if (!$__0 || !$__0.__esModule)
@@ -15,15 +15,18 @@ define("config-routes/index", ["lodash", "./lib/RouteFactory", "./lib/FnLibrary"
     $__10 = {default: $__10};
   if (!$__12 || !$__12.__esModule)
     $__12 = {default: $__12};
+  if (!$__14 || !$__14.__esModule)
+    $__14 = {default: $__14};
   global.$traceurRuntime = require('traceur-runtime');
   var path = require("path");
   var _ = $__0.default;
-  var RouteFactory = $__2.RouteFactory;
-  var FnLibrary = $__4.FnLibrary;
+  var Library = $__2.Library;
+  var RouteFactory = $__4.RouteFactory;
   var RouteLibrary = $__6.RouteLibrary;
-  var Library = $__8.Library;
-  var ObjectPath = $__10.ObjectPath;
-  var VariableString = $__12.VariableString;
+  var RouteContext = $__8.RouteContext;
+  var FnLibrary = $__10.FnLibrary;
+  var ObjectPath = $__12.ObjectPath;
+  var VariableString = $__14.VariableString;
   function createRoutes(config) {
     var stdFnLibPath = path.join(__dirname, "fns");
     var fnPaths = _.flatten([stdFnLibPath, config.fnLib]);
@@ -47,6 +50,10 @@ define("config-routes/index", ["lodash", "./lib/RouteFactory", "./lib/FnLibrary"
     return lib;
   }
   ;
+  function createContext(state) {
+    return new RouteContext(state);
+  }
+  ;
   var utils = {
     ObjectPath: ObjectPath,
     VariableString: VariableString
@@ -57,6 +64,9 @@ define("config-routes/index", ["lodash", "./lib/RouteFactory", "./lib/FnLibrary"
     },
     get createLibrary() {
       return createLibrary;
+    },
+    get createContext() {
+      return createContext;
     },
     get utils() {
       return utils;

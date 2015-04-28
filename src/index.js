@@ -8,6 +8,7 @@ import {RouteFactory} from './lib/RouteFactory';
 import {RouteLibrary} from './lib/RouteLibrary';
 import {RouteContext} from './lib/RouteContext';
 import {FnLibrary} from './lib/FnLibrary';
+import {Filter} from './lib/Filter';
 import {ObjectPath} from "./utils/ObjectPath";
 import {VariableString} from './utils/VariableString';
 
@@ -47,6 +48,21 @@ export function createLibrary(libDirs, fileNameRegex, getDecorator)
 export function createContext(state)
 {
 	return new RouteContext(state);
+};
+
+export function addFilter(matchFn, filterFn)
+{
+	Filter.addFilter(matchFn, filterFn);
+};
+
+export function clearFilters()
+{
+	Filter.clearFilters();
+};
+
+export function hasFilter(type)
+{
+	return Filter.hasFilterForType(type);
 };
 
 export var utils = {

@@ -1,4 +1,4 @@
-define("config-routes/index", ["lodash", "./lib/Library", "./lib/RouteFactory", "./lib/RouteLibrary", "./lib/RouteContext", "./lib/FnLibrary", "./utils/ObjectPath", "./utils/VariableString"], function($__0,$__2,$__4,$__6,$__8,$__10,$__12,$__14) {
+define("config-routes/index", ["lodash", "./lib/Library", "./lib/RouteFactory", "./lib/RouteLibrary", "./lib/RouteContext", "./lib/FnLibrary", "./lib/Filter", "./utils/ObjectPath", "./utils/VariableString"], function($__0,$__2,$__4,$__6,$__8,$__10,$__12,$__14,$__16) {
   "use strict";
   var __moduleName = "config-routes/index";
   if (!$__0 || !$__0.__esModule)
@@ -17,6 +17,8 @@ define("config-routes/index", ["lodash", "./lib/Library", "./lib/RouteFactory", 
     $__12 = {default: $__12};
   if (!$__14 || !$__14.__esModule)
     $__14 = {default: $__14};
+  if (!$__16 || !$__16.__esModule)
+    $__16 = {default: $__16};
   global.$traceurRuntime = require('traceur-runtime');
   var path = require("path");
   var _ = $__0.default;
@@ -25,8 +27,9 @@ define("config-routes/index", ["lodash", "./lib/Library", "./lib/RouteFactory", 
   var RouteLibrary = $__6.RouteLibrary;
   var RouteContext = $__8.RouteContext;
   var FnLibrary = $__10.FnLibrary;
-  var ObjectPath = $__12.ObjectPath;
-  var VariableString = $__14.VariableString;
+  var Filter = $__12.Filter;
+  var ObjectPath = $__14.ObjectPath;
+  var VariableString = $__16.VariableString;
   function createRoutes(config) {
     var stdFnLibPath = path.join(__dirname, "fns");
     var fnPaths = _.flatten([stdFnLibPath, config.fnLib]);
@@ -54,6 +57,18 @@ define("config-routes/index", ["lodash", "./lib/Library", "./lib/RouteFactory", 
     return new RouteContext(state);
   }
   ;
+  function addFilter(matchFn, filterFn) {
+    Filter.addFilter(matchFn, filterFn);
+  }
+  ;
+  function clearFilters() {
+    Filter.clearFilters();
+  }
+  ;
+  function hasFilter(type) {
+    return Filter.hasFilterForType(type);
+  }
+  ;
   var utils = {
     ObjectPath: ObjectPath,
     VariableString: VariableString
@@ -67,6 +82,15 @@ define("config-routes/index", ["lodash", "./lib/Library", "./lib/RouteFactory", 
     },
     get createContext() {
       return createContext;
+    },
+    get addFilter() {
+      return addFilter;
+    },
+    get clearFilters() {
+      return clearFilters;
+    },
+    get hasFilter() {
+      return hasFilter;
     },
     get utils() {
       return utils;

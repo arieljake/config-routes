@@ -3,14 +3,6 @@
 import { default as _} from 'lodash';
 import {ObjectPath} from "../utils/ObjectPath";
 
-let filterTypeEqualsTest = function(type)
-{
-	return function(filterType)
-	{
-		return filterType == type;
-	};
-};
-
 export var Filter = {
 
 	filter: function(value, config, state)
@@ -40,7 +32,7 @@ export var Filter = {
 
 			var filter = _.find(Filter.filters, function(filter)
 			{
-				return filter.filterApplies(filterType) === true;
+				return filter.match(filterType) === true;
 			});
 
 			if (filter)
@@ -51,7 +43,7 @@ export var Filter = {
 					value = path.getValueIn(value);
 				}
 				
-				return filter.passes(value, config, state, filterType);
+				return filter.filter(value, config, state, filterType);
 			}
 			else
 			{
@@ -60,29 +52,58 @@ export var Filter = {
 		}
 	},
 
-	filters: [
+	filters: [],
+	
+	createFilterMatchByName: function(type)
+	{
+		return function(filterType)
 		{
-			filterApplies: filterTypeEqualsTest("matches"),
-			passes: function(value, config)
-			{
-				var regex = new RegExp(config.regex);
-				return regex.test(value);
-			}
-		},
+			return filterType == type;
+		};
+	},
+	
+	addFilter: function(matchFn, filterFn)
+	{
+		if (typeof matchFn === "string")
 		{
-			filterApplies: filterTypeEqualsTest("notIn"),
-			passes: function(value, config, state, filterType)
-			{
-				var values = state.get(config.collectionVarName);
-				return values.indexOf(value) < 0;
-			}
-		},
-		{
-			filterApplies: filterTypeEqualsTest("truthy"),
-			passes: function(value, config, state, filterType)
-			{
-				return !!value;
-			}
+			matchFn = Filter.createFilterMatchByName(matchFn);
 		}
-	]
+
+		Filter.filters.push({
+			match: matchFn,
+			filter: filterFn
+		});
+	},
+	
+	clearFilters: function()
+	{
+		Filter.filters.length = 0;
+	},
+	
+	hasFilterForType: function(filterType)
+	{
+		var filter = _.find(Filter.filters, function(filter)
+		{
+			return filter.match(filterType) === true;
+		});
+		
+		return filter !== undefined;
+	}
 };
+
+Filter.addFilter("matches", function(value, config)
+{
+	var regex = new RegExp(config.regex);
+	return regex.test(value);
+});
+
+Filter.addFilter("notIn", function(value, config, state, filterType)
+{
+	var values = state.get(config.collectionVarName);
+	return values.indexOf(value) < 0;
+});
+
+Filter.addFilter("truthy", function(value, config, state, filterType)
+{
+	return !!value;
+});

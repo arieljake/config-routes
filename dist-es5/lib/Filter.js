@@ -11,11 +11,6 @@ var $__lodash__,
 'use strict';
 var _ = ($__lodash__ = require("lodash"), $__lodash__ && $__lodash__.__esModule && $__lodash__ || {default: $__lodash__}).default;
 var ObjectPath = ($__dist_45_es5_47_utils_47_ObjectPath__ = require("../utils/ObjectPath"), $__dist_45_es5_47_utils_47_ObjectPath__ && $__dist_45_es5_47_utils_47_ObjectPath__.__esModule && $__dist_45_es5_47_utils_47_ObjectPath__ || {default: $__dist_45_es5_47_utils_47_ObjectPath__}).ObjectPath;
-var filterTypeEqualsTest = function(type) {
-  return function(filterType) {
-    return filterType == type;
-  };
-};
 var Filter = {
   filter: function(value, config, state) {
     if (!config)
@@ -33,36 +28,53 @@ var Filter = {
       else
         filterType = config.type;
       var filter = _.find(Filter.filters, function(filter) {
-        return filter.filterApplies(filterType) === true;
+        return filter.match(filterType) === true;
       });
       if (filter) {
         if (config.valueVarName) {
           var path = new ObjectPath(config.valueVarName);
           value = path.getValueIn(value);
         }
-        return filter.passes(value, config, state, filterType);
+        return filter.filter(value, config, state, filterType);
       } else {
         return true;
       }
     }
   },
-  filters: [{
-    filterApplies: filterTypeEqualsTest("matches"),
-    passes: function(value, config) {
-      var regex = new RegExp(config.regex);
-      return regex.test(value);
+  filters: [],
+  createFilterMatchByName: function(type) {
+    return function(filterType) {
+      return filterType == type;
+    };
+  },
+  addFilter: function(matchFn, filterFn) {
+    if (typeof matchFn === "string") {
+      matchFn = Filter.createFilterMatchByName(matchFn);
     }
-  }, {
-    filterApplies: filterTypeEqualsTest("notIn"),
-    passes: function(value, config, state, filterType) {
-      var values = state.get(config.collectionVarName);
-      return values.indexOf(value) < 0;
-    }
-  }, {
-    filterApplies: filterTypeEqualsTest("truthy"),
-    passes: function(value, config, state, filterType) {
-      return !!value;
-    }
-  }]
+    Filter.filters.push({
+      match: matchFn,
+      filter: filterFn
+    });
+  },
+  clearFilters: function() {
+    Filter.filters.length = 0;
+  },
+  hasFilterForType: function(filterType) {
+    var filter = _.find(Filter.filters, function(filter) {
+      return filter.match(filterType) === true;
+    });
+    return filter !== undefined;
+  }
 };
+Filter.addFilter("matches", function(value, config) {
+  var regex = new RegExp(config.regex);
+  return regex.test(value);
+});
+Filter.addFilter("notIn", function(value, config, state, filterType) {
+  var values = state.get(config.collectionVarName);
+  return values.indexOf(value) < 0;
+});
+Filter.addFilter("truthy", function(value, config, state, filterType) {
+  return !!value;
+});
 //# sourceURL=src/lib/Filter.js

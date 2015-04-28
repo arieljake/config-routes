@@ -8,11 +8,6 @@ define("config-routes/lib/Filter", ["lodash", "../utils/ObjectPath"], function($
   'use strict';
   var _ = $__0.default;
   var ObjectPath = $__2.ObjectPath;
-  var filterTypeEqualsTest = function(type) {
-    return function(filterType) {
-      return filterType == type;
-    };
-  };
   var Filter = {
     filter: function(value, config, state) {
       if (!config)
@@ -30,38 +25,55 @@ define("config-routes/lib/Filter", ["lodash", "../utils/ObjectPath"], function($
         else
           filterType = config.type;
         var filter = _.find(Filter.filters, function(filter) {
-          return filter.filterApplies(filterType) === true;
+          return filter.match(filterType) === true;
         });
         if (filter) {
           if (config.valueVarName) {
             var path = new ObjectPath(config.valueVarName);
             value = path.getValueIn(value);
           }
-          return filter.passes(value, config, state, filterType);
+          return filter.filter(value, config, state, filterType);
         } else {
           return true;
         }
       }
     },
-    filters: [{
-      filterApplies: filterTypeEqualsTest("matches"),
-      passes: function(value, config) {
-        var regex = new RegExp(config.regex);
-        return regex.test(value);
+    filters: [],
+    createFilterMatchByName: function(type) {
+      return function(filterType) {
+        return filterType == type;
+      };
+    },
+    addFilter: function(matchFn, filterFn) {
+      if (typeof matchFn === "string") {
+        matchFn = Filter.createFilterMatchByName(matchFn);
       }
-    }, {
-      filterApplies: filterTypeEqualsTest("notIn"),
-      passes: function(value, config, state, filterType) {
-        var values = state.get(config.collectionVarName);
-        return values.indexOf(value) < 0;
-      }
-    }, {
-      filterApplies: filterTypeEqualsTest("truthy"),
-      passes: function(value, config, state, filterType) {
-        return !!value;
-      }
-    }]
+      Filter.filters.push({
+        match: matchFn,
+        filter: filterFn
+      });
+    },
+    clearFilters: function() {
+      Filter.filters.length = 0;
+    },
+    hasFilterForType: function(filterType) {
+      var filter = _.find(Filter.filters, function(filter) {
+        return filter.match(filterType) === true;
+      });
+      return filter !== undefined;
+    }
   };
+  Filter.addFilter("matches", function(value, config) {
+    var regex = new RegExp(config.regex);
+    return regex.test(value);
+  });
+  Filter.addFilter("notIn", function(value, config, state, filterType) {
+    var values = state.get(config.collectionVarName);
+    return values.indexOf(value) < 0;
+  });
+  Filter.addFilter("truthy", function(value, config, state, filterType) {
+    return !!value;
+  });
   return {
     get Filter() {
       return Filter;

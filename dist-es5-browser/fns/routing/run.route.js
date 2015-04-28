@@ -3,7 +3,7 @@ define("config-routes/fns/routing/run.route", [], function() {
   var __moduleName = "config-routes/fns/routing/run.route";
   var Q = require("q");
   function runRoute(state, config) {
-    var routeLib = state.get(config.routeLibVarName);
+    var routeLib = state.get("$routes");
     var routeContext = state.child();
     var route;
     if (!routeLib)

@@ -11,7 +11,7 @@ Object.defineProperties(exports, {
 var __moduleName = "dist-es5/fns/routing/run.route";
 var Q = require("q");
 function runRoute(state, config) {
-  var routeLib = state.get(config.routeLibVarName);
+  var routeLib = state.get("$routes");
   var routeContext = state.child();
   var route;
   if (!routeLib)

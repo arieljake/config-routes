@@ -4,7 +4,7 @@ export
 default
 function runRoute(state, config)
 {
-	var routeLib = state.get(config.routeLibVarName);
+	var routeLib = state.get("$routes");
 	var routeContext = state.child();
 	var route;
 

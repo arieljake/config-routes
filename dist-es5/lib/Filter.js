@@ -58,6 +58,11 @@ var Filter = {
       var values = state.get(config.collectionVarName);
       return values.indexOf(value) < 0;
     }
+  }, {
+    filterApplies: filterTypeEqualsTest("truthy"),
+    passes: function(value, config, state, filterType) {
+      return !!value;
+    }
   }]
 };
 //# sourceURL=src/lib/Filter.js

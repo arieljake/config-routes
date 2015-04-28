@@ -12,33 +12,27 @@ define("config-routes/utils/ObjectPath", ["lodash", "./ObjectPathPart"], functio
   };
   ($traceurRuntime.createClass)(ObjectPath, {
     deleteIn: function(obj) {
-      var $__5 = this.descendIn(obj),
-          finalProperty = $__5.finalProperty,
-          object = $__5.object;
-      delete object[finalProperty];
+      var result = this.descendIn(obj, false);
+      if (result)
+        delete result.object[result.finalProperty];
     },
     getValueIn: function(obj) {
-      var $__5 = this.descendIn(obj),
-          finalProperty = $__5.finalProperty,
-          object = $__5.object;
-      if (!finalProperty || !object)
-        return undefined;
+      var result = this.descendIn(obj, false);
+      if (result && result.finalProperty && result.object)
+        return result.object[result.finalProperty];
       else
-        return object[finalProperty];
+        return undefined;
     },
     setValueIn: function(obj, value) {
-      var $__5 = this.descendIn(obj),
-          finalProperty = $__5.finalProperty,
-          object = $__5.object;
-      var finalPathPart = new ObjectPathPart(finalProperty);
-      finalPathPart.setIn(object, value);
+      var result = this.descendIn(obj, true);
+      if (result) {
+        var finalPathPart = new ObjectPathPart(result.finalProperty);
+        finalPathPart.setIn(result.object, value);
+      }
     },
-    descendIn: function(obj) {
+    descendIn: function(obj, fillPath) {
       if (!obj || !this.path)
-        return {
-          finalProperty: undefined,
-          object: undefined
-        };
+        return undefined;
       var objRef = obj;
       var pathParts = _.isArray(this.path) ? this.path : this.path.split(".");
       var partIndex = 0;
@@ -47,7 +41,7 @@ define("config-routes/utils/ObjectPath", ["lodash", "./ObjectPathPart"], functio
         var pathPart = new ObjectPathPart(property);
         var childRef = pathPart.getValueIn(objRef);
         if (childRef === undefined) {
-          if (_.isObject(objRef)) {
+          if (fillPath && _.isObject(objRef)) {
             childRef = pathPart.createIn(objRef);
           } else {
             return undefined;

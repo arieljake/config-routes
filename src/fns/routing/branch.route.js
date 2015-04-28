@@ -36,7 +36,6 @@ function branchRoute(state, config)
 		}
 		
 		var routeConfig = {
-			routeLibVarName: config.routeLibVarName,
 			route: targetCase.route,
 			desc: targetCase.desc,
 			input: _.defaults({}, targetCase.input, config.input),

@@ -11,45 +11,37 @@ export class ObjectPath
 
 	deleteIn(obj)
 	{
-		let
-		{
-			finalProperty, object
-		} = this.descendIn(obj);
+		let result = this.descendIn(obj,false);
 
-		delete object[finalProperty];
+		if (result)
+			delete result.object[result.finalProperty];
 	}
 
 	getValueIn(obj)
 	{
-		let
-		{
-			finalProperty, object
-		} = this.descendIn(obj);
+		let result = this.descendIn(obj,false);
 
-		if (!finalProperty || !object)
-			return undefined;
+		if (result && result.finalProperty && result.object)
+			return result.object[result.finalProperty];
 		else
-			return object[finalProperty];
+			return undefined;
 	}
 
 	setValueIn(obj, value)
 	{
-		let
-		{
-			finalProperty, object
-		} = this.descendIn(obj);
+		let result = this.descendIn(obj,true);
 
-		var finalPathPart = new ObjectPathPart(finalProperty);
-		finalPathPart.setIn(object, value);
+		if (result)
+		{
+			var finalPathPart = new ObjectPathPart(result.finalProperty);
+			finalPathPart.setIn(result.object, value);
+		}
 	}
 
-	descendIn(obj)
+	descendIn(obj,fillPath)
 	{
 		if (!obj || !this.path)
-			return {
-				finalProperty: undefined,
-				object: undefined
-			};
+			return undefined;
 
 		let objRef = obj;
 		let pathParts = _.isArray(this.path) ? this.path : this.path.split(".");
@@ -63,7 +55,7 @@ export class ObjectPath
 
 			if (childRef === undefined)
 			{
-				if (_.isObject(objRef))
+				if (fillPath && _.isObject(objRef))
 				{
 					childRef = pathPart.createIn(objRef);
 				}

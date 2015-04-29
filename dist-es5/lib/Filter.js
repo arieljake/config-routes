@@ -66,15 +66,4 @@ var Filter = {
     return filter !== undefined;
   }
 };
-Filter.addFilter("matches", function(value, config) {
-  var regex = new RegExp(config.regex);
-  return regex.test(value);
-});
-Filter.addFilter("notIn", function(value, config, state, filterType) {
-  var values = state.get(config.collectionVarName);
-  return values.indexOf(value) < 0;
-});
-Filter.addFilter("truthy", function(value, config, state, filterType) {
-  return !!value;
-});
 //# sourceURL=src/lib/Filter.js

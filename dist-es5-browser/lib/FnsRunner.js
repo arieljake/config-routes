@@ -16,7 +16,8 @@ define("config-routes/lib/FnsRunner", ["q", "eventemitter3"], function($__0,$__2
       var fnIndex = 0;
       var emitter = this;
       var gen = $traceurRuntime.initGeneratorFunction(function $__5() {
-        var err;
+        var error,
+            err;
         return $traceurRuntime.createGeneratorInstance(function($ctx) {
           while (true)
             switch ($ctx.state) {
@@ -58,15 +59,21 @@ define("config-routes/lib/FnsRunner", ["q", "eventemitter3"], function($__0,$__2
                 break;
               case 16:
                 if (!err)
-                  err = "unknown error";
-                emitter.emit('fnError', fnIndex, err);
+                  error = "unknown error";
+                else if (err.stack)
+                  error = err.stack;
+                else if (err.message)
+                  error = err.message;
+                else
+                  error = err;
+                emitter.emit('fnError', fnIndex, error);
                 $ctx.state = 17;
                 break;
               case 17:
                 $ctx.state = 13;
                 return Q.reject({
                   fnIndex: fnIndex,
-                  error: err.stack || err.message || err
+                  error: error
                 });
               case 13:
                 $ctx.maybeThrow();

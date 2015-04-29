@@ -33,14 +33,22 @@ export class FnsRunner extends EventEmitter
 			}
 			catch (err)
 			{
-				if (!err)
-					err = "unknown error";
+				var error;
 				
-				emitter.emit('fnError', fnIndex, err);
+				if (!err)
+					error = "unknown error";
+				else if (err.stack)
+					error = err.stack;
+				else if (err.message)
+					error = err.message;
+				else
+					error = err;
+				
+				emitter.emit('fnError', fnIndex, error);
 				
 				yield Q.reject({
 					fnIndex: fnIndex,
-					error: err.stack || err.message || err
+					error: error
 				});
 			}
 		};

@@ -23,6 +23,11 @@ export class RouteLibrary
 		return route;
 	}
 	
+	get entries()
+	{
+		return this.lib.entries;
+	}
+	
 	toObject()
 	{
 		return this.lib.toObject();

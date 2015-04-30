@@ -1,6 +1,6 @@
 {
 	"name": "config-routes",
-	"version": "0.0.17",
+	"version": "0.0.18",
 	"description": "Configuration based routing for express, written in es6 compiled to es5",
 	"keywords": [
     "expressjs",

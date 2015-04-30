@@ -21,6 +21,9 @@ var RouteLibrary = function RouteLibrary(routePaths) {
     var route = JSON.parse(fs.readFileSync(entry.fullPath, "utf8"));
     return route;
   },
+  get entries() {
+    return this.lib.entries;
+  },
   toObject: function() {
     return this.lib.toObject();
   }

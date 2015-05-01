@@ -11,11 +11,9 @@ function runRoute(state, config)
 	if (!routeLib)
 		return Q.reject("routeLib is undefined");
 
-	if (config.routeNameString)
+	if (config.routeName)
 	{
-		var routeName = state.translate(config.routeNameString);
-
-		route = routeLib.get(routeName, routeContext);
+		route = routeLib.get(config.routeName, routeContext);
 	}
 	else if (config.route)
 	{
@@ -24,23 +22,8 @@ function runRoute(state, config)
 
 	if (config.input)
 	{
-		Object.keys(config.input).map(function(inputKey)
-		{
-			var fullKey = "input." + inputKey;
-			var valueVarName = config.input[inputKey];
-			var value;
-
-			if (valueVarName.length >= 2 && valueVarName.substr(0, 1) == "'" && valueVarName.substr(-1) == "'")
-			{
-				value = valueVarName.substr(1, valueVarName.length - 2);
-			}
-			else
-			{
-				value = state.get(valueVarName);
-			}
-
-			route.context.set(fullKey, value);
-		});
+		var input = state.assemble(config.input);
+		routeContext.set("input", input);
 	}
 
 	var routePromise = route.run();
@@ -49,18 +32,18 @@ function runRoute(state, config)
 	{
 		routePromise = routePromise.then(function()
 		{
+			var output = route.context.get("output");
+			
 			if (typeof config.output === "string")
 			{
-				var value = route.context.get("output");
-				state.set(config.output, value);
+				state.set(config.output, output);
 			}
 			else
 			{
 				Object.keys(config.output).map(function(outputKey)
 				{
-					var fullKey = "output." + outputKey;
+					var value = output[outputKey];
 					var saveTo = config.output[outputKey];
-					var value = route.context.get(fullKey);
 
 					state.set(saveTo, value);
 				});

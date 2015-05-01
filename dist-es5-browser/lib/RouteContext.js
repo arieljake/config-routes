@@ -43,6 +43,16 @@ define("config-routes/lib/RouteContext", ["lodash", "../utils/ObjectPath", "../u
     translate: function(varString) {
       return VariableString(varString, this.model);
     },
+    assemble: function(map) {
+      var self = this;
+      var result = {};
+      Object.keys(map).map(function(key) {
+        var valueVarName = map[key];
+        var value = self.get(valueVarName);
+        result[key] = value;
+      });
+      return result;
+    },
     child: function() {
       var $__6 = this;
       var child = new $RouteContext();

@@ -62,6 +62,7 @@
 [2K[0G  [32m  ✓[0m[90m child context has empty state with no inherited props [0m
 [2K[0G  [32m  ✓[0m[90m child context has inherited props [0m
 [2K[0G  [32m  ✓[0m[90m child context excludes same props on dump [0m
+[2K[0G  [32m  ✓[0m[90m child context has inherited props [0m
 
 [0m  RouteStep[0m
 [2K[0G  [32m  ✓[0m[90m getExecutable binds context and config [0m
@@ -91,5 +92,5 @@
 [2K[0G  [32m  ✓[0m[90m setIn concatenates value when array specified and doesn't exist [0m
 
 
-[92m [0m[32m 72 passing[0m[90m (369ms)[0m
+[92m [0m[32m 73 passing[0m[90m (368ms)[0m
 

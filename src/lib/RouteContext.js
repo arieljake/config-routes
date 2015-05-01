@@ -56,6 +56,22 @@ export class RouteContext
 		return VariableString(varString, this.model);
 	}
 	
+	assemble(map)
+	{
+		var self = this;
+		var result = {};
+		
+		Object.keys(map).map(function(key)
+		{
+			var valueVarName = map[key];
+			var value = self.get(valueVarName);
+
+			result[key] = value;
+		});
+		
+		return result;
+	}
+	
 	child()
 	{
 		let child = new RouteContext();

@@ -288,7 +288,7 @@ describe("FnsRunner", function()
 		{
 			try
 			{
-				assert.equal(err.message, "test error", "error matches");
+				assert.match(err, /test error/, "error matches");
 				assert.equal(fnIndex, 0, "fn 0 threw error");
 
 				done();

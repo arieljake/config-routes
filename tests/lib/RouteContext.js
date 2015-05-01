@@ -137,4 +137,22 @@ describe("Route", function()
 		
 		assert.deepEqual(childObj, routeContext.toObject(), "dumps match");
 	});
+	
+	it("child context has inherited props", function()
+	{
+		var routeContext = new RouteContext();
+
+		routeContext.set("foo", 1);
+		routeContext.set("bar", 2);
+		
+		var input = {
+			"prop1": "foo",
+			"prop2": "bar"
+		};
+		
+		var result = routeContext.assemble(input);
+		
+		assert.equal(result.prop1, routeContext.get(input.prop1), "prop1 matches");
+		assert.equal(result.prop2, routeContext.get(input.prop2), "prop2 matches");
+	});
 });

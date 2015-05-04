@@ -133,4 +133,37 @@ describe("Filter", function()
 		
 		assert.strictEqual(hasFilterAfterClear, false, "no filter");
 	});
+
+	it("filter array returns AND of all filters", function()
+	{
+		ConfigRoutes.addFilter("true", function(value) {
+			return true;
+		});
+		
+		ConfigRoutes.addFilter("false", function(value) {
+			return false;
+		});
+
+		var result;
+		
+		result = Filter.filter(1, ["true"]);
+		
+		assert.strictEqual(result, true, "result single item array matches");
+		
+		result = Filter.filter(2, ["false"]);
+		
+		assert.strictEqual(result, false, "result single item array matches");
+		
+		result = Filter.filter(3, ["true","true"]);
+		
+		assert.strictEqual(result, true, "result multi item array matches");
+		
+		result = Filter.filter(4, ["true","false"]);
+		
+		assert.strictEqual(result, false, "result multi item array matches");
+		
+		result = Filter.filter(5, ["false","true"]);
+		
+		assert.strictEqual(result, false, "result multi item array matches");
+	});
 });

@@ -1,5 +1,9 @@
 
 [0m[0m
+[0m  input/collection.unique[0m
+[2K[0G  [32m  ✓[0m[90m removes duplicates for simple array [0m
+[2K[0G  [32m  ✓[0m[90m removes duplicates for array of objects [0m
+
 [0m  Filter[0m
 [2K[0G  [32m  ✓[0m[90m undefined config returns true [0m
 [2K[0G  [32m  ✓[0m[90m unrecognized config responds true [0m
@@ -8,6 +12,7 @@
 [2K[0G  [32m  ✓[0m[90m filter by config object [0m
 [2K[0G  [32m  ✓[0m[90m valueVarName honored [0m
 [2K[0G  [32m  ✓[0m[90m clearFilter works [0m
+[2K[0G  [32m  ✓[0m[90m filter array returns AND of all filters [0m
 
 [0m  FnLibrary[0m
 [2K[0G  [32m  ✓[0m[90m returns fn by id [0m
@@ -25,7 +30,7 @@
 [2K[0G  [32m  ✓[0m[90m fnComplete fires once for each fn [0m
 [2K[0G  [32m  ✓[0m[90m fnError fires if fn throws error [0m
 [2K[0G  [32m  ✓[0m[90m fn error trigger promise rejection with error message [0m
-[2K[0G  [32m  ✓[0m[90m fn error stops sequence [0m[31m(99ms)[0m
+[2K[0G  [32m  ✓[0m[90m fn error stops sequence [0m[31m(101ms)[0m
 
 [0m  Formatter[0m
 [2K[0G  [32m  ✓[0m[90m undefined config returns value [0m
@@ -92,5 +97,5 @@
 [2K[0G  [32m  ✓[0m[90m setIn concatenates value when array specified and doesn't exist [0m
 
 
-[92m [0m[32m 73 passing[0m[90m (366ms)[0m
+[92m [0m[32m 76 passing[0m[90m (375ms)[0m
 

@@ -15,9 +15,9 @@
 [0m  FnsRunner[0m
 [2K[0G  [32m  ✓[0m[90m promise completes with no fns [0m
 [2K[0G  [32m  ✓[0m[90m promise completes after fns return [0m
-[2K[0G  [32m  ✓[0m[90m promise completes after fns promise compeletes [0m[31m(101ms)[0m
+[2K[0G  [32m  ✓[0m[90m promise completes after fns promise compeletes [0m[31m(102ms)[0m
 [2K[0G  [32m  ✓[0m[90m promise catches after fns throw error [0m
-[2K[0G  [32m  ✓[0m[90m promise catches after fns reject promise [0m[31m(102ms)[0m
+[2K[0G  [32m  ✓[0m[90m promise catches after fns reject promise [0m[31m(100ms)[0m
 [2K[0G  [32m  ✓[0m[90m promise catches after 2nd fn throws error [0m
 [2K[0G  [32m  ✓[0m[90m runnerStarting event fires [0m
 [2K[0G  [32m  ✓[0m[90m runnerComplete event fires [0m
@@ -25,7 +25,7 @@
 [2K[0G  [32m  ✓[0m[90m fnComplete fires once for each fn [0m
 [2K[0G  [32m  ✓[0m[90m fnError fires if fn throws error [0m
 [2K[0G  [32m  ✓[0m[90m fn error trigger promise rejection with error message [0m
-[2K[0G  [32m  ✓[0m[90m fn error stops sequence [0m[31m(101ms)[0m
+[2K[0G  [32m  ✓[0m[90m fn error stops sequence [0m[31m(99ms)[0m
 
 [0m  Formatter[0m
 [2K[0G  [32m  ✓[0m[90m undefined config returns value [0m
@@ -92,5 +92,5 @@
 [2K[0G  [32m  ✓[0m[90m setIn concatenates value when array specified and doesn't exist [0m
 
 
-[92m [0m[32m 73 passing[0m[90m (375ms)[0m
+[92m [0m[32m 73 passing[0m[90m (366ms)[0m
 

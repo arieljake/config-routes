@@ -24,7 +24,7 @@ function setVar(state, config)
 		value = state.translate(config.valueString);
 	}
 	
-	if (value === undefined  && config.hasOwnProperty("defaultValue"))
+	if (value === undefined && config.hasOwnProperty("defaultValue"))
 	{
 		value = config.defaultValue;
 	}

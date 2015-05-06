@@ -6,9 +6,14 @@ default
 function map(state, config) {
 
     var collection = state.get(config.collectionVarName);
-	var value = _.map(collection, function(item) {
+	var value = _.map(collection, function(item, index) {
 		
 		state.set(config.sourceKey, item);
+		
+		if (config.indexKey)
+		{
+			state.set(config.indexKey, index);
+		}
 		
 		SetVars.default(state, config.map);
 		
@@ -26,4 +31,6 @@ function map(state, config) {
 	{
 		state.unset(config.collectionVarName);
 	}
+	
+	return value;
 };

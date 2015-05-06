@@ -47,12 +47,17 @@ var $RouteContext = RouteContext;
   },
   assemble: function(map) {
     var self = this;
-    var result = {};
-    Object.keys(map).map(function(key) {
-      var valueVarName = map[key];
-      var value = self.get(valueVarName);
-      result[key] = value;
-    });
+    var result;
+    if (typeof map === "string") {
+      result = self.get(map);
+    } else {
+      result = {};
+      Object.keys(map).map(function(key) {
+        var valueVarName = map[key];
+        var value = self.get(valueVarName);
+        result[key] = value;
+      });
+    }
     return result;
   },
   child: function() {

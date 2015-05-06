@@ -5,8 +5,11 @@ define("config-routes/fns/input/collection.map", [], function() {
   var SetVars = require('./set.vars');
   function map(state, config) {
     var collection = state.get(config.collectionVarName);
-    var value = _.map(collection, function(item) {
+    var value = _.map(collection, function(item, index) {
       state.set(config.sourceKey, item);
+      if (config.indexKey) {
+        state.set(config.indexKey, index);
+      }
       SetVars.default(state, config.map);
       var result = state.get(config.destKey);
       state.unset(config.sourceKey);
@@ -17,6 +20,7 @@ define("config-routes/fns/input/collection.map", [], function() {
     if (config.deleteOriginal === true) {
       state.unset(config.collectionVarName);
     }
+    return value;
   }
   var $__default = map;
   ;

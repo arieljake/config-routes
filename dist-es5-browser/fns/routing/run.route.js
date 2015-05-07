@@ -2,6 +2,7 @@ define("config-routes/fns/routing/run.route", [], function() {
   "use strict";
   var __moduleName = "config-routes/fns/routing/run.route";
   var Q = require("q");
+  var util = require("util");
   function runRoute(state, config) {
     var routeLib = state.get("$routes");
     var routeContext = state.child();
@@ -18,9 +19,11 @@ define("config-routes/fns/routing/run.route", [], function() {
       routeContext.set("input", input);
     }
     var routePromise = route.run();
-    if (config.output) {
+    if (config.output && (typeof config.output === "string" || Object.keys(config.output).length > 0)) {
       routePromise = routePromise.then(function() {
         var output = route.context.get("output");
+        if (!output)
+          return Q.reject("output expected but none defined: " + util.inspect(config.output));
         if (typeof config.output === "string") {
           state.set(config.output, output);
         } else {

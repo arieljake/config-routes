@@ -1,4 +1,5 @@
 let Q = require("q");
+let util = require("util");
 
 export
 default
@@ -28,11 +29,14 @@ function runRoute(state, config)
 
 	var routePromise = route.run();
 
-	if (config.output)
+	if (config.output && (typeof config.output === "string" || Object.keys(config.output).length > 0))
 	{
 		routePromise = routePromise.then(function()
 		{
 			var output = route.context.get("output");
+
+			if (!output)
+				return Q.reject("output expected but none defined: " + util.inspect(config.output));
 			
 			if (typeof config.output === "string")
 			{

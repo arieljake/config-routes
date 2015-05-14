@@ -9,14 +9,11 @@ Object.defineProperties(exports, {
   createContext: {get: function() {
       return createContext;
     }},
-  addFilter: {get: function() {
-      return addFilter;
+  Filter: {get: function() {
+      return Filter;
     }},
-  clearFilters: {get: function() {
-      return clearFilters;
-    }},
-  hasFilter: {get: function() {
-      return hasFilter;
+  Formatter: {get: function() {
+      return Formatter;
     }},
   utils: {get: function() {
       return utils;
@@ -31,6 +28,7 @@ var $__lodash__,
     $__dist_45_es5_47_lib_47_RouteContext__,
     $__dist_45_es5_47_lib_47_FnLibrary__,
     $__dist_45_es5_47_lib_47_Filter__,
+    $__dist_45_es5_47_lib_47_Formatter__,
     $__dist_45_es5_47_utils_47_ObjectPath__,
     $__dist_45_es5_47_utils_47_VariableString__;
 global.$traceurRuntime = require('traceur-runtime');
@@ -42,6 +40,7 @@ var RouteLibrary = ($__dist_45_es5_47_lib_47_RouteLibrary__ = require("./lib/Rou
 var RouteContext = ($__dist_45_es5_47_lib_47_RouteContext__ = require("./lib/RouteContext"), $__dist_45_es5_47_lib_47_RouteContext__ && $__dist_45_es5_47_lib_47_RouteContext__.__esModule && $__dist_45_es5_47_lib_47_RouteContext__ || {default: $__dist_45_es5_47_lib_47_RouteContext__}).RouteContext;
 var FnLibrary = ($__dist_45_es5_47_lib_47_FnLibrary__ = require("./lib/FnLibrary"), $__dist_45_es5_47_lib_47_FnLibrary__ && $__dist_45_es5_47_lib_47_FnLibrary__.__esModule && $__dist_45_es5_47_lib_47_FnLibrary__ || {default: $__dist_45_es5_47_lib_47_FnLibrary__}).FnLibrary;
 var Filter = ($__dist_45_es5_47_lib_47_Filter__ = require("./lib/Filter"), $__dist_45_es5_47_lib_47_Filter__ && $__dist_45_es5_47_lib_47_Filter__.__esModule && $__dist_45_es5_47_lib_47_Filter__ || {default: $__dist_45_es5_47_lib_47_Filter__}).Filter;
+var Formatter = ($__dist_45_es5_47_lib_47_Formatter__ = require("./lib/Formatter"), $__dist_45_es5_47_lib_47_Formatter__ && $__dist_45_es5_47_lib_47_Formatter__.__esModule && $__dist_45_es5_47_lib_47_Formatter__ || {default: $__dist_45_es5_47_lib_47_Formatter__}).Formatter;
 var ObjectPath = ($__dist_45_es5_47_utils_47_ObjectPath__ = require("./utils/ObjectPath"), $__dist_45_es5_47_utils_47_ObjectPath__ && $__dist_45_es5_47_utils_47_ObjectPath__.__esModule && $__dist_45_es5_47_utils_47_ObjectPath__ || {default: $__dist_45_es5_47_utils_47_ObjectPath__}).ObjectPath;
 var VariableString = ($__dist_45_es5_47_utils_47_VariableString__ = require("./utils/VariableString"), $__dist_45_es5_47_utils_47_VariableString__ && $__dist_45_es5_47_utils_47_VariableString__.__esModule && $__dist_45_es5_47_utils_47_VariableString__ || {default: $__dist_45_es5_47_utils_47_VariableString__}).VariableString;
 function createRoutes(config) {
@@ -71,17 +70,7 @@ function createContext(state) {
   return new RouteContext(state);
 }
 ;
-function addFilter(matchFn, filterFn) {
-  Filter.addFilter(matchFn, filterFn);
-}
 ;
-function clearFilters() {
-  Filter.clearFilters();
-}
-;
-function hasFilter(type) {
-  return Filter.hasFilterForType(type);
-}
 ;
 var utils = {
   ObjectPath: ObjectPath,

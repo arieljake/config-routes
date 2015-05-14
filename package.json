@@ -1,15 +1,15 @@
 {
 	"name": "config-routes",
-	"version": "0.0.23",
+	"version": "0.0.24",
 	"description": "Configuration based routing for express, written in es6 compiled to es5",
 	"keywords": [
-    "expressjs",
-    "route",
-    "routing",
-    "configuration",
-    "json",
-    "functional"
-  ],
+		"expressjs",
+		"route",
+		"routing",
+		"configuration",
+		"json",
+		"functional"
+	],
 	"main": "dist-es5/index.js",
 	"repository":
 	{
@@ -23,7 +23,6 @@
 		"async": "^0.9.0",
 		"eventemitter3": "^0.1.6",
 		"lodash": "^2.4.1",
-		"mongodb": "^1.4.30",
 		"q": "^1.1.2",
 		"traceur-runtime": "0.0.59",
 		"uuid": "^2.0.1",

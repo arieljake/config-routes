@@ -1,5 +1,9 @@
 
 [0m[0m
+[0m  input/collection.map[0m
+[2K[0G  [32m  ✓[0m[90m exits quietly when collection is undefined [0m
+[2K[0G  [32m  ✓[0m[90m makes index value available when indexKey specified [0m
+
 [0m  input/collection.unique[0m
 [2K[0G  [32m  ✓[0m[90m removes duplicates for simple array [0m
 [2K[0G  [32m  ✓[0m[90m removes duplicates for array of objects [0m
@@ -7,11 +11,9 @@
 [0m  Filter[0m
 [2K[0G  [32m  ✓[0m[90m undefined config returns true [0m
 [2K[0G  [32m  ✓[0m[90m unrecognized config responds true [0m
-[2K[0G  [32m  ✓[0m[90m hasFilter works [0m
 [2K[0G  [32m  ✓[0m[90m filter by config string [0m
 [2K[0G  [32m  ✓[0m[90m filter by config object [0m
 [2K[0G  [32m  ✓[0m[90m valueVarName honored [0m
-[2K[0G  [32m  ✓[0m[90m clearFilter works [0m
 [2K[0G  [32m  ✓[0m[90m filter array returns AND of all filters [0m
 
 [0m  FnLibrary[0m
@@ -22,7 +24,7 @@
 [2K[0G  [32m  ✓[0m[90m promise completes after fns return [0m
 [2K[0G  [32m  ✓[0m[90m promise completes after fns promise compeletes [0m[31m(102ms)[0m
 [2K[0G  [32m  ✓[0m[90m promise catches after fns throw error [0m
-[2K[0G  [32m  ✓[0m[90m promise catches after fns reject promise [0m[31m(100ms)[0m
+[2K[0G  [32m  ✓[0m[90m promise catches after fns reject promise [0m[31m(101ms)[0m
 [2K[0G  [32m  ✓[0m[90m promise catches after 2nd fn throws error [0m
 [2K[0G  [32m  ✓[0m[90m runnerStarting event fires [0m
 [2K[0G  [32m  ✓[0m[90m runnerComplete event fires [0m
@@ -30,22 +32,13 @@
 [2K[0G  [32m  ✓[0m[90m fnComplete fires once for each fn [0m
 [2K[0G  [32m  ✓[0m[90m fnError fires if fn throws error [0m
 [2K[0G  [32m  ✓[0m[90m fn error trigger promise rejection with error message [0m
-[2K[0G  [32m  ✓[0m[90m fn error stops sequence [0m[31m(101ms)[0m
+[2K[0G  [32m  ✓[0m[90m fn error stops sequence [0m[31m(102ms)[0m
 
 [0m  Formatter[0m
 [2K[0G  [32m  ✓[0m[90m undefined config returns value [0m
 [2K[0G  [32m  ✓[0m[90m config string returns formatted value [0m
 [2K[0G  [32m  ✓[0m[90m config object returns formatted value [0m
-[2K[0G  [32m  ✓[0m[90m config array with single entry returns formatted value [0m
-[2K[0G  [32m  ✓[0m[90m returns uuid v1 by default with string format [0m
-[2K[0G  [32m  ✓[0m[90m returns uuid v1 by default with object [0m
-[2K[0G  [32m  ✓[0m[90m returns uuid v1 by default with array format [0m
-[2K[0G  [32m  ✓[0m[90m returns uuid v1 if requested with string format [0m
-[2K[0G  [32m  ✓[0m[90m returns uuid v1 if requested with object format [0m
-[2K[0G  [32m  ✓[0m[90m returns uuid v1 if requested with array format [0m
-[2K[0G  [32m  ✓[0m[90m returns uuid v4 if requested with string format [0m
-[2K[0G  [32m  ✓[0m[90m returns uuid v4 if requested with object format [0m
-[2K[0G  [32m  ✓[0m[90m returns uuid v4 if requested with array format [0m
+[2K[0G  [32m  ✓[0m[90m config array returns value formatted by sequence of formatters [0m
 
 [0m  Route[0m
 [2K[0G  [32m  ✓[0m[90m toObject returns id, name, and state [0m
@@ -57,17 +50,24 @@
 [2K[0G  [32m  ✓[0m[90m promise is rejected with step error [0m
 
 [0m  Route[0m
-[2K[0G  [32m  ✓[0m[90m empty constructor, initialized with empty state [0m
-[2K[0G  [32m  ✓[0m[90m state in constructor, initialized with provided state [0m
 [2K[0G  [32m  ✓[0m[90m get returns value [0m
-[2K[0G  [32m  ✓[0m[90m set updates value [0m
-[2K[0G  [32m  ✓[0m[90m unset clears value [0m
-[2K[0G  [32m  ✓[0m[90m toObject with no excluded props matches state [0m
-[2K[0G  [32m  ✓[0m[90m toObject omits excluded props [0m
-[2K[0G  [32m  ✓[0m[90m child context has empty state with no inherited props [0m
-[2K[0G  [32m  ✓[0m[90m child context has inherited props [0m
-[2K[0G  [32m  ✓[0m[90m child context excludes same props on dump [0m
-[2K[0G  [32m  ✓[0m[90m child context has inherited props [0m
+[0m    constructor[0m
+[2K[0G    [32m  ✓[0m[90m initializes with empty state when no arguments provided [0m
+[2K[0G    [32m  ✓[0m[90m initializes context with provided state [0m
+[0m    set[0m
+[2K[0G    [32m  ✓[0m[90m updates specifed path with provided value [0m
+[0m    unset[0m
+[2K[0G    [32m  ✓[0m[90m clears value [0m
+[0m    toObject[0m
+[2K[0G    [32m  ✓[0m[90m with no excluded props matches state [0m
+[2K[0G    [32m  ✓[0m[90m omits excluded props [0m
+[0m    child[0m
+[2K[0G    [32m  ✓[0m[90m creates child context with empty state when no props specified as inherited [0m
+[2K[0G    [32m  ✓[0m[90m creates child context with specified inherited props [0m
+[2K[0G    [32m  ✓[0m[90m creates child context that dumps with same excluded properties [0m
+[0m    assemble[0m
+[2K[0G    [32m  ✓[0m[90m returns struct assembled from provided map [0m
+[2K[0G    [32m  ✓[0m[90m returns struct copied from provided key name [0m
 
 [0m  RouteStep[0m
 [2K[0G  [32m  ✓[0m[90m getExecutable binds context and config [0m
@@ -97,5 +97,5 @@
 [2K[0G  [32m  ✓[0m[90m setIn concatenates value when array specified and doesn't exist [0m
 
 
-[92m [0m[32m 76 passing[0m[90m (375ms)[0m
+[92m [0m[32m 68 passing[0m[90m (366ms)[0m
 

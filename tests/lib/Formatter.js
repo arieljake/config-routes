@@ -7,107 +7,57 @@ var Formatter = require("../../dist-es5/lib/Formatter").Formatter;
 
 describe("Formatter", function()
 {
+	before(function()
+	{
+		Formatter.add("integer", function(value, config, formatType)
+		{
+			return parseInt(value, 10);
+		});
+		
+		Formatter.add("string", function(value, config, formatType)
+		{
+			return value.toString();
+		});
+	});
+
 	it("undefined config returns value", function()
 	{
 		var value = 10;
 		var newValue = Formatter.format(value, undefined);
-		
+
 		assert.strictEqual(value, newValue, "values match");
 	});
-	
+
 	it("config string returns formatted value", function()
 	{
 		var value = "10";
 		var newValue = Formatter.format(value, "integer");
-		
+
 		assert.strictEqual(newValue, 10, "format matches");
 	});
-	
+
 	it("config object returns formatted value", function()
 	{
 		var value = "10";
-		var newValue = Formatter.format(value, {type: "integer"});
-		
+		var newValue = Formatter.format(value,
+		{
+			type: "integer"
+		});
+
 		assert.strictEqual(newValue, 10, "format matches");
 	});
-	
-	it("config array with single entry returns formatted value", function()
+
+	it("config array returns value formatted by sequence of formatters", function()
 	{
 		var value = "10";
-		var newValue = Formatter.format(value, [{type: "integer"},{type: "string"}]);
-		
+		var newValue = Formatter.format(value, [
+		{
+			type: "integer"
+		},
+		{
+			type: "string"
+		}]);
+
 		assert.strictEqual(newValue, value, "format matches");
-	});
-	
-	it("returns uuid v1 by default with string format", function()
-	{
-		var value = "10";
-		var newValue = Formatter.format(value, "uuid");
-		
-		assert.match(newValue, /[0-9a-f]{8}-[0-9a-f]{4}-1[0-9a-f]{3}-[0-9a-f]{4}-[0-9a-f]{12}/, "value id is uuid.v1");
-	});
-	
-	it("returns uuid v1 by default with object", function()
-	{
-		var value = "10";
-		var newValue = Formatter.format(value, {type: "uuid"});
-		
-		assert.match(newValue, /[0-9a-f]{8}-[0-9a-f]{4}-1[0-9a-f]{3}-[0-9a-f]{4}-[0-9a-f]{12}/, "value id is uuid.v1");
-	});
-	
-	it("returns uuid v1 by default with array format", function()
-	{
-		var value = "10";
-		var newValue = Formatter.format(value, [{type: "uuid"}]);
-		
-		assert.match(newValue, /[0-9a-f]{8}-[0-9a-f]{4}-1[0-9a-f]{3}-[0-9a-f]{4}-[0-9a-f]{12}/, "value id is uuid.v1");
-	});
-	
-	it("returns uuid v1 if requested with string format", function()
-	{
-		var value = "10";
-		var newValue = Formatter.format(value, "uuid.v1");
-		
-		assert.match(newValue, /[0-9a-f]{8}-[0-9a-f]{4}-1[0-9a-f]{3}-[0-9a-f]{4}-[0-9a-f]{12}/, "value id is uuid.v1");
-	});
-	
-	it("returns uuid v1 if requested with object format", function()
-	{
-		var value = "10";
-		var newValue = Formatter.format(value, {type: "uuid.v1"});
-		
-		assert.match(newValue, /[0-9a-f]{8}-[0-9a-f]{4}-1[0-9a-f]{3}-[0-9a-f]{4}-[0-9a-f]{12}/, "value id is uuid.v1");
-	});
-	
-	it("returns uuid v1 if requested with array format", function()
-	{
-		var value = "10";
-		var newValue = Formatter.format(value, [{type: "uuid.v1"}]);
-		
-		assert.match(newValue, /[0-9a-f]{8}-[0-9a-f]{4}-1[0-9a-f]{3}-[0-9a-f]{4}-[0-9a-f]{12}/, "value id is uuid.v1");
-	});
-	
-	it("returns uuid v4 if requested with string format", function()
-	{
-		var value = "10";
-		var newValue = Formatter.format(value, "uuid.v4");
-		
-		assert.match(newValue, /[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[0-9a-f]{4}-[0-9a-f]{12}/, "value id is uuid.v4");
-	});
-	
-	it("returns uuid v4 if requested with object format", function()
-	{
-		var value = "10";
-		var newValue = Formatter.format(value, {type: "uuid.v4"});
-		
-		assert.match(newValue, /[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[0-9a-f]{4}-[0-9a-f]{12}/, "value id is uuid.v4");
-	});
-	
-	it("returns uuid v4 if requested with array format", function()
-	{
-		var value = "10";
-		var newValue = Formatter.format(value, [{type: "uuid.v4"}]);
-		
-		assert.match(newValue, /[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[0-9a-f]{4}-[0-9a-f]{12}/, "value id is uuid.v4");
 	});
 });

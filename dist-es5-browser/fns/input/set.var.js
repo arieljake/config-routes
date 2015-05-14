@@ -1,9 +1,6 @@
 define("config-routes/fns/input/set.var", [], function() {
   "use strict";
   var __moduleName = "config-routes/fns/input/set.var";
-  var MongoDbId = require('mongodb').ObjectID;
-  var uuid = require('uuid');
-  var _ = require('lodash');
   var Formatter = require("../../lib/Formatter").Formatter;
   function setVar(state, config) {
     var value;

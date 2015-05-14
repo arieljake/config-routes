@@ -9,6 +9,7 @@ import {RouteLibrary} from './lib/RouteLibrary';
 import {RouteContext} from './lib/RouteContext';
 import {FnLibrary} from './lib/FnLibrary';
 import {Filter} from './lib/Filter';
+import {Formatter} from './lib/Formatter';
 import {ObjectPath} from "./utils/ObjectPath";
 import {VariableString} from './utils/VariableString';
 
@@ -50,20 +51,8 @@ export function createContext(state)
 	return new RouteContext(state);
 };
 
-export function addFilter(matchFn, filterFn)
-{
-	Filter.addFilter(matchFn, filterFn);
-};
-
-export function clearFilters()
-{
-	Filter.clearFilters();
-};
-
-export function hasFilter(type)
-{
-	return Filter.hasFilterForType(type);
-};
+export { Filter };
+export { Formatter };
 
 export var utils = {
 	ObjectPath,

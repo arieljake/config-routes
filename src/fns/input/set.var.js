@@ -1,6 +1,3 @@
-let MongoDbId = require('mongodb').ObjectID;
-let uuid = require('uuid');
-let _ = require('lodash');
 let Formatter = require("../../lib/Formatter").Formatter;
 
 export

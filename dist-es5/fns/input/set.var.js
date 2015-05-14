@@ -9,9 +9,6 @@ Object.defineProperties(exports, {
   __esModule: {value: true}
 });
 var __moduleName = "dist-es5/fns/input/set.var";
-var MongoDbId = require('mongodb').ObjectID;
-var uuid = require('uuid');
-var _ = require('lodash');
 var Formatter = require("../../lib/Formatter").Formatter;
 function setVar(state, config) {
   var value;

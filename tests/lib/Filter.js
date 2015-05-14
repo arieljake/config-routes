@@ -5,12 +5,26 @@ global.$traceurRuntime = require('traceur-runtime');
 var assert = require("chai").assert;
 var Filter = require("../../dist-es5/lib/Filter").Filter;
 var ConfigRoutes = require("../../dist-es5/index");
+var Filter = ConfigRoutes.Filter;
 
 describe("Filter", function()
 {
-	beforeEach(function()
+	before(function()
 	{
-		ConfigRoutes.clearFilters();
+		Filter.add("true", function(value)
+		{
+			return true;
+		});
+
+		Filter.add("false", function(value)
+		{
+			return false;
+		});
+
+		Filter.add("isA", function(value, config, state, filterType)
+		{
+			return value == "a";
+		});
 	});
 
 	it("undefined config returns true", function()
@@ -29,28 +43,8 @@ describe("Filter", function()
 		assert.strictEqual(result, true, "result true");
 	});
 
-	it("hasFilter works", function()
-	{
-		var hasFilter = ConfigRoutes.hasFilter("isA");
-		
-		assert.strictEqual(hasFilter, false, "filter DNE");
-		
-		ConfigRoutes.addFilter("isA", function() {});
-		
-		var hasFilter = ConfigRoutes.hasFilter("isA");
-		
-		assert.strictEqual(hasFilter, true, "filter exists");
-	});
-
 	it("filter by config string", function()
 	{
-		var filterFn = function(value, config, state, filterType)
-		{
-			return value == "a";
-		};
-
-		ConfigRoutes.addFilter("isA", filterFn);
-
 		var value1 = "a";
 		var result1 = Filter.filter(value1, "isA");
 
@@ -64,37 +58,30 @@ describe("Filter", function()
 
 	it("filter by config object", function()
 	{
-		var filterFn = function(value, config, state, filterType)
-		{
-			return value == "a";
-		};
-
-		ConfigRoutes.addFilter("isA", filterFn);
-
 		var value1 = "a";
-		var result1 = Filter.filter(value1, {type: "isA"});
+		var result1 = Filter.filter(value1,
+		{
+			type: "isA"
+		});
 
 		assert.strictEqual(result1, true, "result true");
 
 		var value2 = "b";
-		var result2 = Filter.filter(value2, {type: "isA"});
+		var result2 = Filter.filter(value2,
+		{
+			type: "isA"
+		});
 
 		assert.strictEqual(result2, false, "result false");
 	});
 
 	it("valueVarName honored", function()
 	{
-		var filterFn = function(value, config, state, filterType)
-		{
-			return value == "a";
-		};
-
-		ConfigRoutes.addFilter("isA", filterFn);
-
 		var value = {
-			foo: {
+			foo:
+			{
 				bar: "a"
-			}	
+			}
 		};
 		var config = {
 			type: "isA",
@@ -105,65 +92,28 @@ describe("Filter", function()
 		assert.strictEqual(result, true, "result true");
 	});
 
-	it("clearFilter works", function()
-	{
-		var filterFn = function(value, config, state, filterType)
-		{
-			return value == "a";
-		};
-
-		ConfigRoutes.addFilter("isA", filterFn);
-		
-		var hasFilter = ConfigRoutes.hasFilter("isA");
-		
-		assert.strictEqual(hasFilter, true, "has filter");
-
-		var value = "b";
-		var result = Filter.filter(value, "isA");
-
-		assert.strictEqual(result, false, "result false");
-
-		ConfigRoutes.clearFilters();
-
-		result = Filter.filter(value, "isA");
-
-		assert.strictEqual(result, true, "result true");
-		
-		var hasFilterAfterClear = ConfigRoutes.hasFilter("isA");
-		
-		assert.strictEqual(hasFilterAfterClear, false, "no filter");
-	});
-
 	it("filter array returns AND of all filters", function()
 	{
-		ConfigRoutes.addFilter("true", function(value) {
-			return true;
-		});
-		
-		ConfigRoutes.addFilter("false", function(value) {
-			return false;
-		});
-
 		var result;
-		
+
 		result = Filter.filter(1, ["true"]);
-		
+
 		assert.strictEqual(result, true, "result single item array matches");
-		
+
 		result = Filter.filter(2, ["false"]);
-		
+
 		assert.strictEqual(result, false, "result single item array matches");
-		
-		result = Filter.filter(3, ["true","true"]);
-		
+
+		result = Filter.filter(3, ["true", "true"]);
+
 		assert.strictEqual(result, true, "result multi item array matches");
-		
-		result = Filter.filter(4, ["true","false"]);
-		
+
+		result = Filter.filter(4, ["true", "false"]);
+
 		assert.strictEqual(result, false, "result multi item array matches");
-		
-		result = Filter.filter(5, ["false","true"]);
-		
+
+		result = Filter.filter(5, ["false", "true"]);
+
 		assert.strictEqual(result, false, "result multi item array matches");
 	});
 });

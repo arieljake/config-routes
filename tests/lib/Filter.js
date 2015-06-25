@@ -35,12 +35,18 @@ describe("Filter", function()
 		assert.strictEqual(result, true, "result true");
 	});
 
-	it("unrecognized config responds true", function()
+	it("unrecognized config throws error", function()
 	{
 		var value = "asdf";
-		var result = Filter.filter(value, "asdf");
-
-		assert.strictEqual(result, true, "result true");
+		
+		try
+		{
+			var result = Filter.filter(value, "asdf");
+		}
+		catch (err)
+		{
+			assert.match(err.message, /unfound filter/, "filter unfound error");
+		}		
 	});
 
 	it("filter by config string", function()

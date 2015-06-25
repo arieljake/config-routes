@@ -32,6 +32,10 @@ Formatter.format = function(value, config)
 		{
 			value = formatter.format(value, config, formatType);
 		}
+		else
+		{
+			throw new Error("unfound formatter type; " + formatType);
+		}
 
 		return value;
 	}

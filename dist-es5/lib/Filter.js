@@ -37,7 +37,7 @@ Filter.filter = function(value, config, state) {
       }
       return filter.filter(value, config, state, filterType);
     } else {
-      return true;
+      throw new Error("unfound filter type; " + filterType);
     }
   }
 };

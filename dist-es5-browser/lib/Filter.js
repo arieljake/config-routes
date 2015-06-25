@@ -35,7 +35,7 @@ define("config-routes/lib/Filter", ["lodash", "../utils/Toolset", "../utils/Obje
         }
         return filter.filter(value, config, state, filterType);
       } else {
-        return true;
+        throw new Error("unfound filter type; " + filterType);
       }
     }
   };

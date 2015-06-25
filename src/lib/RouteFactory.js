@@ -40,8 +40,7 @@ export class RouteFactory
 	{
 		if (!context)
 		{
-			context = new RouteContext();
-			this.addInputsToContext(context);
+			context = this.createContext();
 		}
 		
 		var routeId = uuid.v1();
@@ -71,10 +70,14 @@ export class RouteFactory
 		});
 	}
 	
-	addInputsToContext(context)
+	createContext()
 	{
+		var context = new RouteContext();
+		
 		this.routeInputs.forEach(function(input) {
 			context.set(input.name, input.value, input.inherited, input.ignored);
 		});
+		
+		return context;
 	}
 }

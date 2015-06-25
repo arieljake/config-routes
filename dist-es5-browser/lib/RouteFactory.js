@@ -40,8 +40,7 @@ define("config-routes/lib/RouteFactory", ["uuid", "./Route", "./RouteEventHandle
     },
     create: function(name, routeDefinition, context) {
       if (!context) {
-        context = new RouteContext();
-        this.addInputsToContext(context);
+        context = this.createContext();
       }
       var routeId = uuid.v1();
       var steps = this.createStepsForRoute(routeId, routeDefinition);
@@ -63,10 +62,12 @@ define("config-routes/lib/RouteFactory", ["uuid", "./Route", "./RouteEventHandle
         return new RouteStep(stepId, fnId, desc, stepFn, stepConfig);
       }));
     },
-    addInputsToContext: function(context) {
+    createContext: function() {
+      var context = new RouteContext();
       this.routeInputs.forEach(function(input) {
         context.set(input.name, input.value, input.inherited, input.ignored);
       });
+      return context;
     }
   }, {});
   return {

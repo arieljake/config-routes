@@ -23,6 +23,8 @@ define("config-routes/lib/Formatter", ["../utils/Toolset"], function($__0) {
       var formatter = this.get(formatType);
       if (formatter) {
         value = formatter.format(value, config, formatType);
+      } else {
+        throw new Error("unfound formatter type; " + formatType);
       }
       return value;
     }

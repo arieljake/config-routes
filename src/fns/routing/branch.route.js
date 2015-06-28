@@ -37,6 +37,7 @@ function branchRoute(state, config)
 		
 		var routeConfig = {
 			route: targetCase.route,
+			routeName: targetCase.routeName,
 			desc: targetCase.desc,
 			input: _.defaults({}, targetCase.input, config.input),
 			output: buildOutput(config.output, targetCase.output)

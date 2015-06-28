@@ -13,7 +13,7 @@ function consoleDir(state, config) {
   } else if (config.valueVarName) {
     value = state.get(config.valueVarName);
   } else if (config.valueString) {
-    value = state.tranlsate(config.valueString);
+    value = state.translate(config.valueString);
   }
   switch (config.format) {
     case "jsonString":

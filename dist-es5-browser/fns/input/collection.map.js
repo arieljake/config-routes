@@ -2,7 +2,7 @@ define("config-routes/fns/input/collection.map", [], function() {
   "use strict";
   var __moduleName = "config-routes/fns/input/collection.map";
   var _ = require("lodash");
-  var SetVars = require('./set.vars');
+  var SetVars = require('./set.vars').default;
   function map(state, config) {
     var collection = state.get(config.collectionVarName);
     var value = _.map(collection, function(item, index) {
@@ -10,7 +10,7 @@ define("config-routes/fns/input/collection.map", [], function() {
       if (config.indexKey) {
         state.set(config.indexKey, index);
       }
-      SetVars.default(state, config.map);
+      SetVars(state, config.map);
       var result = state.get(config.destKey);
       state.unset(config.sourceKey);
       state.unset(config.destKey);

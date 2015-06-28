@@ -1,5 +1,5 @@
 let _ = require("lodash");
-let SetVars = require('./set.vars');
+let SetVars = require('./set.vars').default;
 
 export
 default
@@ -15,7 +15,7 @@ function map(state, config) {
 			state.set(config.indexKey, index);
 		}
 		
-		SetVars.default(state, config.map);
+		SetVars(state, config.map);
 		
 		var result = state.get(config.destKey);
 		

@@ -14,7 +14,7 @@ function consoleDir(state, config) {
 	}
 	else if (config.valueString)
 	{
-		value = state.tranlsate(config.valueString);
+		value = state.translate(config.valueString);
 	}
 	
 	switch (config.format)

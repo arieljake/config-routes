@@ -15,7 +15,19 @@ define("config-routes/fns/routing/run.route", [], function() {
       route = routeLib.create(config.desc, config.route, routeContext);
     }
     if (config.input) {
-      var input = state.assemble(config.input);
+      var input;
+      if (typeof config.input === "string") {
+        input = state.get(config.input);
+      } else {
+        input = {};
+        Object.keys(config.input).forEach(function(key) {
+          var value = config.input[key];
+          if (typeof value === "string")
+            input[key] = state.get(value);
+          else
+            input[key] = value;
+        });
+      }
       routeContext.set("input", input);
     }
     var routePromise = route.run();

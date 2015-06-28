@@ -3,6 +3,7 @@ let util = require("util");
 
 export
 default
+
 function runRoute(state, config)
 {
 	var routeLib = state.get("$routes");
@@ -23,7 +24,27 @@ function runRoute(state, config)
 
 	if (config.input)
 	{
-		var input = state.assemble(config.input);
+		var input;
+
+		if (typeof config.input === "string")
+		{
+			input = state.get(config.input);
+		}
+		else
+		{
+			input = {};
+			
+			Object.keys(config.input).forEach(function(key)
+			{
+				var value = config.input[key];
+
+				if (typeof value === "string")
+					input[key] = state.get(value);
+				else
+					input[key] = value;
+			})
+		}
+
 		routeContext.set("input", input);
 	}
 
@@ -37,7 +58,7 @@ function runRoute(state, config)
 
 			if (!output)
 				return Q.reject("output expected but none defined: " + util.inspect(config.output));
-			
+
 			if (typeof config.output === "string")
 			{
 				state.set(config.output, output);

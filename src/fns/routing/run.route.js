@@ -32,19 +32,26 @@ function runRoute(state, config)
 		}
 		else
 		{
-			input = {};
-			
-			Object.keys(config.input).forEach(function(key)
-			{
-				var value = config.input[key];
-
-				if (typeof value === "string")
-					input[key] = state.get(value);
-				else
-					input[key] = value;
-			})
+			input = config.input;
 		}
 
+		routeContext.set("input", input);
+	}
+	
+	if (config.inputs)
+	{
+		var input = routeContext.get("input") || {};
+
+		Object.keys(config.inputs).forEach(function(key)
+		{
+			var value = config.inputs[key];
+
+			if (typeof value === "string")
+				input[key] = state.get(value);
+			else
+				input[key] = value;
+		});
+		
 		routeContext.set("input", input);
 	}
 
@@ -79,7 +86,10 @@ function runRoute(state, config)
 	if (config.fork === true)
 		return undefined;
 	else
-		return routePromise;
+		return routePromise.then(function()
+		{
+			return routeContext.get("output");
+		});
 };
 
 export function humanize(utils, config)

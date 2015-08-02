@@ -40,6 +40,7 @@ function branchRoute(state, config)
 			routeName: targetCase.routeName,
 			desc: targetCase.desc,
 			input: _.defaults({}, targetCase.input, config.input),
+			inputs: _.defaults({}, targetCase.inputs, config.inputs),
 			output: buildOutput(config.output, targetCase.output)
 		};
 		

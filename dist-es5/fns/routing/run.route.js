@@ -27,15 +27,19 @@ function runRoute(state, config) {
     if (typeof config.input === "string") {
       input = state.get(config.input);
     } else {
-      input = {};
-      Object.keys(config.input).forEach(function(key) {
-        var value = config.input[key];
-        if (typeof value === "string")
-          input[key] = state.get(value);
-        else
-          input[key] = value;
-      });
+      input = config.input;
     }
+    routeContext.set("input", input);
+  }
+  if (config.inputs) {
+    var input = routeContext.get("input") || {};
+    Object.keys(config.inputs).forEach(function(key) {
+      var value = config.inputs[key];
+      if (typeof value === "string")
+        input[key] = state.get(value);
+      else
+        input[key] = value;
+    });
     routeContext.set("input", input);
   }
   var routePromise = route.run();
@@ -58,7 +62,9 @@ function runRoute(state, config) {
   if (config.fork === true)
     return undefined;
   else
-    return routePromise;
+    return routePromise.then(function() {
+      return routeContext.get("output");
+    });
 }
 var $__default = runRoute;
 ;

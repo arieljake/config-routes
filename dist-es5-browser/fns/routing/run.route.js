@@ -35,17 +35,18 @@ define("config-routes/fns/routing/run.route", [], function() {
       routeContext.set("input", input);
     }
     var routePromise = route.run();
-    if (config.output && (typeof config.output === "string" || Object.keys(config.output).length > 0)) {
+    if (config.output || config.outputs) {
       routePromise = routePromise.then(function() {
         var output = route.context.get("output");
         if (!output)
           return Q.reject("output expected but none defined: " + util.inspect(config.output));
-        if (typeof config.output === "string") {
+        if (config.output) {
           state.set(config.output, output);
-        } else {
-          Object.keys(config.output).map(function(outputKey) {
+        }
+        if (config.outputs) {
+          Object.keys(config.outputs).map(function(outputKey) {
             var value = output[outputKey];
-            var saveTo = config.output[outputKey];
+            var saveTo = config.outputs[outputKey];
             state.set(saveTo, value);
           });
         }

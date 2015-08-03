@@ -14,22 +14,22 @@ var EventEmitter = ($__eventemitter3__ = require("eventemitter3"), $__eventemitt
 var FnsRunner = function FnsRunner(fns) {
   this.fns = fns;
 };
-($traceurRuntime.createClass)(FnsRunner, {run: function() {
+($traceurRuntime.createClass)(FnsRunner, {
+  run: function() {
+    var runner = this;
     var fns = this.fns;
     var fnIndex = 0;
-    var emitter = this;
     var gen = $traceurRuntime.initGeneratorFunction(function $__3() {
-      var error,
-          err;
+      var err;
       return $traceurRuntime.createGeneratorInstance(function($ctx) {
         while (true)
           switch ($ctx.state) {
             case 0:
-              $ctx.pushTry(18, null);
-              $ctx.state = 21;
+              $ctx.pushTry(21, null);
+              $ctx.state = 24;
               break;
-            case 21:
-              emitter.emit('runnerStarting');
+            case 24:
+              runner.emit('runnerStarting');
               $ctx.state = 9;
               break;
             case 9:
@@ -43,42 +43,37 @@ var FnsRunner = function FnsRunner(fns) {
               $ctx.state = 4;
               break;
             case 4:
-              emitter.emit('fnComplete', fnIndex);
+              runner.emit('fnComplete', fnIndex);
               fnIndex++;
               $ctx.state = 9;
               break;
             case 7:
-              emitter.emit('runnerComplete');
+              runner.emit('runnerComplete');
               $ctx.state = 11;
               break;
             case 11:
               $ctx.popTry();
               $ctx.state = -2;
               break;
-            case 18:
+            case 21:
               $ctx.popTry();
               err = $ctx.storedException;
-              $ctx.state = 16;
+              $ctx.state = 20;
+              break;
+            case 20:
+              $ctx.state = (err && err.message == "$abort") ? 12 : 16;
+              break;
+            case 12:
+              $ctx.state = 13;
+              return runner.handleAbort(fnIndex, err);
+            case 13:
+              $ctx.maybeThrow();
+              $ctx.state = -2;
               break;
             case 16:
-              if (!err)
-                error = "unknown error";
-              else if (err.stack)
-                error = err.stack;
-              else if (err.message)
-                error = err.message;
-              else
-                error = err;
-              emitter.emit('fnError', fnIndex, error);
               $ctx.state = 17;
-              break;
+              return runner.handleError(fnIndex, err);
             case 17:
-              $ctx.state = 13;
-              return Q.reject({
-                fnIndex: fnIndex,
-                error: error
-              });
-            case 13:
               $ctx.maybeThrow();
               $ctx.state = -2;
               break;
@@ -88,6 +83,29 @@ var FnsRunner = function FnsRunner(fns) {
       }, $__3, this);
     });
     return Q.async(gen)();
-  }}, {}, EventEmitter);
+  },
+  handleError: function(fnIndex, err) {
+    var error;
+    if (!err)
+      error = "unknown error";
+    else if (err.stack)
+      error = err.stack;
+    else if (err.message)
+      error = err.message;
+    else
+      error = err;
+    this.emit('fnError', fnIndex, error);
+    return Q.reject({
+      fnIndex: fnIndex,
+      error: error
+    });
+  },
+  handleAbort: function(fnIndex, err) {
+    return Q({
+      fnIndex: fnIndex,
+      abort: true
+    });
+  }
+}, {}, EventEmitter);
 ;
 //# sourceURL=src/lib/FnsRunner.js

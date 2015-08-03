@@ -56,7 +56,7 @@ var RouteFactory = function RouteFactory(routeLib, fnLib, routeEvents) {
       var fnId = stepDef.fn;
       var desc = stepDef.desc;
       var stepConfig = stepDef.config;
-      var stepFn = $__5.fnLib.get(fnId);
+      var stepFn = $__5.getFn(fnId);
       if (!stepFn)
         throw new Error("function not found: " + fnId);
       return new RouteStep(stepId, fnId, desc, stepFn, stepConfig);
@@ -68,6 +68,9 @@ var RouteFactory = function RouteFactory(routeLib, fnLib, routeEvents) {
       context.set(input.name, input.value, input.inherited, input.ignored);
     });
     return context;
+  },
+  getFn: function(fnId) {
+    return this.fnLib.get(fnId);
   }
 }, {});
 //# sourceURL=src/lib/RouteFactory.js

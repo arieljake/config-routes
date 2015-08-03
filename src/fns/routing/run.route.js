@@ -57,7 +57,7 @@ function runRoute(state, config)
 
 	var routePromise = route.run();
 
-	if (config.output && (typeof config.output === "string" || Object.keys(config.output).length > 0))
+	if (config.output || config.outputs)
 	{
 		routePromise = routePromise.then(function()
 		{
@@ -66,16 +66,17 @@ function runRoute(state, config)
 			if (!output)
 				return Q.reject("output expected but none defined: " + util.inspect(config.output));
 
-			if (typeof config.output === "string")
+			if (config.output)
 			{
 				state.set(config.output, output);
 			}
-			else
+			
+			if (config.outputs)
 			{
-				Object.keys(config.output).map(function(outputKey)
+				Object.keys(config.outputs).map(function(outputKey)
 				{
 					var value = output[outputKey];
-					var saveTo = config.output[outputKey];
+					var saveTo = config.outputs[outputKey];
 
 					state.set(saveTo, value);
 				});

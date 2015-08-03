@@ -56,7 +56,7 @@ define("config-routes/lib/RouteFactory", ["uuid", "./Route", "./RouteEventHandle
         var fnId = stepDef.fn;
         var desc = stepDef.desc;
         var stepConfig = stepDef.config;
-        var stepFn = $__10.fnLib.get(fnId);
+        var stepFn = $__10.getFn(fnId);
         if (!stepFn)
           throw new Error("function not found: " + fnId);
         return new RouteStep(stepId, fnId, desc, stepFn, stepConfig);
@@ -68,6 +68,9 @@ define("config-routes/lib/RouteFactory", ["uuid", "./Route", "./RouteEventHandle
         context.set(input.name, input.value, input.inherited, input.ignored);
       });
       return context;
+    },
+    getFn: function(fnId) {
+      return this.fnLib.get(fnId);
     }
   }, {});
   return {

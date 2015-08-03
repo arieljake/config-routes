@@ -1,7 +1,15 @@
 'use strict';
 
-import {default as Q} from "q";
-import {default as EventEmitter} from "eventemitter3";
+import
+{
+	default as Q
+}
+from "q";
+import
+{
+	default as EventEmitter
+}
+from "eventemitter3";
 
 export class FnsRunner extends EventEmitter
 {
@@ -12,47 +20,65 @@ export class FnsRunner extends EventEmitter
 
 	run()
 	{
+		let runner = this;
 		let fns = this.fns;
 		let fnIndex = 0;
-		let emitter = this;
 		let gen = function*()
 		{
 			try
 			{
-				emitter.emit('runnerStarting');
-			
+				runner.emit('runnerStarting');
+
 				while (fnIndex < fns.length)
 				{
 					yield fns[fnIndex]();
 
-					emitter.emit('fnComplete', fnIndex);
-					fnIndex++;	
+					runner.emit('fnComplete', fnIndex);
+					fnIndex++;
 				}
 
-				emitter.emit('runnerComplete');
+				runner.emit('runnerComplete');
 			}
 			catch (err)
 			{
-				var error;
-				
-				if (!err)
-					error = "unknown error";
-				else if (err.stack)
-					error = err.stack;
-				else if (err.message)
-					error = err.message;
+				if (err && err.message == "$abort")
+					yield runner.handleAbort(fnIndex, err);
 				else
-					error = err;
-				
-				emitter.emit('fnError', fnIndex, error);
-				
-				yield Q.reject({
-					fnIndex: fnIndex,
-					error: error
-				});
+					yield runner.handleError(fnIndex, err);
 			}
 		};
 
 		return Q.async(gen)();
+	}
+	
+	handleError(fnIndex, err)
+	{
+		var error;
+
+		if (!err)
+			error = "unknown error";
+		else if (err.stack)
+			error = err.stack;
+		else if (err.message)
+			error = err.message;
+		else
+			error = err;
+
+		this.emit('fnError', fnIndex, error);
+
+		return Q.reject(
+		{
+			fnIndex: fnIndex,
+			error: error
+		});
+	}
+	
+	handleAbort(fnIndex, err)
+	{
+		return Q(
+		{
+			fnIndex: fnIndex,
+			abort: true
+		});
 	}
 };

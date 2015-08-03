@@ -48,7 +48,7 @@ describe("FnsRunner", function()
 			});
 	});
 
-	it("promise completes after fns promise compeletes", function(done)
+	it("promise completes after fns promise completes", function(done)
 	{
 		var value;
 		var fn1 = function()
@@ -163,6 +163,66 @@ describe("FnsRunner", function()
 				try
 				{
 					assert.equal(value, 2, "value updated");
+					done();
+				}
+				catch (err)
+				{
+					done(err);
+				}
+			});
+	});
+
+	it("promise completes when fn throws abort error", function(done)
+	{
+		var value;
+		var fn1 = function()
+		{
+			value = 1;
+		};
+		var fn2 = function()
+		{
+			value = 2;
+			throw new Error("$abort");
+		};
+		var fns = [fn1, fn2];
+		var runner = new FnsRunner(fns);
+
+		runner.run()
+			.then(function()
+			{
+				try
+				{
+					assert.equal(value, 2, "value updated");
+					done();
+				}
+				catch (err)
+				{
+					done(err);
+				}
+			});
+	});
+
+	it("no more fns called when fn throws abort error", function(done)
+	{
+		var value;
+		var fn1 = function()
+		{
+			value = 1;
+			throw new Error("$abort");
+		};
+		var fn2 = function()
+		{
+			value = 2;
+		};
+		var fns = [fn1, fn2];
+		var runner = new FnsRunner(fns);
+
+		runner.run()
+			.then(function()
+			{
+				try
+				{
+					assert.equal(value, 1, "value updated");
 					done();
 				}
 				catch (err)

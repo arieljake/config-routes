@@ -61,7 +61,7 @@ export class RouteFactory
 			var fnId = stepDef.fn;
 			var desc = stepDef.desc;
 			var stepConfig = stepDef.config;
-			var stepFn = this.fnLib.get(fnId);
+			var stepFn = this.getFn(fnId);
 			
 			if (!stepFn)
 				throw new Error("function not found: " + fnId);
@@ -79,5 +79,10 @@ export class RouteFactory
 		});
 		
 		return context;
+	}
+	
+	getFn(fnId)
+	{
+		return this.fnLib.get(fnId);
 	}
 }

@@ -5,6 +5,8 @@ define("config-routes/fns/input/collection.sortBy", [], function() {
   function sortBy(state, config) {
     var collection = state.get(config.collectionVarName);
     var value = _.sortBy(collection, config.propertyName);
+    if (config.reverse)
+      value.reverse();
     if (config.saveTo)
       state.set(config.saveTo, value);
     return value;

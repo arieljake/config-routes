@@ -78,7 +78,7 @@ export class RouteContext
 		{
 			result = self.get(map);
 		}
-		else
+		else if (typeof map === "object")
 		{
 			result = {};
 
@@ -89,6 +89,10 @@ export class RouteContext
 
 				result[key] = value;
 			});
+		}
+		else
+		{
+			result = {};
 		}
 
 		return result;

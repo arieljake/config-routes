@@ -27,9 +27,12 @@ define("config-routes/fns/routing/run.route", [], function() {
       var input = routeContext.get("input") || {};
       Object.keys(config.inputs).forEach(function(key) {
         var value = config.inputs[key];
-        if (typeof value === "string")
-          input[key] = state.get(value);
-        else
+        if (typeof value === "string") {
+          if (value[0] === "'" && value.substr(-1) === "'")
+            input[key] = value.replace(/\'/g, "");
+          else
+            input[key] = state.get(value);
+        } else
           input[key] = value;
       });
       routeContext.set("input", input);

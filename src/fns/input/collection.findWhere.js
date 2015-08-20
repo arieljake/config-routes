@@ -8,5 +8,8 @@ function findWhere(state, config) {
 	let query = config.query || state.get(config.queryVarName);
 	let value = _.findWhere(collection, query);
 	
-    state.set(config.saveTo, value);
+	if (config.saveTo)
+		state.set(config.saveTo, value);
+	
+	return value;
 };

@@ -11,7 +11,9 @@ function findWhere(state, config) {
   var collection = state.get(config.collectionVarName);
   var query = config.query || state.get(config.queryVarName);
   var value = _.findWhere(collection, query);
-  state.set(config.saveTo, value);
+  if (config.saveTo)
+    state.set(config.saveTo, value);
+  return value;
 }
 var $__default = findWhere;
 ;

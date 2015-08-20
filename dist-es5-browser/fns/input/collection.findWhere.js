@@ -6,7 +6,9 @@ define("config-routes/fns/input/collection.findWhere", [], function() {
     var collection = state.get(config.collectionVarName);
     var query = config.query || state.get(config.queryVarName);
     var value = _.findWhere(collection, query);
-    state.set(config.saveTo, value);
+    if (config.saveTo)
+      state.set(config.saveTo, value);
+    return value;
   }
   var $__default = findWhere;
   ;

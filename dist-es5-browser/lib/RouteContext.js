@@ -48,13 +48,15 @@ define("config-routes/lib/RouteContext", ["lodash", "../utils/ObjectPath", "../u
       var result;
       if (typeof map === "string") {
         result = self.get(map);
-      } else {
+      } else if (typeof map === "object") {
         result = {};
         Object.keys(map).map(function(key) {
           var valueVarName = map[key];
           var value = self.get(valueVarName);
           result[key] = value;
         });
+      } else {
+        result = {};
       }
       return result;
     },

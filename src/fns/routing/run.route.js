@@ -47,7 +47,12 @@ function runRoute(state, config)
 			var value = config.inputs[key];
 
 			if (typeof value === "string")
-				input[key] = state.get(value);
+			{
+				if (value[0] === "'" && value.substr(-1) === "'")
+					input[key] = value.replace(/\'/g, "");
+				else
+					input[key] = state.get(value);
+			}
 			else
 				input[key] = value;
 		});

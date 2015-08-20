@@ -29,9 +29,13 @@ function branchRoute(state, config)
 				else
 					return branchOutput;
 			}
-			else
+			else if (branchOutput || caseOutput)
 			{
 				return _.defaults({}, caseOutput, branchOutput)
+			}
+			else
+			{
+				return undefined;
 			}
 		}
 		

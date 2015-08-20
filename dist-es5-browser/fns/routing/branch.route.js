@@ -20,8 +20,10 @@ define("config-routes/fns/routing/branch.route", [], function() {
             return caseOutput;
           else
             return branchOutput;
-        } else {
+        } else if (branchOutput || caseOutput) {
           return _.defaults({}, caseOutput, branchOutput);
+        } else {
+          return undefined;
         }
       };
       var routeConfig = {

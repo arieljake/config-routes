@@ -16,7 +16,11 @@ import {VariableString} from './utils/VariableString';
 export function createRoutes(config)
 {
 	let stdFnLibPath = path.join(__dirname, "fns");	
-	let fnPaths = _.flatten([stdFnLibPath,config.fnLib]);
+	let stdFnLibEntry = {
+		dirPath: stdFnLibPath,
+		fileNameRegex: /\.js$/
+	};
+	let fnPaths = _.flatten([stdFnLibEntry,config.fnLib]);
 	let fnLib = new FnLibrary(fnPaths);
 	let routeLib = new RouteLibrary(config.routeLib);
 	let routes = new RouteFactory(routeLib, fnLib, config.routeEvents);

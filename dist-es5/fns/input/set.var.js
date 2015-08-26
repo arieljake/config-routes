@@ -23,7 +23,13 @@ function setVar(state, config) {
   if (value === undefined && config.hasOwnProperty("defaultValue")) {
     value = config.defaultValue;
   }
-  value = Formatter.format(value, config.format);
+  var format;
+  if (config.format)
+    format = config.format;
+  else if (config.formatVarName)
+    format = state.get(config.formatVarName);
+  if (format)
+    value = Formatter.format(value, format);
   if (config.saveTo) {
     saveTo = config.saveTo;
   } else if (config.saveToString) {

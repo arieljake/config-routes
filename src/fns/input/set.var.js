@@ -25,8 +25,16 @@ function setVar(state, config)
 	{
 		value = config.defaultValue;
 	}
-
-	value = Formatter.format(value, config.format);
+	
+	var format;
+	
+	if (config.format)
+		format = config.format;
+	else if (config.formatVarName)
+		format = state.get(config.formatVarName);
+	
+	if (format)
+		value = Formatter.format(value, format);
 
 	if (config.saveTo)
 	{

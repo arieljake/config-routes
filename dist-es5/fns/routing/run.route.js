@@ -19,6 +19,8 @@ function runRoute(state, config) {
     return Q.reject("routeLib is undefined");
   if (config.routeName) {
     route = routeLib.get(config.routeName, routeContext);
+    if (!route)
+      return Q.reject("no route defined for " + config.routeName);
   } else if (config.route) {
     route = routeLib.create(config.desc, config.route, routeContext);
   }

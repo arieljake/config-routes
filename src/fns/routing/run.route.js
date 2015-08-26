@@ -16,12 +16,15 @@ function runRoute(state, config)
 	if (config.routeName)
 	{
 		route = routeLib.get(config.routeName, routeContext);
+
+		if (!route)
+			return Q.reject("no route defined for " + config.routeName);
 	}
 	else if (config.route)
 	{
 		route = routeLib.create(config.desc, config.route, routeContext);
 	}
-
+	
 	if (config.input)
 	{
 		var input;

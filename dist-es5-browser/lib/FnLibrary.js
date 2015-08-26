@@ -5,8 +5,8 @@ define("config-routes/lib/FnLibrary", ["./Library"], function($__0) {
     $__0 = {default: $__0};
   'use strict';
   var Library = $__0.Library;
-  var FnLibrary = function FnLibrary(fnPaths) {
-    this.lib = new Library(fnPaths, /\.js$/);
+  var FnLibrary = function FnLibrary(fnPaths, fileNameRegex) {
+    this.lib = new Library(fnPaths, fileNameRegex || /\.js$/);
   };
   ($traceurRuntime.createClass)(FnLibrary, {
     get: function(id) {

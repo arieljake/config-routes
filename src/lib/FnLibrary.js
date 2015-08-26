@@ -4,9 +4,9 @@ import {Library} from "./Library";
 
 export class FnLibrary
 {
-	constructor(fnPaths)
+	constructor(fnPaths, fileNameRegex)
 	{
-		this.lib = new Library(fnPaths, /\.js$/);
+		this.lib = new Library(fnPaths, fileNameRegex || /\.js$/);
 	}
 
 	get(id)

@@ -35,7 +35,11 @@ define("config-routes/index", ["lodash", "./lib/Library", "./lib/RouteFactory", 
   var VariableString = $__18.VariableString;
   function createRoutes(config) {
     var stdFnLibPath = path.join(__dirname, "fns");
-    var fnPaths = _.flatten([stdFnLibPath, config.fnLib]);
+    var stdFnLibEntry = {
+      dirPath: stdFnLibPath,
+      fileNameRegex: /\.js$/
+    };
+    var fnPaths = _.flatten([stdFnLibEntry, config.fnLib]);
     var fnLib = new FnLibrary(fnPaths);
     var routeLib = new RouteLibrary(config.routeLib);
     var routes = new RouteFactory(routeLib, fnLib, config.routeEvents);

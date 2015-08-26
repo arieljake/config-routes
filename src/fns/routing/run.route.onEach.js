@@ -13,12 +13,10 @@ function runRouteOnEach(state, config)
 	var itemKey = "__item_" + Math.random().toString().substr(2);
 	var deferred = Q.defer();
 
-	if (routeConfig.input === undefined)
-	{
-		routeConfig.input = {};
-	}
+	if (routeConfig.inputs === undefined)
+		routeConfig.inputs = {};
 
-	routeConfig.input[inputVarName] = itemKey;
+	routeConfig.inputs[inputVarName] = itemKey;
 
 	async.forEachSeries(collection,
 

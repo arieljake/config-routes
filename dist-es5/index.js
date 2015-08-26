@@ -45,7 +45,11 @@ var ObjectPath = ($__dist_45_es5_47_utils_47_ObjectPath__ = require("./utils/Obj
 var VariableString = ($__dist_45_es5_47_utils_47_VariableString__ = require("./utils/VariableString"), $__dist_45_es5_47_utils_47_VariableString__ && $__dist_45_es5_47_utils_47_VariableString__.__esModule && $__dist_45_es5_47_utils_47_VariableString__ || {default: $__dist_45_es5_47_utils_47_VariableString__}).VariableString;
 function createRoutes(config) {
   var stdFnLibPath = path.join(__dirname, "fns");
-  var fnPaths = _.flatten([stdFnLibPath, config.fnLib]);
+  var stdFnLibEntry = {
+    dirPath: stdFnLibPath,
+    fileNameRegex: /\.js$/
+  };
+  var fnPaths = _.flatten([stdFnLibEntry, config.fnLib]);
   var fnLib = new FnLibrary(fnPaths);
   var routeLib = new RouteLibrary(config.routeLib);
   var routes = new RouteFactory(routeLib, fnLib, config.routeEvents);

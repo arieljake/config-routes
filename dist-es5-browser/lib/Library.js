@@ -9,11 +9,45 @@ define("config-routes/lib/Library", ["lodash"], function($__0) {
   var wrench = require('wrench');
   var _ = $__0.default;
   var Library = function Library(dirs, fileNameRegex) {
-    this.dirs = _.flatten([dirs]);
-    this.fileNameRegex = fileNameRegex || /\.js$/;
-    this.entries = _.chain(this.dirs).map(_.bind(this.loadDir, this)).flatten().value();
+    this.defaultFileNameRegex = fileNameRegex || /\.js$/;
+    this.entries = _.chain(_.flatten([dirs])).map(this.prepDir.bind(this)).map(this.loadDir.bind(this)).flatten().value();
   };
   ($traceurRuntime.createClass)(Library, {
+    prepDir: function(dir) {
+      if (!dir)
+        return [];
+      var self = this;
+      if (typeof dir === "string") {
+        return {
+          dirPath: dir,
+          fileNameRegex: self.defaultFileNameRegex
+        };
+      } else {
+        return {
+          dirPath: dir.dirPath,
+          fileNameRegex: dir.fileNameRegex || self.defaultFileNameRegex
+        };
+      }
+    },
+    loadDir: function(dir) {
+      if (!dir)
+        return [];
+      var self = this;
+      return wrench.readdirSyncRecursive(dir.dirPath).filter((function(fileName) {
+        return dir.fileNameRegex.test(fileName);
+      })).map((function(fileName) {
+        var name = path.basename(fileName, path.extname(fileName));
+        var id = path.join(path.dirname(fileName), name);
+        var relativePath = fileName;
+        var fullPath = path.join(dir.dirPath, fileName);
+        return {
+          id: id,
+          name: name,
+          relativePath: relativePath,
+          fullPath: fullPath
+        };
+      }));
+    },
     getById: function(value) {
       return this.entries.find((function(entry) {
         return entry.id == value;
@@ -27,25 +61,6 @@ define("config-routes/lib/Library", ["lodash"], function($__0) {
     getByPath: function(value) {
       return this.entries.find((function(entry) {
         return entry.relativePath == value;
-      }));
-    },
-    loadDir: function(dir) {
-      var $__2 = this;
-      if (!dir)
-        return [];
-      return wrench.readdirSyncRecursive(dir).filter((function(fileName) {
-        return $__2.fileNameRegex.test(fileName);
-      })).map((function(fileName) {
-        var name = path.basename(fileName, path.extname(fileName));
-        var id = path.join(path.dirname(fileName), name);
-        var relativePath = fileName;
-        var fullPath = path.join(dir, fileName);
-        return {
-          id: id,
-          name: name,
-          relativePath: relativePath,
-          fullPath: fullPath
-        };
       }));
     },
     toObject: function() {

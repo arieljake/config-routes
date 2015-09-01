@@ -7,11 +7,11 @@ default
 
 function runRouteOnEach(state, config)
 {
+	var deferred = Q.defer();
 	var collection = state.get(config.collectionVarName);
 	var inputVarName = config.inputVarName;
 	var routeConfig = config.routeConfig;
 	var itemKey = "__item_" + Math.random().toString().substr(2);
-	var deferred = Q.defer();
 
 	if (routeConfig.inputs === undefined)
 		routeConfig.inputs = {};

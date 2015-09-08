@@ -22,11 +22,16 @@ function VariableString(value, context, delim) {
     });
   return value.replace(varLocator, function(m, i, t) {
     var path = m.replace(varExtract, "");
+    var value;
     if (_.isFunction(context.get)) {
-      return context.get(path);
+      value = context.get(path);
     } else {
-      return new ObjectPath(path).getValueIn(context).toString();
+      value = new ObjectPath(path).getValueIn(context);
     }
+    if (value === undefined || value === null)
+      return "";
+    else
+      return value.toString();
   });
 }
 //# sourceURL=src/utils/VariableString.js

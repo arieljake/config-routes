@@ -31,12 +31,22 @@ export default function insertManyBatch(state, config)
 
 		var batch = mongoDB.collection(collection).initializeUnorderedBulkOp();
 		
-		for (var i=0; i < records.length; i++)
+		if (records.length > 0)
 		{
-			batch.insert(records[i], options);
+			for (var i=0; i < records.length; i++)
+			{
+				batch.insert(records[i], options);
+			}
+
+			batch.execute(resultHandler);
 		}
-		
-		batch.execute(resultHandler);
+		else
+		{
+			if (config.protectEmptySet === true)
+				deferred.resolve([]);
+			else
+				deferred.reject("no records provided to insert (allow with protectEmptySet:true)");
+		}
 	}
 	catch (err)
 	{

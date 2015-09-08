@@ -20,10 +20,17 @@ define("config-routes/fns/database/mongo/insertManyBatch", [], function() {
         deferred.resolve(result);
       };
       var batch = mongoDB.collection(collection).initializeUnorderedBulkOp();
-      for (var i = 0; i < records.length; i++) {
-        batch.insert(records[i], options);
+      if (records.length > 0) {
+        for (var i = 0; i < records.length; i++) {
+          batch.insert(records[i], options);
+        }
+        batch.execute(resultHandler);
+      } else {
+        if (config.protectEmptySet === true)
+          deferred.resolve([]);
+        else
+          deferred.reject("no records provided to insert (allow with protectEmptySet:true)");
       }
-      batch.execute(resultHandler);
     } catch (err) {
       deferred.reject(err);
     }
